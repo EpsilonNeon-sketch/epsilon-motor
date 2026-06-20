@@ -8,7 +8,8 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
-    <link rel="icon" href="icon.png">
+    <link rel="icon"
+        href="icon.png" type="image/png">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
 
@@ -28,10 +29,7 @@
             position: fixed;
             inset: 0;
             z-index: -1;
-            background-image:
-                radial-gradient(at 0% 0%, rgba(120, 120, 140, 0.08) 0, transparent 50%),
-                radial-gradient(at 100% 100%, rgba(100, 100, 120, 0.06) 0, transparent 50%),
-                radial-gradient(at 50% 50%, rgba(80, 80, 100, 0.04) 0, transparent 70%);
+            background-image: radial-gradient(at 0% 0%, rgba(120, 120, 140, 0.08) 0, transparent 50%), radial-gradient(at 100% 100%, rgba(100, 100, 120, 0.06) 0, transparent 50%), radial-gradient(at 50% 50%, rgba(80, 80, 100, 0.04) 0, transparent 70%);
         }
 
         .glass {
@@ -418,6 +416,122 @@
             background: #1a1a2e;
         }
 
+        /* Dictionary specific styles */
+        .dict-card {
+            transition: all 0.25s ease;
+            border-left: 4px solid transparent;
+        }
+
+        .dict-card:hover {
+            transform: translateX(4px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+        }
+
+        .dict-card.cat-Engine {
+            border-left-color: #dc2626;
+        }
+
+        .dict-card.cat-Drivetrain {
+            border-left-color: #2563eb;
+        }
+
+        .dict-card.cat-Handling {
+            border-left-color: #16a34a;
+        }
+
+        .dict-card.cat-Aerodynamics {
+            border-left-color: #9333ea;
+        }
+
+        .dict-card.cat-Brakes-Safety {
+            border-left-color: #ea580c;
+        }
+
+        .dict-card.cat-Transmission {
+            border-left-color: #0891b2;
+        }
+
+        .dict-card.cat-General {
+            border-left-color: #6b7280;
+        }
+
+        .cat-badge-Engine {
+            background: #fef2f2;
+            color: #dc2626;
+        }
+
+        .cat-badge-Drivetrain {
+            background: #eff6ff;
+            color: #2563eb;
+        }
+
+        .cat-badge-Handling {
+            background: #f0fdf4;
+            color: #16a34a;
+        }
+
+        .cat-badge-Aerodynamics {
+            background: #faf5ff;
+            color: #9333ea;
+        }
+
+        .cat-badge-Brakes-Safety {
+            background: #fff7ed;
+            color: #ea580c;
+        }
+
+        .cat-badge-Transmission {
+            background: #ecfeff;
+            color: #0891b2;
+        }
+
+        .cat-badge-General {
+            background: #f9fafb;
+            color: #6b7280;
+        }
+
+        .dict-letter-nav button {
+            width: 2rem;
+            height: 2rem;
+            border-radius: 0.375rem;
+            font-size: 0.75rem;
+            font-weight: 700;
+            border: none;
+            background: white;
+            color: #9ca3af;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .dict-letter-nav button:hover {
+            background: #1a1a2e;
+            color: white;
+        }
+
+        .dict-letter-nav button.active-letter {
+            background: #1a1a2e;
+            color: white;
+        }
+
+        .dict-letter-nav button:disabled {
+            opacity: 0.3;
+            cursor: default;
+        }
+
+        .dict-letter-nav button:disabled:hover {
+            background: white;
+            color: #9ca3af;
+        }
+
+        .highlight {
+            background: #fef08a;
+            padding: 0 2px;
+            border-radius: 2px;
+        }
+
         @media (max-width: 768px) {
             .sidebar {
                 transform: translateX(-100%);
@@ -438,10 +552,7 @@
 <body class="min-h-screen">
     <div class="bg-pattern"></div>
 
-    <button id="menuToggle" class="menu-toggle">
-        <i data-lucide="menu" style="width:22px;height:22px;"></i>
-    </button>
-
+    <button id="menuToggle" class="menu-toggle"><i data-lucide="menu" style="width:22px;height:22px;"></i></button>
     <div id="sidebarOverlay" class="sidebar-overlay"></div>
 
     <aside id="sidebar" class="sidebar">
@@ -449,30 +560,28 @@
             <div class="flex items-center justify-between mb-8">
                 <h2 class="text-xl font-extrabold text-gray-900 tracking-tight">EPSILON<span
                         class="text-gray-400">MOTOR</span></h2>
-                <button id="closeSidebar" class="md:hidden text-gray-400 hover:text-gray-700">
-                    <i data-lucide="x" style="width:22px;height:22px;"></i>
-                </button>
+                <button id="closeSidebar" class="md:hidden text-gray-400 hover:text-gray-700"><i data-lucide="x"
+                        style="width:22px;height:22px;"></i></button>
             </div>
             <nav class="space-y-1">
                 <button class="nav-btn w-full flex items-center gap-3 p-3 rounded-xl transition text-left active-nav"
-                    data-page="home">
-                    <i data-lucide="layout-dashboard" style="width:20px;height:20px;"></i><span>Home</span>
-                </button>
+                    data-page="home"><i data-lucide="layout-dashboard"
+                        style="width:20px;height:20px;"></i><span>Home</span></button>
                 <button
                     class="nav-btn w-full flex items-center gap-3 p-3 rounded-xl hover:bg-gray-100 transition text-left text-gray-600"
-                    data-page="cars">
-                    <i data-lucide="car" style="width:20px;height:20px;"></i><span>Cars</span>
-                </button>
+                    data-page="cars"><i data-lucide="car" style="width:20px;height:20px;"></i><span>Cars</span></button>
                 <button
                     class="nav-btn w-full flex items-center gap-3 p-3 rounded-xl hover:bg-gray-100 transition text-left text-gray-600"
-                    data-page="planes">
-                    <i data-lucide="plane" style="width:20px;height:20px;"></i><span>Planes</span>
-                </button>
+                    data-page="planes"><i data-lucide="plane"
+                        style="width:20px;height:20px;"></i><span>Planes</span></button>
                 <button
                     class="nav-btn w-full flex items-center gap-3 p-3 rounded-xl hover:bg-gray-100 transition text-left text-gray-600"
-                    data-page="users">
-                    <i data-lucide="users" style="width:20px;height:20px;"></i><span>Users</span>
-                </button>
+                    data-page="dictionary"><i data-lucide="book-open"
+                        style="width:20px;height:20px;"></i><span>Dictionary</span></button>
+                <button
+                    class="nav-btn w-full flex items-center gap-3 p-3 rounded-xl hover:bg-gray-100 transition text-left text-gray-600"
+                    data-page="users"><i data-lucide="users"
+                        style="width:20px;height:20px;"></i><span>Users</span></button>
             </nav>
             <div class="divider my-6"></div>
             <div class="px-3 py-4 rounded-xl bg-gray-50 border border-gray-100">
@@ -488,9 +597,8 @@
             </div>
             <div class="mt-4 pt-4 border-t border-gray-100">
                 <button id="logoutBtn"
-                    class="w-full flex items-center gap-3 p-3 rounded-xl hover:bg-red-50 hover:text-red-600 transition text-left text-gray-500 text-sm">
-                    <i data-lucide="log-out" style="width:18px;height:18px;"></i><span>Sign Out</span>
-                </button>
+                    class="w-full flex items-center gap-3 p-3 rounded-xl hover:bg-red-50 hover:text-red-600 transition text-left text-gray-500 text-sm"><i
+                        data-lucide="log-out" style="width:18px;height:18px;"></i><span>Sign Out</span></button>
             </div>
         </div>
     </aside>
@@ -500,9 +608,8 @@
         <div class="max-w-md w-full">
             <div class="glass p-8 rounded-2xl">
                 <div class="text-center mb-8">
-                    <div class="w-16 h-16 mx-auto mb-4 rounded-2xl bg-gray-900 flex items-center justify-center">
-                        <i data-lucide="car" style="width:32px;height:32px;color:white;"></i>
-                    </div>
+                    <div class="w-16 h-16 mx-auto mb-4 rounded-2xl bg-gray-900 flex items-center justify-center"><i
+                            data-lucide="car" style="width:32px;height:32px;color:white;"></i></div>
                     <h1 class="text-2xl font-extrabold text-gray-900 tracking-tight">EPSILON<span
                             class="text-gray-400">MOTOR</span></h1>
                     <p class="text-gray-400 text-sm mt-1">Discover the world of automobiles & aviation</p>
@@ -629,8 +736,7 @@
                         <div>
                             <h3 class="text-xl font-extrabold text-gray-900">Featured Cars</h3>
                             <p class="text-gray-400 text-sm">Hand-picked automobiles from our collection</p>
-                        </div>
-                        <button onclick="navigateTo('cars')"
+                        </div><button onclick="navigateTo('cars')"
                             class="text-sm font-semibold text-gray-500 hover:text-gray-900 transition flex items-center gap-1">View
                             All <i data-lucide="arrow-right" style="width:16px;height:16px;"></i></button>
                     </div>
@@ -641,8 +747,7 @@
                         <div>
                             <h3 class="text-xl font-extrabold text-gray-900">Featured Aircraft</h3>
                             <p class="text-gray-400 text-sm">Explore aviation marvels</p>
-                        </div>
-                        <button onclick="navigateTo('planes')"
+                        </div><button onclick="navigateTo('planes')"
                             class="text-sm font-semibold text-gray-500 hover:text-gray-900 transition flex items-center gap-1">View
                             All <i data-lucide="arrow-right" style="width:16px;height:16px;"></i></button>
                     </div>
@@ -660,15 +765,14 @@
                     <div class="search-box flex-1"><i data-lucide="search" style="width:18px;height:18px;"></i><input
                             id="carSearch" type="text" placeholder="Search by name, manufacturer, model..."
                             class="input-field" style="padding-left:3rem;"></div>
-                    <div class="flex gap-2 flex-wrap" id="carFilters">
-                        <button class="filter-btn active-filter" data-filter="all">All</button>
-                        <button class="filter-btn" data-filter="Sedan">Sedan</button>
-                        <button class="filter-btn" data-filter="SUV">SUV</button>
-                        <button class="filter-btn" data-filter="Sports">Sports</button>
-                        <button class="filter-btn" data-filter="Truck">Truck</button>
-                        <button class="filter-btn" data-filter="Electric">Electric</button>
-                        <button class="filter-btn" data-filter="Coupe">Coupe</button>
-                    </div>
+                    <div class="flex gap-2 flex-wrap" id="carFilters"><button class="filter-btn active-filter"
+                            data-filter="all">All</button><button class="filter-btn"
+                            data-filter="Sedan">Sedan</button><button class="filter-btn"
+                            data-filter="SUV">SUV</button><button class="filter-btn"
+                            data-filter="Sports">Sports</button><button class="filter-btn"
+                            data-filter="Truck">Truck</button><button class="filter-btn"
+                            data-filter="Electric">Electric</button><button class="filter-btn"
+                            data-filter="Coupe">Coupe</button></div>
                 </div>
                 <div id="carsGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5"></div>
                 <div id="noCarsMsg" class="hidden text-center py-16"><i data-lucide="search-x"
@@ -687,18 +791,77 @@
                     <div class="search-box flex-1"><i data-lucide="search" style="width:18px;height:18px;"></i><input
                             id="planeSearch" type="text" placeholder="Search by name, manufacturer..."
                             class="input-field" style="padding-left:3rem;"></div>
-                    <div class="flex gap-2 flex-wrap" id="planeFilters">
-                        <button class="filter-btn active-filter" data-filter="all">All</button>
-                        <button class="filter-btn" data-filter="Commercial">Commercial</button>
-                        <button class="filter-btn" data-filter="Private">Private</button>
-                        <button class="filter-btn" data-filter="Military">Military</button>
-                        <button class="filter-btn" data-filter="Cargo">Cargo</button>
-                    </div>
+                    <div class="flex gap-2 flex-wrap" id="planeFilters"><button class="filter-btn active-filter"
+                            data-filter="all">All</button><button class="filter-btn"
+                            data-filter="Commercial">Commercial</button><button class="filter-btn"
+                            data-filter="Private">Private</button><button class="filter-btn"
+                            data-filter="Military">Military</button><button class="filter-btn"
+                            data-filter="Cargo">Cargo</button></div>
                 </div>
                 <div id="planesGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5"></div>
                 <div id="noPlanesMsg" class="hidden text-center py-16"><i data-lucide="search-x"
                         style="width:48px;height:48px;color:#d1d5db;margin:0 auto 1rem;display:block;"></i>
                     <p class="text-gray-400 font-medium">No planes found matching your criteria</p>
+                </div>
+            </div>
+
+            <!-- DICTIONARY -->
+            <div id="dictionarySection" class="section hidden">
+                <header class="mb-6">
+                    <h1 class="text-3xl font-extrabold text-gray-900 tracking-tight">Auto Dictionary</h1>
+                    <p class="text-gray-400 mt-1">Learn the language of the automobile industry — <span id="dictCount"
+                            class="font-semibold text-gray-600">40</span> terms and counting</p>
+                </header>
+
+                <!-- Search -->
+                <div class="search-box mb-5 max-w-lg"><i data-lucide="search" style="width:18px;height:18px;"></i><input
+                        id="dictSearch" type="text" placeholder="Search terms, definitions, examples..."
+                        class="input-field" style="padding-left:3rem;"></div>
+
+                <!-- Category filters -->
+                <div class="flex gap-2 flex-wrap mb-5" id="dictFilters">
+                    <button class="filter-btn active-filter" data-filter="all">All</button>
+                    <button class="filter-btn" data-filter="Engine">Engine</button>
+                    <button class="filter-btn" data-filter="Drivetrain">Drivetrain</button>
+                    <button class="filter-btn" data-filter="Handling">Handling</button>
+                    <button class="filter-btn" data-filter="Aerodynamics">Aerodynamics</button>
+                    <button class="filter-btn" data-filter="Brakes & Safety">Brakes & Safety</button>
+                    <button class="filter-btn" data-filter="Transmission">Transmission</button>
+                    <button class="filter-btn" data-filter="General">General</button>
+                </div>
+
+                <!-- Letter nav -->
+                <div class="dict-letter-nav flex flex-wrap gap-1 mb-6" id="dictLetterNav"></div>
+
+                <!-- Terms list -->
+                <div id="dictGrid" class="space-y-3"></div>
+
+                <!-- No results -->
+                <div id="noDictMsg" class="hidden text-center py-16"><i data-lucide="book-x"
+                        style="width:48px;height:48px;color:#d1d5db;margin:0 auto 1rem;display:block;"></i>
+                    <p class="text-gray-400 font-medium">No terms found matching your search</p>
+                </div>
+
+                <!-- Loading -->
+                <div id="dictLoading" class="space-y-3">
+                    <div class="glass rounded-xl p-5">
+                        <div class="skeleton h-5 w-1/3 mb-3"></div>
+                        <div class="skeleton h-4 w-full mb-2"></div>
+                        <div class="skeleton h-4 w-3/4 mb-4"></div>
+                        <div class="skeleton h-4 w-full"></div>
+                    </div>
+                    <div class="glass rounded-xl p-5">
+                        <div class="skeleton h-5 w-1/4 mb-3"></div>
+                        <div class="skeleton h-4 w-full mb-2"></div>
+                        <div class="skeleton h-4 w-2/3 mb-4"></div>
+                        <div class="skeleton h-4 w-5/6"></div>
+                    </div>
+                    <div class="glass rounded-xl p-5">
+                        <div class="skeleton h-5 w-2/5 mb-3"></div>
+                        <div class="skeleton h-4 w-full mb-2"></div>
+                        <div class="skeleton h-4 w-1/2 mb-4"></div>
+                        <div class="skeleton h-4 w-4/5"></div>
+                    </div>
                 </div>
             </div>
 
@@ -783,76 +946,44 @@
         });
 
         // --- STATE ---
-        let currentUser = null;
-        let currentProfile = null;
-        let allProfiles = [];
-        let carsData = [];
-        let planesData = [];
+        let currentUser = null, currentProfile = null, allProfiles = [];
+        let carsData = [], planesData = [], glossaryData = [];
 
         // --- INIT ---
         document.addEventListener('DOMContentLoaded', async () => {
             lucide.createIcons();
-            setupNavigation();
-            setupSidebar();
-            setupAuthForms();
-            setupCarFilters();
-            setupPlaneFilters();
-            setupSearch();
-            setupModals();
-
-            // Load JSON data files first, then check auth
-            await Promise.all([loadCarsJSON(), loadPlanesJSON()]);
+            setupNavigation(); setupSidebar(); setupAuthForms();
+            setupCarFilters(); setupPlaneFilters(); setupDictFilters();
+            setupSearch(); setupModals();
+            await Promise.all([loadCarsJSON(), loadPlanesJSON(), loadGlossaryJSON()]);
             checkAuth();
         });
 
-        // --- LOAD CARS FROM car.json ---
+        // --- DATA LOADERS ---
         async function loadCarsJSON() {
-            try {
-                const res = await fetch('car.json');
-                if (!res.ok) throw new Error('Failed to load car.json');
-                carsData = await res.json();
-            } catch (err) {
-                console.error('Error loading car.json:', err);
-                carsData = [];
-                showToast('Failed to load cars data', 'error');
-            }
+            try { const r = await fetch('car.json'); if (!r.ok) throw new Error(); carsData = await r.json(); }
+            catch (e) { console.error('car.json error:', e); carsData = []; }
         }
-
-        // --- LOAD PLANES FROM plane.json ---
         async function loadPlanesJSON() {
-            try {
-                const res = await fetch('plane.json');
-                if (!res.ok) throw new Error('Failed to load plane.json');
-                planesData = await res.json();
-            } catch (err) {
-                console.error('Error loading plane.json:', err);
-                planesData = [];
-                showToast('Failed to load planes data', 'error');
-            }
+            try { const r = await fetch('plane.json'); if (!r.ok) throw new Error(); planesData = await r.json(); }
+            catch (e) { console.error('plane.json error:', e); planesData = []; }
+        }
+        async function loadGlossaryJSON() {
+            try { const r = await fetch('glossary.json'); if (!r.ok) throw new Error(); glossaryData = await r.json(); }
+            catch (e) { console.error('glossary.json error:', e); glossaryData = []; }
         }
 
         // --- AUTH ---
         async function checkAuth() {
             const { data: { session } } = await supabaseClient.auth.getSession();
-            if (session) {
-                currentUser = session.user;
-                await fetchCurrentProfile();
-                showDashboard();
-            } else {
-                showAuth();
-            }
+            if (session) { currentUser = session.user; await fetchCurrentProfile(); showDashboard(); }
+            else showAuth();
         }
-
         async function fetchCurrentProfile() {
             if (!currentUser) return;
-            const { data } = await supabaseClient
-                .from('profiles')
-                .select('username, display_name, profile_pic, bio')
-                .eq('id', currentUser.id)
-                .single();
+            const { data } = await supabaseClient.from('profiles').select('username, display_name, profile_pic, bio').eq('id', currentUser.id).single();
             currentProfile = data || null;
         }
-
         function showAuth() {
             document.getElementById('authPage').classList.add('active');
             document.getElementById('dashboardPage').classList.remove('active');
@@ -860,283 +991,130 @@
             document.getElementById('sidebar').classList.add('closed');
             document.getElementById('mainContent').classList.add('expanded');
         }
-
         function showDashboard() {
             document.getElementById('authPage').classList.remove('active');
             document.getElementById('dashboardPage').classList.add('active');
             document.getElementById('menuToggle').style.display = 'flex';
-            updateUserUI();
-            loadHomeData();
-            loadCars();
-            loadPlanes();
-            loadUsers();
+            updateUserUI(); loadHomeData(); loadCars(); loadPlanes(); loadUsers(); loadDictionary();
             lucide.createIcons();
         }
-
         function updateUserUI() {
             if (!currentUser) return;
-            const displayName = currentProfile?.display_name || currentUser.email?.split('@')[0] || 'User';
-            const initial = displayName.charAt(0).toUpperCase();
-            const profilePic = currentProfile?.profile_pic;
-            document.getElementById('userNameDisplay').textContent = displayName;
-            const avatarEl = document.getElementById('userAvatar');
-            if (profilePic) { avatarEl.innerHTML = `<img src="${profilePic}" class="w-12 h-12 rounded-full object-cover shadow-lg shadow-gray-900/20">`; }
-            else { avatarEl.textContent = initial; }
-            const sidebarAvEl = document.getElementById('sidebarAvatar');
-            if (profilePic) { sidebarAvEl.innerHTML = `<img src="${profilePic}" class="w-9 h-9 rounded-full object-cover">`; sidebarAvEl.className = 'w-9 h-9 rounded-full overflow-hidden flex-shrink-0'; }
-            else { sidebarAvEl.innerHTML = ''; sidebarAvEl.textContent = initial; sidebarAvEl.className = 'w-9 h-9 rounded-full bg-gray-900 flex items-center justify-center text-white font-bold text-sm flex-shrink-0'; }
-            document.getElementById('sidebarUserName').textContent = displayName;
+            const dn = currentProfile?.display_name || currentUser.email?.split('@')[0] || 'User';
+            const init = dn.charAt(0).toUpperCase();
+            const pic = currentProfile?.profile_pic;
+            document.getElementById('userNameDisplay').textContent = dn;
+            const av = document.getElementById('userAvatar');
+            if (pic) av.innerHTML = `<img src="${pic}" class="w-12 h-12 rounded-full object-cover shadow-lg shadow-gray-900/20">`;
+            else av.textContent = init;
+            const sa = document.getElementById('sidebarAvatar');
+            if (pic) { sa.innerHTML = `<img src="${pic}" class="w-9 h-9 rounded-full object-cover">`; sa.className = 'w-9 h-9 rounded-full overflow-hidden flex-shrink-0'; }
+            else { sa.innerHTML = ''; sa.textContent = init; sa.className = 'w-9 h-9 rounded-full bg-gray-900 flex items-center justify-center text-white font-bold text-sm flex-shrink-0'; }
+            document.getElementById('sidebarUserName').textContent = dn;
             document.getElementById('sidebarUserEmail').textContent = currentProfile?.username ? '@' + currentProfile.username : currentUser.email || '';
         }
-
         function setupAuthForms() {
-            document.getElementById('showSignup').addEventListener('click', (e) => { e.preventDefault(); document.getElementById('loginForm').classList.add('hidden'); document.getElementById('signupForm').classList.remove('hidden'); });
-            document.getElementById('showLogin').addEventListener('click', (e) => { e.preventDefault(); document.getElementById('signupForm').classList.add('hidden'); document.getElementById('loginForm').classList.remove('hidden'); });
-
-            document.getElementById('loginForm').addEventListener('submit', async (e) => {
-                e.preventDefault();
-                const email = document.getElementById('loginEmail').value;
-                const password = document.getElementById('loginPassword').value;
-                const errorEl = document.getElementById('loginError');
-                errorEl.classList.add('hidden');
-                const { data, error } = await supabaseClient.auth.signInWithPassword({ email, password });
-                if (error) { errorEl.textContent = error.message; errorEl.classList.remove('hidden'); }
+            document.getElementById('showSignup').addEventListener('click', e => { e.preventDefault(); document.getElementById('loginForm').classList.add('hidden'); document.getElementById('signupForm').classList.remove('hidden'); });
+            document.getElementById('showLogin').addEventListener('click', e => { e.preventDefault(); document.getElementById('signupForm').classList.add('hidden'); document.getElementById('loginForm').classList.remove('hidden'); });
+            document.getElementById('loginForm').addEventListener('submit', async e => {
+                e.preventDefault(); const err = document.getElementById('loginError'); err.classList.add('hidden');
+                const { data, error } = await supabaseClient.auth.signInWithPassword({ email: document.getElementById('loginEmail').value, password: document.getElementById('loginPassword').value });
+                if (error) { err.textContent = error.message; err.classList.remove('hidden'); }
                 else { currentUser = data.user; await fetchCurrentProfile(); showToast('Welcome back!', 'success'); showDashboard(); }
             });
-
-            document.getElementById('signupForm').addEventListener('submit', async (e) => {
-                e.preventDefault();
-                const email = document.getElementById('signupEmail').value;
-                const password = document.getElementById('signupPassword').value;
-                const displayName = document.getElementById('signupName').value;
-                const username = document.getElementById('signupUsername').value;
-                const errorEl = document.getElementById('signupError');
-                const successEl = document.getElementById('signupSuccess');
-                errorEl.classList.add('hidden'); successEl.classList.add('hidden');
-                const { data, error } = await supabaseClient.auth.signUp({ email, password, options: { data: { display_name: displayName, username: username } } });
-                if (error) { errorEl.textContent = error.message; errorEl.classList.remove('hidden'); }
-                else if (data.user && !data.session) { successEl.textContent = 'Account created! Please check your email to verify, then sign in.'; successEl.classList.remove('hidden'); }
-                else if (data.session) { currentUser = data.user; await fetchCurrentProfile(); showToast('Account created successfully!', 'success'); showDashboard(); }
+            document.getElementById('signupForm').addEventListener('submit', async e => {
+                e.preventDefault(); const err = document.getElementById('signupError'); const suc = document.getElementById('signupSuccess'); err.classList.add('hidden'); suc.classList.add('hidden');
+                const { data, error } = await supabaseClient.auth.signUp({ email: document.getElementById('signupEmail').value, password: document.getElementById('signupPassword').value, options: { data: { display_name: document.getElementById('signupName').value, username: document.getElementById('signupUsername').value } } });
+                if (error) { err.textContent = error.message; err.classList.remove('hidden'); }
+                else if (data.user && !data.session) { suc.textContent = 'Account created! Check your email to verify, then sign in.'; suc.classList.remove('hidden'); }
+                else if (data.session) { currentUser = data.user; await fetchCurrentProfile(); showToast('Account created!', 'success'); showDashboard(); }
             });
-
-            document.getElementById('logoutBtn').addEventListener('click', async () => {
-                await supabaseClient.auth.signOut();
-                currentUser = null; currentProfile = null;
-                showToast('Signed out', 'success'); showAuth();
-            });
+            document.getElementById('logoutBtn').addEventListener('click', async () => { await supabaseClient.auth.signOut(); currentUser = null; currentProfile = null; showToast('Signed out', 'success'); showAuth(); });
         }
 
         // --- NAVIGATION ---
-        function setupNavigation() {
-            document.querySelectorAll('.nav-btn[data-page]').forEach(btn => { btn.addEventListener('click', () => navigateTo(btn.dataset.page)); });
-        }
-
+        function setupNavigation() { document.querySelectorAll('.nav-btn[data-page]').forEach(b => b.addEventListener('click', () => navigateTo(b.dataset.page))); }
         function navigateTo(page) {
-            document.querySelectorAll('.nav-btn[data-page]').forEach(btn => {
-                btn.classList.remove('active-nav'); btn.classList.add('text-gray-600');
-                if (btn.dataset.page === page) { btn.classList.add('active-nav'); btn.classList.remove('text-gray-600'); }
-            });
+            document.querySelectorAll('.nav-btn[data-page]').forEach(b => { b.classList.remove('active-nav'); b.classList.add('text-gray-600'); if (b.dataset.page === page) { b.classList.add('active-nav'); b.classList.remove('text-gray-600'); } });
             document.querySelectorAll('.section').forEach(s => s.classList.add('hidden'));
-            const section = document.getElementById(page + 'Section');
-            if (section) section.classList.remove('hidden');
+            const s = document.getElementById(page + 'Section'); if (s) s.classList.remove('hidden');
             if (window.innerWidth < 768) { document.getElementById('sidebar').classList.remove('open'); document.getElementById('sidebarOverlay').classList.remove('active'); }
             if (page === 'users') loadUsers();
             if (page === 'cars') loadCars();
             if (page === 'planes') loadPlanes();
+            if (page === 'dictionary') loadDictionary();
             lucide.createIcons();
         }
 
         // --- SIDEBAR ---
         function setupSidebar() {
-            const sidebar = document.getElementById('sidebar');
-            const overlay = document.getElementById('sidebarOverlay');
-            const mainContent = document.getElementById('mainContent');
-            document.getElementById('menuToggle').addEventListener('click', () => {
-                if (window.innerWidth < 768) { sidebar.classList.toggle('open'); overlay.classList.toggle('active'); }
-                else { sidebar.classList.toggle('closed'); mainContent.classList.toggle('expanded'); }
-            });
-            document.getElementById('closeSidebar').addEventListener('click', () => { sidebar.classList.remove('open'); overlay.classList.remove('active'); });
-            overlay.addEventListener('click', () => { sidebar.classList.remove('open'); overlay.classList.remove('active'); });
+            const sb = document.getElementById('sidebar'), ov = document.getElementById('sidebarOverlay'), mc = document.getElementById('mainContent');
+            document.getElementById('menuToggle').addEventListener('click', () => { if (window.innerWidth < 768) { sb.classList.toggle('open'); ov.classList.toggle('active'); } else { sb.classList.toggle('closed'); mc.classList.toggle('expanded'); } });
+            document.getElementById('closeSidebar').addEventListener('click', () => { sb.classList.remove('open'); ov.classList.remove('active'); });
+            ov.addEventListener('click', () => { sb.classList.remove('open'); ov.classList.remove('active'); });
         }
 
         // --- HOME ---
         function loadHomeData() {
             document.getElementById('statCars').textContent = carsData.length || '—';
             document.getElementById('statPlanes').textContent = planesData.length || '—';
-            const manufacturers = new Set([...carsData.map(c => c.manufacturer), ...planesData.map(p => p.manufacturer)]);
-            document.getElementById('statMfg').textContent = manufacturers.size || '—';
+            const mfgs = new Set([...carsData.map(c => c.manufacturer), ...planesData.map(p => p.manufacturer)]);
+            document.getElementById('statMfg').textContent = mfgs.size || '—';
             document.getElementById('statUsers').textContent = allProfiles.length || '—';
-            document.getElementById('featuredCarsGrid').innerHTML = carsData.slice(0, 3).map(car => createCarCard(car)).join('');
-            document.getElementById('featuredPlanesGrid').innerHTML = planesData.slice(0, 3).map(plane => createPlaneCard(plane)).join('');
+            document.getElementById('featuredCarsGrid').innerHTML = carsData.slice(0, 3).map(c => createCarCard(c)).join('');
+            document.getElementById('featuredPlanesGrid').innerHTML = planesData.slice(0, 3).map(p => createPlaneCard(p)).join('');
             lucide.createIcons();
         }
 
         // --- CAR CARDS ---
         function createCarCard(car) {
             const tc = { 'Sedan': 'bg-blue-50 text-blue-700', 'SUV': 'bg-amber-50 text-amber-700', 'Sports': 'bg-red-50 text-red-700', 'Truck': 'bg-green-50 text-green-700', 'Electric': 'bg-emerald-50 text-emerald-700', 'Coupe': 'bg-purple-50 text-purple-700' };
-            return `<div class="car-card glass rounded-2xl overflow-hidden" onclick="openCarModal(${car.id})">
-                <div class="relative overflow-hidden aspect-video bg-gray-100">
-                    <img src="${car.image}" alt="${car.name}" class="car-img w-full h-full object-cover" loading="lazy">
-                    <div class="absolute top-3 left-3"><span class="badge ${tc[car.type] || 'bg-gray-100 text-gray-700'}">${car.type}</span></div>
-                    <div class="absolute top-3 right-3"><span class="badge badge-dark">$${car.price.toLocaleString()}</span></div>
-                </div>
-                <div class="p-5">
-                    <p class="text-xs text-gray-400 font-medium uppercase tracking-wider mb-1">${car.manufacturer}</p>
-                    <h3 class="text-lg font-bold text-gray-900">${car.name} <span class="text-gray-400 font-normal">${car.model}</span></h3>
-                    <div class="flex items-center gap-4 mt-3 text-xs text-gray-400">
-                        <span class="flex items-center gap-1"><i data-lucide="gauge" style="width:13px;height:13px;"></i> ${car.horsepower} HP</span>
-                        <span class="flex items-center gap-1"><i data-lucide="zap" style="width:13px;height:13px;"></i> ${car.acceleration}</span>
-                        <span class="flex items-center gap-1"><i data-lucide="fuel" style="width:13px;height:13px;"></i> ${car.fuelType}</span>
-                    </div>
-                </div></div>`;
+            return `<div class="car-card glass rounded-2xl overflow-hidden" onclick="openCarModal(${car.id})"><div class="relative overflow-hidden aspect-video bg-gray-100"><img src="${car.image}" alt="${car.name}" class="car-img w-full h-full object-cover" loading="lazy"><div class="absolute top-3 left-3"><span class="badge ${tc[car.type] || 'bg-gray-100 text-gray-700'}">${car.type}</span></div><div class="absolute top-3 right-3"><span class="badge badge-dark">$${car.price.toLocaleString()}</span></div></div><div class="p-5"><p class="text-xs text-gray-400 font-medium uppercase tracking-wider mb-1">${car.manufacturer}</p><h3 class="text-lg font-bold text-gray-900">${car.name} <span class="text-gray-400 font-normal">${car.model}</span></h3><div class="flex items-center gap-4 mt-3 text-xs text-gray-400"><span class="flex items-center gap-1"><i data-lucide="gauge" style="width:13px;height:13px;"></i> ${car.horsepower} HP</span><span class="flex items-center gap-1"><i data-lucide="zap" style="width:13px;height:13px;"></i> ${car.acceleration}</span><span class="flex items-center gap-1"><i data-lucide="fuel" style="width:13px;height:13px;"></i> ${car.fuelType}</span></div></div></div>`;
         }
-
         function loadCars() {
-            const search = (document.getElementById('carSearch')?.value || '').toLowerCase();
-            const activeFilter = document.querySelector('#carFilters .filter-btn.active-filter')?.dataset.filter || 'all';
-            let filtered = carsData.filter(car => {
-                const ms = !search || car.name.toLowerCase().includes(search) || car.manufacturer.toLowerCase().includes(search) || car.model.toLowerCase().includes(search) || car.type.toLowerCase().includes(search);
-                const mf = activeFilter === 'all' || car.type === activeFilter;
-                return ms && mf;
-            });
-            const grid = document.getElementById('carsGrid');
-            const noMsg = document.getElementById('noCarsMsg');
-            if (filtered.length === 0) { grid.innerHTML = ''; noMsg.classList.remove('hidden'); }
-            else { noMsg.classList.add('hidden'); grid.innerHTML = filtered.map(car => createCarCard(car)).join(''); }
+            const s = (document.getElementById('carSearch')?.value || '').toLowerCase();
+            const f = document.querySelector('#carFilters .filter-btn.active-filter')?.dataset.filter || 'all';
+            let fl = carsData.filter(c => { const ms = !s || c.name.toLowerCase().includes(s) || c.manufacturer.toLowerCase().includes(s) || c.model.toLowerCase().includes(s) || c.type.toLowerCase().includes(s); const mf = f === 'all' || c.type === f; return ms && mf; });
+            const g = document.getElementById('carsGrid'), n = document.getElementById('noCarsMsg');
+            if (!fl.length) { g.innerHTML = ''; n.classList.remove('hidden'); } else { n.classList.add('hidden'); g.innerHTML = fl.map(c => createCarCard(c)).join(''); }
             lucide.createIcons();
         }
-
-        function setupCarFilters() {
-            document.querySelectorAll('#carFilters .filter-btn').forEach(btn => {
-                btn.addEventListener('click', () => {
-                    document.querySelectorAll('#carFilters .filter-btn').forEach(b => b.classList.remove('active-filter'));
-                    btn.classList.add('active-filter'); loadCars();
-                });
-            });
-        }
-
+        function setupCarFilters() { document.querySelectorAll('#carFilters .filter-btn').forEach(b => b.addEventListener('click', () => { document.querySelectorAll('#carFilters .filter-btn').forEach(x => x.classList.remove('active-filter')); b.classList.add('active-filter'); loadCars(); })); }
         function openCarModal(id) {
-            const car = carsData.find(c => c.id === id);
-            if (!car) return;
-            const fp = '$' + car.price.toLocaleString();
-            const df = new Date(car.dateOfManufacturing).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
-            document.getElementById('carModalContent').innerHTML = `
-                <div class="relative"><img src="${car.image}" alt="${car.name}" class="w-full h-64 md:h-80 object-cover">
-                <button onclick="closeCarModal()" class="absolute top-4 right-4 w-10 h-10 bg-white/90 backdrop-blur rounded-full flex items-center justify-center hover:bg-white transition shadow-lg"><i data-lucide="x" style="width:20px;height:20px;"></i></button>
-                <div class="absolute bottom-4 left-4 flex gap-2"><span class="badge badge-dark">${car.type}</span><span class="badge bg-white/90 text-gray-900">${fp}</span></div></div>
-                <div class="p-6 md:p-8">
-                    <p class="text-xs text-gray-400 font-medium uppercase tracking-wider mb-1">${car.manufacturer}</p>
-                    <h2 class="text-2xl md:text-3xl font-extrabold text-gray-900 mb-2">${car.name} <span class="text-gray-400 font-normal">${car.model}</span></h2>
-                    <p class="text-sm text-gray-400 mb-6">Manufactured: ${df}</p>
-                    <p class="text-gray-600 text-sm leading-relaxed mb-8">${car.details}</p>
-                    <h4 class="text-sm font-bold text-gray-900 uppercase tracking-wider mb-4">Specifications</h4>
-                    <div class="spec-grid mb-6">
-                        <div class="p-3 rounded-xl bg-gray-50 border border-gray-100"><p class="text-xs text-gray-400 mb-0.5">Engine</p><p class="text-sm font-semibold text-gray-800">${car.engine}</p></div>
-                        <div class="p-3 rounded-xl bg-gray-50 border border-gray-100"><p class="text-xs text-gray-400 mb-0.5">Horsepower</p><p class="text-sm font-semibold text-gray-800">${car.horsepower} HP</p></div>
-                        <div class="p-3 rounded-xl bg-gray-50 border border-gray-100"><p class="text-xs text-gray-400 mb-0.5">Top Speed</p><p class="text-sm font-semibold text-gray-800">${car.topSpeed}</p></div>
-                        <div class="p-3 rounded-xl bg-gray-50 border border-gray-100"><p class="text-xs text-gray-400 mb-0.5">0-60 mph</p><p class="text-sm font-semibold text-gray-800">${car.acceleration}</p></div>
-                        <div class="p-3 rounded-xl bg-gray-50 border border-gray-100"><p class="text-xs text-gray-400 mb-0.5">Transmission</p><p class="text-sm font-semibold text-gray-800">${car.transmission}</p></div>
-                        <div class="p-3 rounded-xl bg-gray-50 border border-gray-100"><p class="text-xs text-gray-400 mb-0.5">Drivetrain</p><p class="text-sm font-semibold text-gray-800">${car.drivetrain}</p></div>
-                        <div class="p-3 rounded-xl bg-gray-50 border border-gray-100"><p class="text-xs text-gray-400 mb-0.5">Fuel Type</p><p class="text-sm font-semibold text-gray-800">${car.fuelType}</p></div>
-                        <div class="p-3 rounded-xl bg-gray-50 border border-gray-100"><p class="text-xs text-gray-400 mb-0.5">Fuel Economy</p><p class="text-sm font-semibold text-gray-800">${car.mpg}</p></div>
-                    </div>
-                    <div class="flex items-center justify-between p-4 rounded-xl bg-gray-900 text-white">
-                        <div><p class="text-xs text-gray-400">Starting Price</p><p class="text-2xl font-extrabold">${fp}</p></div>
-                        <div class="text-right"><p class="text-xs text-gray-400">Type</p><p class="text-sm font-semibold">${car.type}</p></div>
-                    </div>
-                </div>`;
-            document.getElementById('carModal').classList.add('active');
-            document.body.style.overflow = 'hidden';
-            lucide.createIcons();
+            const c = carsData.find(x => x.id === id); if (!c) return;
+            const fp = '$' + c.price.toLocaleString(), df = new Date(c.dateOfManufacturing).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+            document.getElementById('carModalContent').innerHTML = `<div class="relative"><img src="${c.image}" alt="${c.name}" class="w-full h-64 md:h-80 object-cover"><button onclick="closeCarModal()" class="absolute top-4 right-4 w-10 h-10 bg-white/90 backdrop-blur rounded-full flex items-center justify-center hover:bg-white transition shadow-lg"><i data-lucide="x" style="width:20px;height:20px;"></i></button><div class="absolute bottom-4 left-4 flex gap-2"><span class="badge badge-dark">${c.type}</span><span class="badge bg-white/90 text-gray-900">${fp}</span></div></div><div class="p-6 md:p-8"><p class="text-xs text-gray-400 font-medium uppercase tracking-wider mb-1">${c.manufacturer}</p><h2 class="text-2xl md:text-3xl font-extrabold text-gray-900 mb-2">${c.name} <span class="text-gray-400 font-normal">${c.model}</span></h2><p class="text-sm text-gray-400 mb-6">Manufactured: ${df}</p><p class="text-gray-600 text-sm leading-relaxed mb-8">${c.details}</p><h4 class="text-sm font-bold text-gray-900 uppercase tracking-wider mb-4">Specifications</h4><div class="spec-grid mb-6"><div class="p-3 rounded-xl bg-gray-50 border border-gray-100"><p class="text-xs text-gray-400 mb-0.5">Engine</p><p class="text-sm font-semibold text-gray-800">${c.engine}</p></div><div class="p-3 rounded-xl bg-gray-50 border border-gray-100"><p class="text-xs text-gray-400 mb-0.5">Horsepower</p><p class="text-sm font-semibold text-gray-800">${c.horsepower} HP</p></div><div class="p-3 rounded-xl bg-gray-50 border border-gray-100"><p class="text-xs text-gray-400 mb-0.5">Top Speed</p><p class="text-sm font-semibold text-gray-800">${c.topSpeed}</p></div><div class="p-3 rounded-xl bg-gray-50 border border-gray-100"><p class="text-xs text-gray-400 mb-0.5">0-60 mph</p><p class="text-sm font-semibold text-gray-800">${c.acceleration}</p></div><div class="p-3 rounded-xl bg-gray-50 border border-gray-100"><p class="text-xs text-gray-400 mb-0.5">Transmission</p><p class="text-sm font-semibold text-gray-800">${c.transmission}</p></div><div class="p-3 rounded-xl bg-gray-50 border border-gray-100"><p class="text-xs text-gray-400 mb-0.5">Drivetrain</p><p class="text-sm font-semibold text-gray-800">${c.drivetrain}</p></div><div class="p-3 rounded-xl bg-gray-50 border border-gray-100"><p class="text-xs text-gray-400 mb-0.5">Fuel Type</p><p class="text-sm font-semibold text-gray-800">${c.fuelType}</p></div><div class="p-3 rounded-xl bg-gray-50 border border-gray-100"><p class="text-xs text-gray-400 mb-0.5">Fuel Economy</p><p class="text-sm font-semibold text-gray-800">${c.mpg}</p></div></div><div class="flex items-center justify-between p-4 rounded-xl bg-gray-900 text-white"><div><p class="text-xs text-gray-400">Starting Price</p><p class="text-2xl font-extrabold">${fp}</p></div><div class="text-right"><p class="text-xs text-gray-400">Type</p><p class="text-sm font-semibold">${c.type}</p></div></div></div>`;
+            document.getElementById('carModal').classList.add('active'); document.body.style.overflow = 'hidden'; lucide.createIcons();
         }
-
         function closeCarModal() { document.getElementById('carModal').classList.remove('active'); document.body.style.overflow = ''; }
 
         // --- PLANE CARDS ---
-        function createPlaneCard(plane) {
+        function createPlaneCard(p) {
             const tc = { 'Commercial': 'bg-blue-50 text-blue-700', 'Private': 'bg-purple-50 text-purple-700', 'Military': 'bg-red-50 text-red-700', 'Cargo': 'bg-amber-50 text-amber-700' };
-            return `<div class="plane-card glass rounded-2xl overflow-hidden" onclick="openPlaneModal(${plane.id})">
-                <div class="relative overflow-hidden aspect-video bg-gray-100">
-                    <img src="${plane.image}" alt="${plane.name}" class="plane-img w-full h-full object-cover" loading="lazy">
-                    <div class="absolute top-3 left-3"><span class="badge ${tc[plane.type] || 'bg-gray-100 text-gray-700'}">${plane.type}</span></div>
-                    <div class="absolute top-3 right-3"><span class="badge badge-dark">${plane.size}</span></div>
-                </div>
-                <div class="p-5">
-                    <p class="text-xs text-gray-400 font-medium uppercase tracking-wider mb-1">${plane.manufacturer}</p>
-                    <h3 class="text-lg font-bold text-gray-900">${plane.name}</h3>
-                    <div class="flex items-center gap-4 mt-3 text-xs text-gray-400">
-                        <span class="flex items-center gap-1"><i data-lucide="ruler" style="width:13px;height:13px;"></i> ${plane.length}</span>
-                        <span class="flex items-center gap-1"><i data-lucide="users" style="width:13px;height:13px;"></i> ${plane.capacity}</span>
-                        <span class="flex items-center gap-1"><i data-lucide="navigation" style="width:13px;height:13px;"></i> ${plane.range}</span>
-                    </div>
-                </div></div>`;
+            return `<div class="plane-card glass rounded-2xl overflow-hidden" onclick="openPlaneModal(${p.id})"><div class="relative overflow-hidden aspect-video bg-gray-100"><img src="${p.image}" alt="${p.name}" class="plane-img w-full h-full object-cover" loading="lazy"><div class="absolute top-3 left-3"><span class="badge ${tc[p.type] || 'bg-gray-100 text-gray-700'}">${p.type}</span></div><div class="absolute top-3 right-3"><span class="badge badge-dark">${p.size}</span></div></div><div class="p-5"><p class="text-xs text-gray-400 font-medium uppercase tracking-wider mb-1">${p.manufacturer}</p><h3 class="text-lg font-bold text-gray-900">${p.name}</h3><div class="flex items-center gap-4 mt-3 text-xs text-gray-400"><span class="flex items-center gap-1"><i data-lucide="ruler" style="width:13px;height:13px;"></i> ${p.length}</span><span class="flex items-center gap-1"><i data-lucide="users" style="width:13px;height:13px;"></i> ${p.capacity}</span><span class="flex items-center gap-1"><i data-lucide="navigation" style="width:13px;height:13px;"></i> ${p.range}</span></div></div></div>`;
         }
-
         function loadPlanes() {
-            const search = (document.getElementById('planeSearch')?.value || '').toLowerCase();
-            const activeFilter = document.querySelector('#planeFilters .filter-btn.active-filter')?.dataset.filter || 'all';
-            let filtered = planesData.filter(plane => {
-                const ms = !search || plane.name.toLowerCase().includes(search) || plane.manufacturer.toLowerCase().includes(search) || plane.type.toLowerCase().includes(search);
-                const mf = activeFilter === 'all' || plane.type === activeFilter;
-                return ms && mf;
-            });
-            const grid = document.getElementById('planesGrid');
-            const noMsg = document.getElementById('noPlanesMsg');
-            if (filtered.length === 0) { grid.innerHTML = ''; noMsg.classList.remove('hidden'); }
-            else { noMsg.classList.add('hidden'); grid.innerHTML = filtered.map(plane => createPlaneCard(plane)).join(''); }
+            const s = (document.getElementById('planeSearch')?.value || '').toLowerCase();
+            const f = document.querySelector('#planeFilters .filter-btn.active-filter')?.dataset.filter || 'all';
+            let fl = planesData.filter(p => { const ms = !s || p.name.toLowerCase().includes(s) || p.manufacturer.toLowerCase().includes(s) || p.type.toLowerCase().includes(s); const mf = f === 'all' || p.type === f; return ms && mf; });
+            const g = document.getElementById('planesGrid'), n = document.getElementById('noPlanesMsg');
+            if (!fl.length) { g.innerHTML = ''; n.classList.remove('hidden'); } else { n.classList.add('hidden'); g.innerHTML = fl.map(p => createPlaneCard(p)).join(''); }
             lucide.createIcons();
         }
-
-        function setupPlaneFilters() {
-            document.querySelectorAll('#planeFilters .filter-btn').forEach(btn => {
-                btn.addEventListener('click', () => {
-                    document.querySelectorAll('#planeFilters .filter-btn').forEach(b => b.classList.remove('active-filter'));
-                    btn.classList.add('active-filter'); loadPlanes();
-                });
-            });
-        }
-
+        function setupPlaneFilters() { document.querySelectorAll('#planeFilters .filter-btn').forEach(b => b.addEventListener('click', () => { document.querySelectorAll('#planeFilters .filter-btn').forEach(x => x.classList.remove('active-filter')); b.classList.add('active-filter'); loadPlanes(); })); }
         function openPlaneModal(id) {
-            const plane = planesData.find(p => p.id === id);
-            if (!plane) return;
-            const df = new Date(plane.firstFlight).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
-            document.getElementById('planeModalContent').innerHTML = `
-                <div class="relative"><img src="${plane.image}" alt="${plane.name}" class="w-full h-64 md:h-80 object-cover">
-                <button onclick="closePlaneModal()" class="absolute top-4 right-4 w-10 h-10 bg-white/90 backdrop-blur rounded-full flex items-center justify-center hover:bg-white transition shadow-lg"><i data-lucide="x" style="width:20px;height:20px;"></i></button>
-                <div class="absolute bottom-4 left-4 flex gap-2"><span class="badge badge-dark">${plane.type}</span><span class="badge bg-white/90 text-gray-900">${plane.size}</span></div></div>
-                <div class="p-6 md:p-8">
-                    <p class="text-xs text-gray-400 font-medium uppercase tracking-wider mb-1">${plane.manufacturer}</p>
-                    <h2 class="text-2xl md:text-3xl font-extrabold text-gray-900 mb-2">${plane.name}</h2>
-                    <p class="text-sm text-gray-400 mb-6">First Flight: ${df}</p>
-                    <p class="text-gray-600 text-sm leading-relaxed mb-8">${plane.details}</p>
-                    <h4 class="text-sm font-bold text-gray-900 uppercase tracking-wider mb-4">Specifications</h4>
-                    <div class="spec-grid mb-6">
-                        <div class="p-3 rounded-xl bg-gray-50 border border-gray-100"><p class="text-xs text-gray-400 mb-0.5">Wingspan</p><p class="text-sm font-semibold text-gray-800">${plane.wingspan}</p></div>
-                        <div class="p-3 rounded-xl bg-gray-50 border border-gray-100"><p class="text-xs text-gray-400 mb-0.5">Length</p><p class="text-sm font-semibold text-gray-800">${plane.length}</p></div>
-                        <div class="p-3 rounded-xl bg-gray-50 border border-gray-100"><p class="text-xs text-gray-400 mb-0.5">Height</p><p class="text-sm font-semibold text-gray-800">${plane.height}</p></div>
-                        <div class="p-3 rounded-xl bg-gray-50 border border-gray-100"><p class="text-xs text-gray-400 mb-0.5">Max Speed</p><p class="text-sm font-semibold text-gray-800">${plane.maxSpeed}</p></div>
-                        <div class="p-3 rounded-xl bg-gray-50 border border-gray-100"><p class="text-xs text-gray-400 mb-0.5">Range</p><p class="text-sm font-semibold text-gray-800">${plane.range}</p></div>
-                        <div class="p-3 rounded-xl bg-gray-50 border border-gray-100"><p class="text-xs text-gray-400 mb-0.5">Capacity</p><p class="text-sm font-semibold text-gray-800">${plane.capacity}</p></div>
-                        <div class="p-3 rounded-xl bg-gray-50 border border-gray-100"><p class="text-xs text-gray-400 mb-0.5">Engines</p><p class="text-sm font-semibold text-gray-800">${plane.engineCount}x ${plane.engineType}</p></div>
-                        <div class="p-3 rounded-xl bg-gray-50 border border-gray-100"><p class="text-xs text-gray-400 mb-0.5">Max Takeoff Weight</p><p class="text-sm font-semibold text-gray-800">${plane.weight}</p></div>
-                    </div>
-                    <div class="flex items-center justify-between p-4 rounded-xl bg-gray-900 text-white">
-                        <div><p class="text-xs text-gray-400">Classification</p><p class="text-lg font-extrabold">${plane.type}</p></div>
-                        <div class="text-right"><p class="text-xs text-gray-400">Size Category</p><p class="text-sm font-semibold">${plane.size}</p></div>
-                    </div>
-                </div>`;
-            document.getElementById('planeModal').classList.add('active');
-            document.body.style.overflow = 'hidden';
-            lucide.createIcons();
+            const p = planesData.find(x => x.id === id); if (!p) return;
+            const df = new Date(p.firstFlight).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+            document.getElementById('planeModalContent').innerHTML = `<div class="relative"><img src="${p.image}" alt="${p.name}" class="w-full h-64 md:h-80 object-cover"><button onclick="closePlaneModal()" class="absolute top-4 right-4 w-10 h-10 bg-white/90 backdrop-blur rounded-full flex items-center justify-center hover:bg-white transition shadow-lg"><i data-lucide="x" style="width:20px;height:20px;"></i></button><div class="absolute bottom-4 left-4 flex gap-2"><span class="badge badge-dark">${p.type}</span><span class="badge bg-white/90 text-gray-900">${p.size}</span></div></div><div class="p-6 md:p-8"><p class="text-xs text-gray-400 font-medium uppercase tracking-wider mb-1">${p.manufacturer}</p><h2 class="text-2xl md:text-3xl font-extrabold text-gray-900 mb-2">${p.name}</h2><p class="text-sm text-gray-400 mb-6">First Flight: ${df}</p><p class="text-gray-600 text-sm leading-relaxed mb-8">${p.details}</p><h4 class="text-sm font-bold text-gray-900 uppercase tracking-wider mb-4">Specifications</h4><div class="spec-grid mb-6"><div class="p-3 rounded-xl bg-gray-50 border border-gray-100"><p class="text-xs text-gray-400 mb-0.5">Wingspan</p><p class="text-sm font-semibold text-gray-800">${p.wingspan}</p></div><div class="p-3 rounded-xl bg-gray-50 border border-gray-100"><p class="text-xs text-gray-400 mb-0.5">Length</p><p class="text-sm font-semibold text-gray-800">${p.length}</p></div><div class="p-3 rounded-xl bg-gray-50 border border-gray-100"><p class="text-xs text-gray-400 mb-0.5">Height</p><p class="text-sm font-semibold text-gray-800">${p.height}</p></div><div class="p-3 rounded-xl bg-gray-50 border border-gray-100"><p class="text-xs text-gray-400 mb-0.5">Max Speed</p><p class="text-sm font-semibold text-gray-800">${p.maxSpeed}</p></div><div class="p-3 rounded-xl bg-gray-50 border border-gray-100"><p class="text-xs text-gray-400 mb-0.5">Range</p><p class="text-sm font-semibold text-gray-800">${p.range}</p></div><div class="p-3 rounded-xl bg-gray-50 border border-gray-100"><p class="text-xs text-gray-400 mb-0.5">Capacity</p><p class="text-sm font-semibold text-gray-800">${p.capacity}</p></div><div class="p-3 rounded-xl bg-gray-50 border border-gray-100"><p class="text-xs text-gray-400 mb-0.5">Engines</p><p class="text-sm font-semibold text-gray-800">${p.engineCount}x ${p.engineType}</p></div><div class="p-3 rounded-xl bg-gray-50 border border-gray-100"><p class="text-xs text-gray-400 mb-0.5">Max Takeoff Weight</p><p class="text-sm font-semibold text-gray-800">${p.weight}</p></div></div><div class="flex items-center justify-between p-4 rounded-xl bg-gray-900 text-white"><div><p class="text-xs text-gray-400">Classification</p><p class="text-lg font-extrabold">${p.type}</p></div><div class="text-right"><p class="text-xs text-gray-400">Size Category</p><p class="text-sm font-semibold">${p.size}</p></div></div></div>`;
+            document.getElementById('planeModal').classList.add('active'); document.body.style.overflow = 'hidden'; lucide.createIcons();
         }
-
         function closePlaneModal() { document.getElementById('planeModal').classList.remove('active'); document.body.style.overflow = ''; }
 
         // --- MODALS ---
         function setupModals() {
-            document.getElementById('carModal').addEventListener('click', (e) => { if (e.target === document.getElementById('carModal')) closeCarModal(); });
-            document.getElementById('planeModal').addEventListener('click', (e) => { if (e.target === document.getElementById('planeModal')) closePlaneModal(); });
-            document.addEventListener('keydown', (e) => { if (e.key === 'Escape') { closeCarModal(); closePlaneModal(); } });
+            document.getElementById('carModal').addEventListener('click', e => { if (e.target === document.getElementById('carModal')) closeCarModal(); });
+            document.getElementById('planeModal').addEventListener('click', e => { if (e.target === document.getElementById('planeModal')) closePlaneModal(); });
+            document.addEventListener('keydown', e => { if (e.key === 'Escape') { closeCarModal(); closePlaneModal(); } });
         }
 
         // --- SEARCH ---
@@ -1144,64 +1122,123 @@
             document.getElementById('carSearch')?.addEventListener('input', loadCars);
             document.getElementById('planeSearch')?.addEventListener('input', loadPlanes);
             document.getElementById('userSearch')?.addEventListener('input', renderUsers);
+            document.getElementById('dictSearch')?.addEventListener('input', renderDictionary);
         }
 
-        // --- USERS (from profiles table — only safe fields) ---
+        // --- DICTIONARY ---
+        function setupDictFilters() {
+            document.querySelectorAll('#dictFilters .filter-btn').forEach(b => {
+                b.addEventListener('click', () => {
+                    document.querySelectorAll('#dictFilters .filter-btn').forEach(x => x.classList.remove('active-filter'));
+                    b.classList.add('active-filter');
+                    // Clear active letter when switching category
+                    document.querySelectorAll('#dictLetterNav button').forEach(x => x.classList.remove('active-letter'));
+                    renderDictionary();
+                });
+            });
+        }
+
+        function loadDictionary() {
+            document.getElementById('dictLoading').classList.add('hidden');
+            document.getElementById('dictCount').textContent = glossaryData.length;
+            buildLetterNav();
+            renderDictionary();
+        }
+
+        function buildLetterNav() {
+            const letters = new Set(glossaryData.map(t => t.term.charAt(0).toUpperCase()));
+            const nav = document.getElementById('dictLetterNav');
+            const allLetters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
+            nav.innerHTML = allLetters.map(l => {
+                const hasTerms = letters.has(l);
+                return `<button ${hasTerms ? '' : 'disabled'} data-letter="${l}" onclick="filterByLetter('${l}')">${l}</button>`;
+            }).join('');
+        }
+
+        function filterByLetter(letter) {
+            document.querySelectorAll('#dictLetterNav button').forEach(b => b.classList.remove('active-letter'));
+            const btn = document.querySelector(`#dictLetterNav button[data-letter="${letter}"]`);
+            if (btn) btn.classList.add('active-letter');
+            // Clear category filter to "all"
+            document.querySelectorAll('#dictFilters .filter-btn').forEach(b => b.classList.remove('active-filter'));
+            document.querySelector('#dictFilters .filter-btn[data-filter="all"]').classList.add('active-filter');
+            // Clear search
+            document.getElementById('dictSearch').value = '';
+            renderDictionary(letter);
+        }
+
+        function renderDictionary(letterFilter) {
+            const search = (document.getElementById('dictSearch')?.value || '').toLowerCase();
+            const activeFilter = document.querySelector('#dictFilters .filter-btn.active-filter')?.dataset.filter || 'all';
+
+            let filtered = glossaryData.filter(t => {
+                const matchSearch = !search || t.term.toLowerCase().includes(search) || t.definition.toLowerCase().includes(search) || t.example.toLowerCase().includes(search);
+                const matchCat = activeFilter === 'all' || t.category === activeFilter;
+                const matchLetter = !letterFilter || t.term.charAt(0).toUpperCase() === letterFilter;
+                return matchSearch && matchCat && matchLetter;
+            });
+
+            const grid = document.getElementById('dictGrid');
+            const noMsg = document.getElementById('noDictMsg');
+
+            if (!filtered.length) { grid.innerHTML = ''; noMsg.classList.remove('hidden'); return; }
+            noMsg.classList.add('hidden');
+
+            grid.innerHTML = filtered.map(t => {
+                const catClass = 'cat-' + t.category.replace(/\s+/g, '-');
+                const badgeClass = 'cat-badge-' + t.category.replace(/\s+/g, '-');
+                const def = search ? highlightText(t.definition, search) : t.definition;
+                const ex = search ? highlightText(t.example, search) : t.example;
+
+                return `<div class="dict-card glass rounded-xl p-5 ${catClass}">
+                    <div class="flex items-center gap-3 mb-3">
+                        <h3 class="text-lg font-extrabold text-gray-900">${search ? highlightText(t.term, search) : t.term}</h3>
+                        <span class="badge ${badgeClass}">${t.category}</span>
+                    </div>
+                    <p class="text-sm text-gray-600 leading-relaxed mb-3">${def}</p>
+                    <div class="flex items-start gap-2 pl-0.5">
+                        <i data-lucide="quote" style="width:14px;height:14px;color:#d1d5db;margin-top:3px;flex-shrink:0;"></i>
+                        <p class="text-sm text-gray-400 italic leading-relaxed">${ex}</p>
+                    </div>
+                </div>`;
+            }).join('');
+
+            lucide.createIcons();
+        }
+
+        function highlightText(text, query) {
+            if (!query) return text;
+            const regex = new RegExp(`(${query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'gi');
+            return text.replace(regex, '<span class="highlight">$1</span>');
+        }
+
+        // --- USERS ---
         async function loadUsers() {
-            const loadingEl = document.getElementById('usersLoading');
-            const gridEl = document.getElementById('usersGrid');
-            const noMsgEl = document.getElementById('noUsersMsg');
-            const errorMsgEl = document.getElementById('usersErrorMsg');
-            loadingEl.classList.remove('hidden'); gridEl.classList.add('hidden'); noMsgEl.classList.add('hidden'); errorMsgEl.classList.add('hidden');
+            const l = document.getElementById('usersLoading'), g = document.getElementById('usersGrid'), n = document.getElementById('noUsersMsg'), e = document.getElementById('usersErrorMsg');
+            l.classList.remove('hidden'); g.classList.add('hidden'); n.classList.add('hidden'); e.classList.add('hidden');
             try {
                 const { data, error } = await supabaseClient.from('profiles').select('id, username, display_name, profile_pic, bio, created_at').order('created_at', { ascending: false });
-                loadingEl.classList.add('hidden');
-                if (error) throw error;
-                allProfiles = data || [];
-                document.getElementById('statUsers').textContent = allProfiles.length;
-                renderUsers();
-            } catch (err) {
-                console.error('Failed to load profiles:', err);
-                loadingEl.classList.add('hidden'); errorMsgEl.classList.remove('hidden');
-            }
+                l.classList.add('hidden'); if (error) throw error;
+                allProfiles = data || []; document.getElementById('statUsers').textContent = allProfiles.length; renderUsers();
+            } catch (err) { console.error(err); l.classList.add('hidden'); e.classList.remove('hidden'); }
         }
-
         function renderUsers() {
-            const search = (document.getElementById('userSearch')?.value || '').toLowerCase();
-            const gridEl = document.getElementById('usersGrid');
-            const noMsgEl = document.getElementById('noUsersMsg');
-            let filtered = allProfiles.filter(p => {
-                if (!search) return true;
-                return (p.username || '').toLowerCase().includes(search) || (p.display_name || '').toLowerCase().includes(search);
-            });
-            if (filtered.length === 0) { gridEl.classList.add('hidden'); noMsgEl.classList.remove('hidden'); return; }
-            noMsgEl.classList.add('hidden'); gridEl.classList.remove('hidden');
-            gridEl.innerHTML = filtered.map(profile => {
-                const dn = profile.display_name || 'No display name';
-                const un = profile.username ? '@' + profile.username : '';
-                const bio = profile.bio || 'No bio yet';
-                const isMe = currentUser && profile.id === currentUser.id;
-                const init = dn.charAt(0).toUpperCase();
-                let avHtml;
-                if (profile.profile_pic) { avHtml = `<div class="user-avatar-ring flex-shrink-0"><img src="${profile.profile_pic}" alt="${dn}" class="w-14 h-14 object-cover"></div>`; }
-                else { avHtml = `<div class="user-avatar-ring flex-shrink-0"><div class="avatar-fallback w-14 h-14 text-lg">${init}</div></div>`; }
-                return `<div class="user-card glass rounded-2xl p-6">
-                    <div class="flex items-start gap-4 mb-4">${avHtml}
-                        <div class="flex-1 min-w-0"><div class="flex items-center gap-2"><h3 class="text-base font-bold text-gray-900 truncate">${dn}</h3>${isMe ? '<span class="badge badge-dark flex-shrink-0">You</span>' : ''}</div><p class="text-sm text-gray-400 truncate">${un}</p></div>
-                    </div>
-                    <p class="text-sm text-gray-500 leading-relaxed" style="display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;">${bio}</p>
-                </div>`;
+            const s = (document.getElementById('userSearch')?.value || '').toLowerCase();
+            const g = document.getElementById('usersGrid'), n = document.getElementById('noUsersMsg');
+            let fl = allProfiles.filter(p => { if (!s) return true; return (p.username || '').toLowerCase().includes(s) || (p.display_name || '').toLowerCase().includes(s); });
+            if (!fl.length) { g.classList.add('hidden'); n.classList.remove('hidden'); return; }
+            n.classList.add('hidden'); g.classList.remove('hidden');
+            g.innerHTML = fl.map(p => {
+                const dn = p.display_name || 'No display name', un = p.username ? '@' + p.username : '', bio = p.bio || 'No bio yet', isMe = currentUser && p.id === currentUser.id, init = dn.charAt(0).toUpperCase();
+                let av; if (p.profile_pic) av = `<div class="user-avatar-ring flex-shrink-0"><img src="${p.profile_pic}" alt="${dn}" class="w-14 h-14 object-cover"></div>`;
+                else av = `<div class="user-avatar-ring flex-shrink-0"><div class="avatar-fallback w-14 h-14 text-lg">${init}</div></div>`;
+                return `<div class="user-card glass rounded-2xl p-6"><div class="flex items-start gap-4 mb-4">${av}<div class="flex-1 min-w-0"><div class="flex items-center gap-2"><h3 class="text-base font-bold text-gray-900 truncate">${dn}</h3>${isMe ? '<span class="badge badge-dark flex-shrink-0">You</span>' : ''}</div><p class="text-sm text-gray-400 truncate">${un}</p></div></div><p class="text-sm text-gray-500 leading-relaxed" style="display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;">${bio}</p></div>`;
             }).join('');
             lucide.createIcons();
         }
 
         // --- TOAST ---
-        function showToast(message, type = 'success') {
-            const toast = document.getElementById('toast');
-            toast.textContent = message;
-            toast.className = `toast toast-${type} show`;
-            setTimeout(() => { toast.classList.remove('show'); }, 3000);
-        }
+        function showToast(msg, type = 'success') { const t = document.getElementById('toast'); t.textContent = msg; t.className = `toast toast-${type} show`; setTimeout(() => t.classList.remove('show'), 3000); }
     </script>
 </body>
 
