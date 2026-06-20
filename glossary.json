@@ -1,0 +1,282 @@
+[
+    {
+        "id": 1,
+        "term": "Horsepower",
+        "category": "Engine",
+        "definition": "A unit of measurement for engine power, representing the amount of work required to lift 550 pounds one foot in one second. It determines how fast a vehicle can ultimately go.",
+        "example": "The new Corvette produces 670 horsepower, allowing it to reach 60 mph in under three seconds."
+    },
+    {
+        "id": 2,
+        "term": "Torque",
+        "category": "Engine",
+        "definition": "A measure of rotational force produced by the engine, typically expressed in pound-feet (lb-ft) or Newton-meters (Nm). It determines how quickly a vehicle accelerates and how heavy a load it can pull.",
+        "example": "Diesel trucks produce massive torque at low RPM, which is why they're used for towing heavy trailers."
+    },
+    {
+        "id": 3,
+        "term": "Turbocharger",
+        "category": "Engine",
+        "definition": "A device that uses exhaust gases to spin a turbine, which forces compressed air into the engine's cylinders. This allows a smaller engine to produce significantly more power without increasing its physical size.",
+        "example": "The BMW 3 Series uses a turbocharged 2.0-liter engine that makes more power than older naturally aspirated 3.0-liter engines."
+    },
+    {
+        "id": 4,
+        "term": "Supercharger",
+        "category": "Engine",
+        "definition": "A forced-induction system driven mechanically by the engine's crankshaft via a belt. Unlike a turbocharger, it provides instant boost pressure with no lag since it doesn't rely on exhaust gases.",
+        "example": "The Dodge Hellcat's supercharger produces a distinctive whine under hard acceleration, pushing 14 psi of boost into its 6.2-liter V8."
+    },
+    {
+        "id": 5,
+        "term": "Displacement",
+        "category": "Engine",
+        "definition": "The total volume swept by all the pistons inside an engine's cylinders, measured in liters or cubic centimeters (cc). Larger displacement generally means more power and torque, though efficiency varies with design.",
+        "example": "The classic American muscle car had a 7.0-liter displacement, making it one of the largest production V8s ever built."
+    },
+    {
+        "id": 6,
+        "term": "Compression Ratio",
+        "category": "Engine",
+        "definition": "The ratio of the maximum to minimum volume in a cylinder during one complete engine cycle. Higher compression ratios generally improve thermal efficiency and power output but require higher-octane fuel to prevent detonation.",
+        "example": "Modern performance engines often have compression ratios above 10:1, which is why they require premium fuel."
+    },
+    {
+        "id": 7,
+        "term": "Redline",
+        "category": "Engine",
+        "definition": "The maximum safe rotational speed of an engine, measured in RPM, beyond which mechanical failure may occur. It is marked by a red line on the tachometer.",
+        "example": "The Honda S2000 had an 8,900 RPM redline, one of the highest ever for a production car, making it thrilling to drive."
+    },
+    {
+        "id": 8,
+        "term": "RPM (Revolutions Per Minute)",
+        "category": "Engine",
+        "definition": "The number of complete rotations an engine's crankshaft makes in one minute. It indicates how hard the engine is working — idle is typically around 600-900 RPM, while maximum power is produced near the redline.",
+        "example": "The tachometer showed 6,500 RPM as he shifted into third gear, right in the heart of the power band."
+    },
+    {
+        "id": 9,
+        "term": "VTEC",
+        "category": "Engine",
+        "definition": "Variable Valve Timing and Lift Electronic Control — Honda's system that switches between two different camshaft profiles at a set RPM. At low RPM it uses a mild profile for efficiency; at high RPM it engages an aggressive profile for maximum power.",
+        "example": "When VTEC kicked in at 5,200 RPM, the Integra's exhaust note changed dramatically and the car surged forward."
+    },
+    {
+        "id": 10,
+        "term": "Direct Injection",
+        "category": "Engine",
+        "definition": "A fuel delivery system that sprays fuel directly into the combustion chamber at extremely high pressure, rather than into the intake port. This improves fuel atomization, combustion efficiency, and power output while reducing emissions.",
+        "example": "Direct injection allows the EcoBoost engine to produce the power of a larger naturally aspirated motor while maintaining excellent fuel economy."
+    },
+    {
+        "id": 11,
+        "term": "Turbo Lag",
+        "category": "Engine",
+        "definition": "A brief delay between pressing the accelerator and feeling the turbocharger's boost pressure. It occurs because the exhaust gases need time to spin the turbine up to operating speed from low RPM.",
+        "example": "Early 1990s turbo cars suffered from noticeable turbo lag, making them feel sluggish off the line before the boost suddenly hit."
+    },
+    {
+        "id": 12,
+        "term": "Intercooler",
+        "category": "Engine",
+        "definition": "A heat exchanger that cools the compressed air coming from a turbocharger or supercharger before it enters the engine. Cooler, denser air contains more oxygen, which allows for more fuel to be burned and more power to be produced.",
+        "example": "The front-mounted intercooler on the Subaru WRX is visible through the grille and is essential for maintaining consistent power on hot days."
+    },
+    {
+        "id": 13,
+        "term": "Blow-Off Valve",
+        "category": "Engine",
+        "definition": "A pressure-release valve in a turbocharged engine's intake system. When the throttle closes, it vents the pressurized air to prevent it from traveling backward and damaging the turbocharger's compressor wheel.",
+        "example": "The aftermarket blow-off valve produces a loud whoosh sound between gear shifts that enthusiasts love."
+    },
+    {
+        "id": 14,
+        "term": "Catalytic Converter",
+        "category": "Engine",
+        "definition": "An emissions control device in the exhaust system that uses a catalyst (typically platinum, palladium, and rhodium) to convert harmful gases like carbon monoxide, nitrogen oxides, and unburned hydrocarbons into less harmful carbon dioxide, nitrogen, and water vapor.",
+        "example": "Removing the catalytic converter is illegal in many areas because it drastically increases the vehicle's toxic exhaust emissions."
+    },
+    {
+        "id": 15,
+        "term": "All-Wheel Drive (AWD)",
+        "category": "Drivetrain",
+        "definition": "A drivetrain system that can send power to all four wheels simultaneously. Unlike traditional 4WD, AWD systems are typically always active and automatically vary the power distribution between front and rear axles based on traction conditions without driver input.",
+        "example": "The Audi Quattro AWD system gave their rally cars a massive advantage on loose gravel surfaces, winning multiple championships."
+    },
+    {
+        "id": 16,
+        "term": "Four-Wheel Drive (4WD)",
+        "category": "Drivetrain",
+        "definition": "A drivetrain system designed primarily for off-road use that locks all four wheels together, typically via a transfer case with low-range gearing. Unlike AWD, it is usually manually engaged by the driver and not intended for use on dry pavement.",
+        "example": "He shifted the Wrangler into 4WD Low to crawl over the boulder-strewn trail at a walking pace."
+    },
+    {
+        "id": 17,
+        "term": "Differential",
+        "category": "Drivetrain",
+        "definition": "A mechanical device that allows the driven wheels to rotate at different speeds while receiving power from the engine. This is essential during cornering, as the outside wheel travels a longer path than the inside wheel.",
+        "example": "A welded or 'locked' differential makes turning difficult on pavement but provides maximum traction in off-road and drag racing scenarios."
+    },
+    {
+        "id": 18,
+        "term": "Limited-Slip Differential (LSD)",
+        "category": "Drivetrain",
+        "definition": "A type of differential that reduces wheel slip by transferring torque to the wheel with more grip when the opposite wheel begins to spin. It provides a compromise between an open differential's smooth turning and a locked differential's maximum traction.",
+        "example": "The Miata's limited-slip differential helps it power out of corners without spinning the inside rear wheel."
+    },
+    {
+        "id": 19,
+        "term": "Torque Steer",
+        "category": "Drivetrain",
+        "definition": "An unwanted steering pull to one side that occurs in high-power front-wheel-drive cars during hard acceleration. It happens because uneven axle lengths and flexing engine mounts cause different amounts of torque to reach each front wheel.",
+        "example": "The 300-horsepower front-wheel-drive hot hatch suffered from severe torque steer, yanking the steering wheel under full throttle."
+    },
+    {
+        "id": 20,
+        "term": "Oversteer",
+        "category": "Handling",
+        "definition": "A handling condition where the rear tires lose traction before the front tires, causing the car's rear end to slide outward during a turn. It is the characteristic behavior of rear-wheel-drive sports cars and is the basis of the 'drifting' driving technique.",
+        "example": "The Porsche 911's rear-engine layout makes it prone to oversteer if you lift off the throttle mid-corner, a behavior enthusiasts call 'lift-off oversteer.'"
+    },
+    {
+        "id": 21,
+        "term": "Understeer",
+        "category": "Handling",
+        "definition": "A handling condition where the front tires lose traction before the rear tires, causing the car to continue straight ahead even though the steering wheel is turned. It is the most common handling characteristic in front-wheel-drive cars and is generally considered safer and more predictable than oversteer.",
+        "example": "The family SUV exhibited heavy understeer when entering the corner too fast, plowing straight ahead despite the driver turning the wheel."
+    },
+    {
+        "id": 22,
+        "term": "Chassis",
+        "category": "Handling",
+        "definition": "The underlying framework of a vehicle, including the frame, floor pan, and structural components that hold the body, engine, suspension, and drivetrain together. A stiff chassis is critical for precise handling and ride quality.",
+        "example": "The Lotus Elise uses an extruded aluminum chassis that is incredibly lightweight and rigid, giving it razor-sharp handling."
+    },
+    {
+        "id": 23,
+        "term": "Suspension",
+        "category": "Handling",
+        "definition": "The system of springs, shock absorbers, linkages, and other components that connect a vehicle's wheels to its chassis. It absorbs road imperfections, maintains tire contact with the road surface, and controls the vehicle's ride height and body movement.",
+        "example": "The track-focused suspension on the Civic Type R is so firm that it transmits every road detail directly to the driver."
+    },
+    {
+        "id": 24,
+        "term": "MacPherson Strut",
+        "category": "Handling",
+        "definition": "A common suspension design that uses a single shock absorber and coil spring unit as the main structural member. It is compact, lightweight, and cost-effective, making it the most widely used front suspension design in everyday cars.",
+        "example": "Most economy cars use MacPherson struts up front because they're cheap to manufacture and leave more room for the engine bay."
+    },
+    {
+        "id": 25,
+        "term": "Double Wishbone",
+        "category": "Handling",
+        "definition": "A superior suspension design that uses two A-shaped control arms (upper and lower wishbones) to locate the wheel. It allows independent control of camber, caster, and toe angles, providing more consistent tire contact and better handling than simpler strut designs.",
+        "example": "High-end sports cars like the Ferrari 458 use double wishbone suspension at all four corners for maximum grip and precision."
+    },
+    {
+        "id": 26,
+        "term": "Downforce",
+        "category": "Aerodynamics",
+        "definition": "Aerodynamic pressure that pushes a vehicle downward toward the road surface, generated by wings, spoilers, and body shaping. Unlike simple spoilers that reduce lift, downforce-generating devices actively push the car down, increasing tire grip at high speeds.",
+        "example": "An F1 car generates enough downforce at 150 mph that it could theoretically drive upside down on a tunnel ceiling."
+    },
+    {
+        "id": 27,
+        "term": "Drag Coefficient (Cd)",
+        "category": "Aerodynamics",
+        "definition": "A numerical value representing a vehicle's aerodynamic resistance as it moves through air. Lower drag coefficients mean less wind resistance, which improves fuel efficiency and top speed. Typical passenger cars range from 0.25 to 0.35.",
+        "example": "The Mercedes-Benz EQS has a drag coefficient of just 0.20, making it one of the most aerodynamic production cars ever built."
+    },
+    {
+        "id": 28,
+        "term": "Spoiler",
+        "category": "Aerodynamics",
+        "definition": "An aerodynamic device mounted on a vehicle's body, typically on the rear deck or trunk, that disrupts or 'spoils' unfavorable air movement across the body. It reduces lift at the rear wheels to improve high-speed stability, but most cosmetic spoilers on street cars provide little real benefit.",
+        "example": "The large rear spoiler on the WRX STI isn't just for looks — it generates real downforce that keeps the rear end planted above 100 mph."
+    },
+    {
+        "id": 29,
+        "term": "Anti-lock Braking System (ABS)",
+        "category": "Brakes & Safety",
+        "definition": "A safety system that prevents the wheels from locking up during hard braking by rapidly pulsing the brake pressure. This allows the driver to maintain steering control while braking at maximum effort, significantly reducing stopping distances on slippery surfaces.",
+        "example": "Thanks to ABS, she was able to brake hard and swerve around the deer that jumped onto the highway without losing control."
+    },
+    {
+        "id": 30,
+        "term": "Electronic Stability Control (ESC)",
+        "category": "Brakes & Safety",
+        "definition": "A computerized safety system that automatically detects and reduces loss of traction by applying individual brakes and reducing engine power. It prevents understeer and oversteer by keeping the car's actual path aligned with the driver's intended path.",
+        "example": "ESC has been mandatory on all new passenger vehicles since 2012 and is credited with reducing single-vehicle crashes by over 30 percent."
+    },
+    {
+        "id": 31,
+        "term": "Crumple Zone",
+        "category": "Brakes & Safety",
+        "definition": "A structural section of a vehicle's body designed to deform and absorb kinetic energy during a collision. By crumpling in a controlled manner, these zones reduce the force transferred to the passenger cabin, protecting the occupants.",
+        "example": "Modern cars look badly damaged after a minor collision because the crumple zones did their job — the cabin remained completely intact."
+    },
+    {
+        "id": 32,
+        "term": "Dual-Clutch Transmission (DCT)",
+        "category": "Transmission",
+        "definition": "An automated transmission that uses two separate clutches — one for odd gears and one for even gears. While one clutch is engaged driving the car, the other pre-selects the next gear, enabling lightning-fast gear shifts with no interruption in power delivery.",
+        "example": "The Porsche PDK dual-clutch transmission shifts so quickly that it barely interrupts acceleration, making it faster than a manual in almost every scenario."
+    },
+    {
+        "id": 33,
+        "term": "Continuously Variable Transmission (CVT)",
+        "category": "Transmission",
+        "definition": "A transmission that uses a pair of variable-diameter pulleys connected by a steel belt or chain instead of discrete gears. It provides an infinite number of gear ratios, keeping the engine at its most efficient RPM range for any given speed.",
+        "example": "CVTs are popular in hybrid cars like the Toyota Prius because they keep the engine at its ideal RPM for maximum fuel efficiency."
+    },
+    {
+        "id": 34,
+        "term": "NVH (Noise, Vibration, Harshness)",
+        "category": "General",
+        "definition": "An engineering metric used to describe the comfort level of a vehicle's cabin. Noise refers to unwanted sounds, vibration to felt shaking or trembling, and harshness to sharp impacts from the road. Lower NVH means a more refined, comfortable driving experience.",
+        "example": "Luxury brands spend millions on NVH engineering, adding sound-deadening materials, active noise cancellation, and hydraulic engine mounts."
+    },
+    {
+        "id": 35,
+        "term": "Wheelbase",
+        "category": "General",
+        "definition": "The distance between the center of the front axle and the center of the rear axle. A longer wheelbase generally provides a smoother ride and more interior space, while a shorter wheelbase improves agility and maneuverability.",
+        "example": "The long-wheelbase version of the S-Class adds five inches of rear legroom, making it the preferred choice for chauffeured executives."
+    },
+    {
+        "id": 36,
+        "term": "Curb Weight",
+        "category": "General",
+        "definition": "The total weight of a vehicle with all standard equipment and a full tank of fuel, but without any passengers or cargo. It is a key factor in acceleration, braking, handling, and fuel economy — lighter is almost always better for performance.",
+        "example": "The Mazda MX-5's low curb weight of just 2,300 pounds is the main reason it feels so lively and responsive on a winding road."
+    },
+    {
+        "id": 37,
+        "term": "Power-to-Weight Ratio",
+        "category": "General",
+        "definition": "The relationship between a vehicle's engine output and its total weight, usually expressed in horsepower per ton. It is the single best predictor of a vehicle's acceleration performance — a lighter car with less power can be faster than a heavy car with more power.",
+        "example": "The Lotus Exige has a modest 220 horsepower but an incredible power-to-weight ratio of 250 hp per ton, making it as quick as cars with twice the power."
+    },
+    {
+        "id": 38,
+        "term": "Octane Rating",
+        "category": "Engine",
+        "definition": "A measure of a fuel's resistance to premature detonation (knocking) under compression in an engine. Higher octane ratings (91, 93, 100) indicate greater knock resistance. Using fuel with too low an octane rating for a high-compression engine can cause damaging engine knock.",
+        "example": "The owner's manual recommends 93 octane for the sports car, but it can run on 87 octane with a slight reduction in power and fuel economy."
+    },
+    {
+        "id": 39,
+        "term": "Brake Horsepower (BHP)",
+        "category": "Engine",
+        "definition": "The amount of power an engine produces at its output shaft (the crankshaft), measured on an engine dynamometer, before losses from the transmission, differential, and other drivetrain components. It is typically 10-15% higher than the wheel horsepower actually reaching the ground.",
+        "example": "The manufacturer advertises 450 brake horsepower, but a chassis dyno showed only 385 horsepower at the wheels due to drivetrain losses."
+    },
+    {
+        "id": 40,
+        "term": "Ground Effect",
+        "category": "Aerodynamics",
+        "definition": "An aerodynamic phenomenon where a vehicle's underbody shape creates a low-pressure area beneath the car, effectively sucking it toward the ground. It generates downforce without using visible wings, creating huge grip levels but making the car extremely sensitive to ride height changes.",
+        "example": "The 1978 Lotus 79 pioneered ground effect in Formula 1, using side skirts to seal the underbody and generate massive downforce that revolutionized the sport."
+    }
+]
