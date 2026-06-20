@@ -972,6 +972,14 @@
                         </div>
                     </div>
                 </div>
+                <div class="text-center mb-6">
+                    <button id="compareBtn" disabled class="px-8 py-3 bg-gray-900 text-white font-semibold rounded-xl transition shadow-lg disabled:opacity-40 disabled:cursor-not-allowed hover:bg-gray-800 disabled:hover:bg-gray-900">
+                        <span class="flex items-center gap-2 justify-center">
+                            <i data-lucide="git-compare" style="width:20px;height:20px;"></i>
+                            Compare Specifications
+                        </span>
+                    </button>
+                </div>
                 <div id="comparisonResults" class="hidden glass rounded-2xl p-6">
                     <h2 class="text-2xl font-bold text-gray-800 mb-6 text-center">Specification Comparison</h2>
                     <div id="comparisonSpecs"></div>
@@ -1301,8 +1309,15 @@
         // --- COMPARE ---
         function setupCompare() {
             document.getElementById('compareType').onchange = () => { compareType = document.getElementById('compareType').value; loadCompareSelects(); resetCompare(); };
-            document.getElementById('compareSelect1').onchange = () => { const d = compareType === 'cars' ? carsData : planesData; compareItem1 = d.find(i => i.id == document.getElementById('compareSelect1').value); renderCompare(); };
-            document.getElementById('compareSelect2').onchange = () => { const d = compareType === 'cars' ? carsData : planesData; compareItem2 = d.find(i => i.id == document.getElementById('compareSelect2').value); renderCompare(); };
+            document.getElementById('compareSelect1').onchange = () => { const d = compareType === 'cars' ? carsData : planesData; compareItem1 = d.find(i => i.id == document.getElementById('compareSelect1').value); updateCompareButton(); renderCompareSlot(compareItem1, 1); };
+            document.getElementById('compareSelect2').onchange = () => { const d = compareType === 'cars' ? carsData : planesData; compareItem2 = d.find(i => i.id == document.getElementById('compareSelect2').value); updateCompareButton(); renderCompareSlot(compareItem2, 2); };
+            document.getElementById('compareBtn').onclick = () => { if (compareItem1 && compareItem2) renderComparison(); };
+        }
+        function updateCompareButton() {
+            const btn = document.getElementById('compareBtn');
+            if (compareItem1 && compareItem2) { btn.disabled = false; document.getElementById('comparisonResults').classList.add('hidden'); }
+            else btn.disabled = true;
+            lucide.createIcons();
         }
         function loadCompareSelects() {
             const d = compareType === 'cars' ? carsData : planesData;
@@ -1310,9 +1325,10 @@
                 s.innerHTML = '<option value="">Choose...</option>' + d.map(i => `<option value="${i.id}">${i.name}${i.model ? ' ' + i.model : ''}</option>`).join('');
             });
         }
-        function resetCompare() { compareItem1 = compareItem2 = null; document.getElementById('compareSelect1').value = document.getElementById('compareSelect2').value = ''; renderCompare(); }
+        function resetCompare() { compareItem1 = compareItem2 = null; document.getElementById('compareSelect1').value = document.getElementById('compareSelect2').value = ''; document.getElementById('comparisonResults').classList.add('hidden'); updateCompareButton(); renderCompareSlot(null, 1); renderCompareSlot(null, 2); }
         function renderCompare() {
             renderCompareSlot(compareItem1, 1); renderCompareSlot(compareItem2, 2);
+            updateCompareButton();
             if (compareItem1 && compareItem2) renderComparison(); else document.getElementById('comparisonResults').classList.add('hidden');
         }
         function renderCompareSlot(item, n) {
