@@ -4346,18 +4346,41 @@
 
                     const garageCars = Array.isArray(profile?.garage_cars) ? profile.garage_cars : [];
 
+                    // Get owner's garage to check what they already have
+                    const { data: ownerProfile } = await supabaseClient
+                        .from('profiles')
+                        .select('garage_cars')
+                        .eq('id', trade.owner_id)
+                        .single();
+
+                    const ownerGarage = ownerProfile?.garage_cars || [];
+                    const theyAreOffering = trade.offering_cars;
+
                     if (garageCars.length === 0) {
                         document.getElementById('proposalCarsList').innerHTML = '<p class="text-sm text-gray-400">Your garage is empty</p>';
                     } else {
                         document.getElementById('proposalCarsList').innerHTML = garageCars.map(carId => {
                             const car = carDataMap[carId];
                             if (!car) return '';
+
+                            // Check if owner already has this car (excluding what they're trading)
+                            const ownerHasThis = ownerGarage.includes(carId) && !theyAreOffering.includes(carId);
+
                             return `
-                                <label class="flex items-center gap-3 p-2 rounded border-2 border-gray-200 hover:border-gray-900 transition cursor-pointer">
-                                    <input type="checkbox" class="w-4 h-4" value="${carId}" onchange="Trading.toggleProposalCarSelection(${carId})">
+                                <label class="flex items-center gap-3 p-2 rounded border-2 ${
+                                    ownerHasThis 
+                                        ? 'border-red-200 bg-red-50 opacity-60 cursor-not-allowed' 
+                                        : 'border-gray-200 hover:border-gray-900 transition cursor-pointer'
+                                }">
+                                    <input type="checkbox" class="w-4 h-4" value="${carId}" 
+                                        ${ownerHasThis ? 'disabled' : ''}
+                                        onchange="Trading.toggleProposalCarSelection(${carId})">
                                     <img src="${car.image}" class="w-10 h-10 rounded object-cover" onerror="this.style.display='none'">
                                     <div class="flex-1 min-w-0">
-                                        <p class="text-xs font-semibold text-gray-900 truncate">${car.name}</p>
+                                        <p class="text-xs font-semibold ${ownerHasThis ? 'text-red-600' : 'text-gray-900'} truncate">
+                                            ${car.name}
+                                            ${ownerHasThis ? '<span class="ml-1 text-[10px]">(OWNED)</span>' : ''}
+                                        </p>
                                         <p class="text-xs text-gray-500 truncate">${car.model}</p>
                                     </div>
                                 </label>
@@ -4390,11 +4413,35 @@
                 btn.textContent = 'Submitting...';
 
                 try {
-                    await submitOffer(currentTradeForProposal.id, Array.from(selectedCarsForProposal));
+                    // Get owner's garage to check for duplicates
+                    const { data: ownerProfile } = await supabaseClient
+                        .from('profiles')
+                        .select('garage_cars')
+                        .eq('id', currentTradeForProposal.owner_id)
+                        .single();
+
+                    const ownerGarage = ownerProfile?.garage_cars || [];
+                    const offerCars = Array.from(selectedCarsForProposal);
+                    const theyAreOffering = currentTradeForProposal.offering_cars;
+
+                    // Check if owner already has any of the cars we're offering
+                    // (excluding the cars they're trading away)
+                    const duplicates = offerCars.filter(carId => 
+                        ownerGarage.includes(carId) && !theyAreOffering.includes(carId)
+                    );
+
+                    if (duplicates.length > 0) {
+                        const carNames = duplicates.map(cid => carDataMap[cid]?.name || `Car #${cid}`).join(', ');
+                        showToast(`The user already owns: ${carNames}`, 'error');
+                        btn.disabled = false;
+                        btn.textContent = 'Submit Offer';
+                        return;
+                    }
+
+                    await submitOffer(currentTradeForProposal.id, offerCars);
                     closeProposalModal();
                 } catch (e) {
                     console.error('Error submitting proposal:', e);
-                } finally {
                     btn.disabled = false;
                     btn.textContent = 'Submit Offer';
                 }
@@ -4507,10 +4554,20 @@
                         p_proposal_id: proposalId
                     });
 
-                    if (error) throw error;
+                    if (error) {
+                        console.error('RPC error:', error);
+                        showToast('Trade failed: ' + error.message, 'error');
+                        return;
+                    }
 
                     if (data && data.success === false) {
-                        showToast(data.error || 'Trade failed', 'error');
+                        // Check if there are duplicate cars in the error
+                        if (data.duplicate_cars && data.duplicate_cars.length > 0) {
+                            const carNames = data.duplicate_cars.map(cid => carDataMap[cid]?.name || `Car #${cid}`).join(', ');
+                            showToast(`Cannot trade: Duplicate cars detected - ${carNames}`, 'error');
+                        } else {
+                            showToast(data.error || 'Trade failed', 'error');
+                        }
                         return;
                     }
 
@@ -4548,7 +4605,6 @@
             document.getElementById('viewProposalsModal').classList.remove('active');
             Trading.loadTrading();
         };
-        console.log("22")
     </script>
 </body>
 
