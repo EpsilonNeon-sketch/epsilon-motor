@@ -16,6 +16,315 @@
             box-sizing: border-box;
         }
 
+        /* ===== SHOP & GARAGE STYLES ===== */
+        .shop-card {
+            background: white;
+            border-radius: 1rem;
+            border: 1px solid rgba(200, 200, 210, 0.25);
+            overflow: hidden;
+            transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .shop-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.07), 0 8px 16px rgba(0, 0, 0, 0.04);
+        }
+
+        .shop-card:hover .shop-card-img {
+            transform: scale(1.06);
+        }
+
+        .shop-card-img-wrap {
+            position: relative;
+            height: 200px;
+            overflow: hidden;
+            background: #f3f4f6;
+        }
+
+        .shop-card-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .shop-card-token-badge {
+            position: absolute;
+            top: 0.75rem;
+            right: 0.75rem;
+            display: flex;
+            align-items: center;
+            gap: 0.35rem;
+            padding: 0.35rem 0.75rem;
+            border-radius: 9999px;
+            background: rgba(26, 26, 46, 0.85);
+            backdrop-filter: blur(8px);
+            color: #fbbf24;
+            font-size: 0.75rem;
+            font-weight: 700;
+        }
+
+        .shop-card-body {
+            padding: 1.25rem;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .shop-card-type {
+            display: inline-flex;
+            align-self: flex-start;
+            padding: 0.2rem 0.6rem;
+            border-radius: 9999px;
+            font-size: 0.65rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            background: #f3f4f6;
+            color: #6b7280;
+            margin-bottom: 0.6rem;
+        }
+
+        .shop-card-name {
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: #1a1a2e;
+            margin-bottom: 0.15rem;
+        }
+
+        .shop-card-model {
+            font-size: 0.85rem;
+            color: #9ca3af;
+            margin-bottom: 0.75rem;
+        }
+
+        .shop-card-specs {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+            flex: 1;
+        }
+
+        .shop-card-spec {
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+            font-size: 0.72rem;
+            color: #6b7280;
+            padding: 0.25rem 0.55rem;
+            background: #f9fafb;
+            border-radius: 0.4rem;
+        }
+
+        .shop-card-spec svg {
+            width: 12px;
+            height: 12px;
+            color: #9ca3af;
+            flex-shrink: 0;
+        }
+
+        .shop-card-footer {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding-top: 0.75rem;
+            border-top: 1px solid #f3f4f6;
+        }
+
+        .shop-card-price {
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        .shop-card-price-amount {
+            font-size: 1.1rem;
+            font-weight: 800;
+            color: #1a1a2e;
+        }
+
+        .shop-card-price-label {
+            font-size: 0.7rem;
+            font-weight: 600;
+            color: #9ca3af;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+        }
+
+        .shop-buy-btn {
+            padding: 0.55rem 1.1rem;
+            border-radius: 0.6rem;
+            background: #1a1a2e;
+            color: white;
+            font-size: 0.8rem;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            transition: all 0.25s;
+            font-family: 'Inter', sans-serif;
+            display: flex;
+            align-items: center;
+            gap: 0.35rem;
+        }
+
+        .shop-buy-btn:hover {
+            background: #2563eb;
+            transform: translateY(-1px);
+        }
+
+        .shop-buy-btn:disabled {
+            background: #e5e7eb;
+            color: #9ca3af;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .shop-buy-btn.owned {
+            background: #f0fdf4;
+            color: #16a34a;
+            cursor: default;
+        }
+
+        .shop-buy-btn.owned:hover {
+            transform: none;
+            background: #f0fdf4;
+            color: #16a34a;
+        }
+
+        /* Garage card variant */
+        .garage-card {
+            background: white;
+            border-radius: 1rem;
+            border: 1px solid rgba(200, 200, 210, 0.25);
+            overflow: hidden;
+            transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .garage-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 16px 36px rgba(0, 0, 0, 0.07);
+        }
+
+        .garage-card:hover .garage-card-img {
+            transform: scale(1.05);
+        }
+
+        .garage-card-img-wrap {
+            position: relative;
+            height: 200px;
+            overflow: hidden;
+            background: #f3f4f6;
+        }
+
+        .garage-card-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .garage-card-owned-badge {
+            position: absolute;
+            top: 0.75rem;
+            left: 0.75rem;
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+            padding: 0.3rem 0.65rem;
+            border-radius: 9999px;
+            background: rgba(22, 163, 74, 0.9);
+            backdrop-filter: blur(8px);
+            color: white;
+            font-size: 0.68rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+        }
+
+        .garage-card-body {
+            padding: 1.25rem;
+        }
+
+        .garage-card-name {
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: #1a1a2e;
+            margin-bottom: 0.15rem;
+        }
+
+        .garage-card-model {
+            font-size: 0.85rem;
+            color: #9ca3af;
+            margin-bottom: 0.85rem;
+        }
+
+        .garage-card-specs {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.5rem;
+        }
+
+        .garage-card-spec {
+            display: flex;
+            flex-direction: column;
+            gap: 0.1rem;
+            padding: 0.5rem 0.6rem;
+            background: #f9fafb;
+            border-radius: 0.5rem;
+        }
+
+        .garage-card-spec-label {
+            font-size: 0.62rem;
+            font-weight: 600;
+            color: #9ca3af;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+        }
+
+        .garage-card-spec-value {
+            font-size: 0.8rem;
+            font-weight: 700;
+            color: #1a1a2e;
+        }
+
+        /* Shop skeleton loading */
+        .shop-skeleton {
+            background: white;
+            border-radius: 1rem;
+            border: 1px solid rgba(200, 200, 210, 0.25);
+            overflow: hidden;
+        }
+
+        .shop-skeleton-img {
+            height: 200px;
+            background: linear-gradient(90deg, #f0f0f0 25%, #e8e8e8 50%, #f0f0f0 75%);
+            background-size: 200% 100%;
+            animation: shimmer 1.5s infinite;
+        }
+
+        .shop-skeleton-line {
+            height: 14px;
+            border-radius: 4px;
+            background: linear-gradient(90deg, #f0f0f0 25%, #e8e8e8 50%, #f0f0f0 75%);
+            background-size: 200% 100%;
+            animation: shimmer 1.5s infinite;
+        }
+
+        @media (max-width: 768px) {
+
+            .shop-card-img-wrap,
+            .garage-card-img-wrap {
+                height: 170px;
+            }
+
+            .garage-card-specs {
+                grid-template-columns: 1fr;
+            }
+        }
+
         /* ===== EPSILON AI WIDGET SYSTEM ===== */
         .ai-fab {
             position: fixed;
@@ -1026,6 +1335,30 @@
                     class="nav-btn w-full flex items-center gap-3 p-3 rounded-xl hover:bg-gray-100 transition text-left text-gray-600"
                     data-page="learn"><i data-lucide="graduation-cap"
                         style="width:20px;height:20px;"></i><span>Learn</span></button>
+                <button
+                    class="nav-btn w-full flex items-center gap-3 p-3 rounded-xl hover:bg-gray-100 transition text-left text-gray-600"
+                    data-page="shop">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="8" cy="21" r="1" />
+                        <circle cx="19" cy="21" r="1" />
+                        <path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12" />
+                    </svg>
+                    <span>Shop</span>
+                </button>
+                <button
+                    class="nav-btn w-full flex items-center gap-3 p-3 rounded-xl hover:bg-gray-100 transition text-left text-gray-600"
+                    data-page="garage">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path
+                            d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-1.4-2.2-2.3c-.5-.4-1.1-.7-1.8-.7H5c-.6 0-1.1.4-1.4.9l-1.4 2.9A3.7 3.7 0 0 0 2 12v4c0 .6.4 1 1 1h2" />
+                        <circle cx="7" cy="17" r="2" />
+                        <path d="M9 17h6" />
+                        <circle cx="17" cy="17" r="2" />
+                    </svg>
+                    <span>Garage</span>
+                </button>
             </nav>
             <div class="divider my-6"></div>
             <div class="px-3 py-4 rounded-xl bg-gray-50 border border-gray-100">
@@ -1393,18 +1726,130 @@
                 </div>
             </div>
 
+            <!-- ===== SHOP PAGE ===== -->
+            <div id="shopPage" class="page-section" style="display:none;">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
+                    <div>
+                        <h1 class="text-2xl font-extrabold text-gray-900 tracking-tight">Car Shop</h1>
+                        <p class="text-sm text-gray-500 mt-1">Spend your tokens on dream machines</p>
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <div class="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-amber-50 border border-amber-200">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"
+                                stroke-linejoin="round" class="text-amber-600">
+                                <circle cx="12" cy="12" r="10" />
+                                <path d="M12 6v12" />
+                                <path d="M8 8l8 8" />
+                                <path d="M16 8l-8 8" />
+                            </svg>
+                            <span id="shopTokenBalance" class="text-sm font-bold text-amber-700">1000</span>
+                            <span class="text-xs font-semibold text-amber-500 uppercase tracking-wider">Tokens</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Shop Filters -->
+                <div class="flex flex-col sm:flex-row gap-3 mb-6">
+                    <div class="search-box flex-1">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="11" cy="11" r="8" />
+                            <path d="m21 21-4.3-4.3" />
+                        </svg>
+                        <input id="shopSearch" type="text" placeholder="Search cars..." class="input-field"
+                            style="padding-left:3rem;">
+                    </div>
+                    <div id="shopTypeFilters" class="flex flex-wrap gap-2">
+                        <button class="filter-btn active-filter" data-filter="all">All</button>
+                    </div>
+                </div>
+
+                <!-- Shop Grid -->
+                <div id="shopGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+                    <!-- Cars injected by JS -->
+                </div>
+                <div id="shopEmpty" class="hidden flex-col items-center justify-center py-20 text-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"
+                        class="text-gray-300 mb-4">
+                        <circle cx="11" cy="11" r="8" />
+                        <path d="m21 21-4.3-4.3" />
+                    </svg>
+                    <p class="text-gray-400 font-medium">No cars match your search</p>
+                </div>
+            </div>
+
+            <!-- ===== GARAGE PAGE ===== -->
+            <div id="garagePage" class="page-section" style="display:none;">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
+                    <div>
+                        <h1 class="text-2xl font-extrabold text-gray-900 tracking-tight">My Garage</h1>
+                        <p id="garageSubtitle" class="text-sm text-gray-500 mt-1">Your personal car collection</p>
+                    </div>
+                    <a href="#" onclick="navigateTo('shop'); return false;"
+                        class="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-[#1a1a2e] text-white text-sm font-semibold hover:bg-[#2d2d4e] transition">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="8" cy="21" r="1" />
+                            <circle cx="19" cy="21" r="1" />
+                            <path
+                                d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12" />
+                        </svg>
+                        Browse Shop
+                    </a>
+                </div>
+
+                <!-- Garage Grid -->
+                <div id="garageGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+                    <!-- Owned cars injected by JS -->
+                </div>
+
+                <!-- Empty Garage State -->
+                <div id="garageEmpty" class="hidden flex-col items-center justify-center py-24 text-center">
+                    <div class="w-20 h-20 rounded-2xl bg-gray-100 flex items-center justify-center mb-5">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"
+                            class="text-gray-300">
+                            <path
+                                d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-1.4-2.2-2.3c-.5-.4-1.1-.7-1.8-.7H5c-.6 0-1.1.4-1.4.9l-1.4 2.9A3.7 3.7 0 0 0 2 12v4c0 .6.4 1 1 1h2" />
+                            <circle cx="7" cy="17" r="2" />
+                            <path d="M9 17h6" />
+                            <circle cx="17" cy="17" r="2" />
+                        </svg>
+                    </div>
+                    <h3 class="text-lg font-bold text-gray-700 mb-2">Your garage is empty</h3>
+                    <p class="text-sm text-gray-400 mb-6 max-w-xs">Head to the shop and spend your tokens on some dream
+                        cars.</p>
+                    <a href="#" onclick="navigateTo('shop'); return false;"
+                        class="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-[#1a1a2e] text-white text-sm font-semibold hover:bg-[#2d2d4e] transition">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="8" cy="21" r="1" />
+                            <circle cx="19" cy="21" r="1" />
+                            <path
+                                d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12" />
+                        </svg>
+                        Go to Shop
+                    </a>
+                </div>
+            </div>
+
             <!-- LEARN -->
             <div id="learnSection" class="section hidden">
                 <header class="mb-6">
                     <h1 class="text-3xl font-extrabold text-gray-900 tracking-tight">Car Parts Guide</h1>
-                    <p class="text-gray-400 mt-1">Complete guide to car parts, their uses, and models — Perfect for beginners</p>
+                    <p class="text-gray-400 mt-1">Complete guide to car parts, their uses, and models — Perfect for
+                        beginners</p>
                 </header>
                 <div class="glass rounded-2xl p-6 mb-6">
                     <div class="flex items-center gap-3 mb-3">
                         <i data-lucide="info" style="width:20px;height:20px;color:#2563eb;"></i>
                         <h2 class="text-lg font-bold text-gray-900">Welcome to Car Parts 101</h2>
                     </div>
-                    <p class="text-gray-600 text-sm leading-relaxed">This guide covers essential car components, explaining what they do and showing real-world examples. Whether you're new to cars or looking to expand your knowledge, you'll find clear explanations for each major system and part.</p>
+                    <p class="text-gray-600 text-sm leading-relaxed">This guide covers essential car components,
+                        explaining what they do and showing real-world examples. Whether you're new to cars or looking
+                        to expand your knowledge, you'll find clear explanations for each major system and part.</p>
                 </div>
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-5">
                     <div class="glass rounded-2xl p-6">
@@ -1562,7 +2007,8 @@
                                     data-lucide="droplets" style="width:20px;height:20px;color:#0ea5e9;"></i></div>
                             <h2 class="text-xl font-bold text-gray-900">Oil Filter</h2>
                         </div>
-                        <p class="text-gray-600 text-sm mb-3">Removes contaminants from engine oil to protect internal components.</p>
+                        <p class="text-gray-600 text-sm mb-3">Removes contaminants from engine oil to protect internal
+                            components.</p>
                         <p class="text-gray-500 text-xs font-semibold mb-2">Common Models:</p>
                         <div class="space-y-1 text-xs text-gray-600">
                             <p>• Spin-On (easy replacement)</p>
@@ -1576,7 +2022,8 @@
                                     data-lucide="flame" style="width:20px;height:20px;color:#f43f5e;"></i></div>
                             <h2 class="text-xl font-bold text-gray-900">Spark Plugs</h2>
                         </div>
-                        <p class="text-gray-600 text-sm mb-3">Ignites the air-fuel mixture in the combustion chamber to power the engine.</p>
+                        <p class="text-gray-600 text-sm mb-3">Ignites the air-fuel mixture in the combustion chamber to
+                            power the engine.</p>
                         <p class="text-gray-500 text-xs font-semibold mb-2">Common Models:</p>
                         <div class="space-y-1 text-xs text-gray-600">
                             <p>• Copper (standard use)</p>
@@ -1590,7 +2037,8 @@
                                     data-lucide="recycle" style="width:20px;height:20px;color:#84cc16;"></i></div>
                             <h2 class="text-xl font-bold text-gray-900">Catalytic Converter</h2>
                         </div>
-                        <p class="text-gray-600 text-sm mb-3">Reduces harmful emissions by converting toxic gases into less harmful substances.</p>
+                        <p class="text-gray-600 text-sm mb-3">Reduces harmful emissions by converting toxic gases into
+                            less harmful substances.</p>
                         <p class="text-gray-500 text-xs font-semibold mb-2">Common Models:</p>
                         <div class="space-y-1 text-xs text-gray-600">
                             <p>• Two-Way (CO and HC reduction)</p>
@@ -1604,7 +2052,8 @@
                                     data-lucide="airplay" style="width:20px;height:20px;color:#06b6d4;"></i></div>
                             <h2 class="text-xl font-bold text-gray-900">Air Filter</h2>
                         </div>
-                        <p class="text-gray-600 text-sm mb-3">Prevents dirt and debris from entering the engine, ensuring clean air for combustion.</p>
+                        <p class="text-gray-600 text-sm mb-3">Prevents dirt and debris from entering the engine,
+                            ensuring clean air for combustion.</p>
                         <p class="text-gray-500 text-xs font-semibold mb-2">Common Models:</p>
                         <div class="space-y-1 text-xs text-gray-600">
                             <p>• Paper Element (disposable)</p>
@@ -1618,7 +2067,8 @@
                                     data-lucide="move" style="width:20px;height:20px;color:#8b5cf6;"></i></div>
                             <h2 class="text-xl font-bold text-gray-900">Axle</h2>
                         </div>
-                        <p class="text-gray-600 text-sm mb-3">Transfers power from the transmission to the wheels, enabling vehicle movement.</p>
+                        <p class="text-gray-600 text-sm mb-3">Transfers power from the transmission to the wheels,
+                            enabling vehicle movement.</p>
                         <p class="text-gray-500 text-xs font-semibold mb-2">Common Models:</p>
                         <div class="space-y-1 text-xs text-gray-600">
                             <p>• Front Axle (steering control)</p>
@@ -1632,7 +2082,8 @@
                                     data-lucide="lightbulb" style="width:20px;height:20px;color:#f59e0b;"></i></div>
                             <h2 class="text-xl font-bold text-gray-900">Headlights</h2>
                         </div>
-                        <p class="text-gray-600 text-sm mb-3">Illuminates the road ahead for safe nighttime and low-visibility driving.</p>
+                        <p class="text-gray-600 text-sm mb-3">Illuminates the road ahead for safe nighttime and
+                            low-visibility driving.</p>
                         <p class="text-gray-500 text-xs font-semibold mb-2">Common Models:</p>
                         <div class="space-y-1 text-xs text-gray-600">
                             <p>• Halogen (standard bulbs)</p>
@@ -1646,7 +2097,8 @@
                                     data-lucide="waves" style="width:20px;height:20px;color:#10b981;"></i></div>
                             <h2 class="text-xl font-bold text-gray-900">Shock Absorbers</h2>
                         </div>
-                        <p class="text-gray-600 text-sm mb-3">Controls spring movement and dampens road bumps for a smooth ride.</p>
+                        <p class="text-gray-600 text-sm mb-3">Controls spring movement and dampens road bumps for a
+                            smooth ride.</p>
                         <p class="text-gray-500 text-xs font-semibold mb-2">Common Models:</p>
                         <div class="space-y-1 text-xs text-gray-600">
                             <p>• Twin-Tube (comfort-oriented)</p>
@@ -1660,7 +2112,8 @@
                                     data-lucide="minimize-2" style="width:20px;height:20px;color:#d946ef;"></i></div>
                             <h2 class="text-xl font-bold text-gray-900">Exhaust System</h2>
                         </div>
-                        <p class="text-gray-600 text-sm mb-3">Channels exhaust gases away from the engine, reduces noise, and controls emissions.</p>
+                        <p class="text-gray-600 text-sm mb-3">Channels exhaust gases away from the engine, reduces
+                            noise, and controls emissions.</p>
                         <p class="text-gray-500 text-xs font-semibold mb-2">Common Models:</p>
                         <div class="space-y-1 text-xs text-gray-600">
                             <p>• Single Exit (most cars)</p>
@@ -1674,7 +2127,8 @@
                                     data-lucide="car-front" style="width:20px;height:20px;color:#64748b;"></i></div>
                             <h2 class="text-xl font-bold text-gray-900">Bumpers</h2>
                         </div>
-                        <p class="text-gray-600 text-sm mb-3">Protects the vehicle body and absorbs impact during low-speed collisions.</p>
+                        <p class="text-gray-600 text-sm mb-3">Protects the vehicle body and absorbs impact during
+                            low-speed collisions.</p>
                         <p class="text-gray-500 text-xs font-semibold mb-2">Common Models:</p>
                         <div class="space-y-1 text-xs text-gray-600">
                             <p>• Plastic Cover (modern standard)</p>
@@ -1688,7 +2142,8 @@
                                     data-lucide="shield" style="width:20px;height:20px;color:#ef4444;"></i></div>
                             <h2 class="text-xl font-bold text-gray-900">Airbags</h2>
                         </div>
-                        <p class="text-gray-600 text-sm mb-3">Deploys during collisions to cushion and protect occupants from injury.</p>
+                        <p class="text-gray-600 text-sm mb-3">Deploys during collisions to cushion and protect occupants
+                            from injury.</p>
                         <p class="text-gray-500 text-xs font-semibold mb-2">Common Models:</p>
                         <div class="space-y-1 text-xs text-gray-600">
                             <p>• Front Airbags (driver & passenger)</p>
@@ -1702,7 +2157,8 @@
                                     data-lucide="git-fork" style="width:20px;height:20px;color:#fb923c;"></i></div>
                             <h2 class="text-xl font-bold text-gray-900">Differential</h2>
                         </div>
-                        <p class="text-gray-600 text-sm mb-3">Allows wheels to rotate at different speeds during turns for smooth handling.</p>
+                        <p class="text-gray-600 text-sm mb-3">Allows wheels to rotate at different speeds during turns
+                            for smooth handling.</p>
                         <p class="text-gray-500 text-xs font-semibold mb-2">Common Models:</p>
                         <div class="space-y-1 text-xs text-gray-600">
                             <p>• Open Differential (standard cars)</p>
@@ -1716,7 +2172,8 @@
                                     data-lucide="navigation" style="width:20px;height:20px;color:#22c55e;"></i></div>
                             <h2 class="text-xl font-bold text-gray-900">Steering System</h2>
                         </div>
-                        <p class="text-gray-600 text-sm mb-3">Converts steering wheel input into directional movement of the front wheels.</p>
+                        <p class="text-gray-600 text-sm mb-3">Converts steering wheel input into directional movement of
+                            the front wheels.</p>
                         <p class="text-gray-500 text-xs font-semibold mb-2">Common Models:</p>
                         <div class="space-y-1 text-xs text-gray-600">
                             <p>• Rack & Pinion (most modern cars)</p>
@@ -1727,10 +2184,12 @@
                     <div class="glass rounded-2xl p-6">
                         <div class="flex items-center gap-3 mb-4">
                             <div class="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center"><i
-                                    data-lucide="panels-top-left" style="width:20px;height:20px;color:#3b82f6;"></i></div>
+                                    data-lucide="panels-top-left" style="width:20px;height:20px;color:#3b82f6;"></i>
+                            </div>
                             <h2 class="text-xl font-bold text-gray-900">Dashboard</h2>
                         </div>
-                        <p class="text-gray-600 text-sm mb-3">Displays vital vehicle information including speed, fuel level, and warning indicators.</p>
+                        <p class="text-gray-600 text-sm mb-3">Displays vital vehicle information including speed, fuel
+                            level, and warning indicators.</p>
                         <p class="text-gray-500 text-xs font-semibold mb-2">Common Models:</p>
                         <div class="space-y-1 text-xs text-gray-600">
                             <p>• Analog Gauges (traditional)</p>
@@ -1808,7 +2267,53 @@
         <i data-lucide="bot" id="fabIconChat" style="width:26px;height:26px;"></i>
         <i data-lucide="x" id="fabIconClose" style="width:26px;height:26px;display:none;"></i>
     </button>
-
+    <!-- ===== BUY CONFIRMATION MODAL ===== -->
+    <div id="buyModal" class="modal-overlay">
+        <div class="modal-content" style="max-width:480px;">
+            <div class="p-6">
+                <div class="flex items-center justify-between mb-5">
+                    <h3 class="text-lg font-bold text-gray-900">Confirm Purchase</h3>
+                    <button onclick="closeBuyModal()"
+                        class="w-8 h-8 rounded-lg flex items-center justify-center hover:bg-gray-100 transition text-gray-400">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M18 6 6 18" />
+                            <path d="m6 6 12 12" />
+                        </svg>
+                    </button>
+                </div>
+                <div id="buyModalBody" class="flex gap-4 mb-5">
+                    <img id="buyModalImg" src="" alt="" class="w-28 h-20 rounded-xl object-cover flex-shrink-0">
+                    <div class="min-w-0">
+                        <p id="buyModalName" class="font-bold text-gray-900 truncate"></p>
+                        <p id="buyModalModel" class="text-sm text-gray-500 truncate"></p>
+                    </div>
+                </div>
+                <div class="bg-gray-50 rounded-xl p-4 mb-5 space-y-2">
+                    <div class="flex justify-between text-sm">
+                        <span class="text-gray-500">Price</span>
+                        <span id="buyModalPrice" class="font-semibold text-gray-900"></span>
+                    </div>
+                    <div class="flex justify-between text-sm">
+                        <span class="text-gray-500">Your Balance</span>
+                        <span id="buyModalBalance" class="font-semibold text-gray-900"></span>
+                    </div>
+                    <div class="h-px bg-gray-200 my-1"></div>
+                    <div class="flex justify-between text-sm">
+                        <span class="text-gray-500">After Purchase</span>
+                        <span id="buyModalAfter" class="font-semibold"></span>
+                    </div>
+                </div>
+                <div class="flex gap-3">
+                    <button onclick="closeBuyModal()"
+                        class="flex-1 py-2.5 rounded-xl border border-gray-200 text-sm font-semibold text-gray-600 hover:bg-gray-50 transition">Cancel</button>
+                    <button id="buyModalConfirm" onclick="confirmPurchase()"
+                        class="flex-1 py-2.5 rounded-xl bg-[#1a1a2e] text-white text-sm font-semibold hover:bg-[#2d2d4e] transition">Buy
+                        Now</button>
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="ai-chat" id="aiChat">
         <!-- Header -->
         <div class="ai-chat-header">
@@ -2898,6 +3403,529 @@
                 return `<p>${clean}</p>`.replace(/<p>\s*<\/p>/g, '');
             }
         })();
+        // ============================================================
+        // SHOP & GARAGE MODULE
+        // ============================================================
+
+        const ShopGarage = (() => {
+            let allShopCars = [];
+            let userTokens = 1000;
+            let userGarageCars = [];
+            let pendingBuyCar = null;
+
+            // ---- Load shop.json and render ----
+            async function loadShop() {
+                const grid = document.getElementById('shopGrid');
+                const empty = document.getElementById('shopEmpty');
+
+                // Show skeletons
+                grid.innerHTML = '';
+                for (let i = 0; i < 6; i++) {
+                    grid.innerHTML += `
+                <div class="shop-skeleton">
+                    <div class="shop-skeleton-img"></div>
+                    <div style="padding:1.25rem;">
+                        <div class="shop-skeleton-line" style="width:60%;margin-bottom:0.6rem;"></div>
+                        <div class="shop-skeleton-line" style="width:40%;margin-bottom:1rem;"></div>
+                        <div class="shop-skeleton-line" style="width:80%;margin-bottom:0.4rem;"></div>
+                        <div class="shop-skeleton-line" style="width:50%;"></div>
+                    </div>
+                </div>`;
+                }
+                empty.classList.add('hidden');
+                empty.style.display = 'none';
+
+                try {
+                    const res = await fetch('shop.json');
+                    if (!res.ok) throw new Error('Failed to load shop.json');
+                    allShopCars = await res.json();
+                } catch (err) {
+                    grid.innerHTML = `
+                <div class="col-span-full flex flex-col items-center py-16 text-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="text-red-300 mb-3"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><path d="M12 9v4"/><path d="M12 17h.01"/></svg>
+                    <p class="text-gray-500 font-medium">Could not load shop data</p>
+                    <p class="text-xs text-gray-400 mt-1">${err.message}</p>
+                </div>`;
+                    return;
+                }
+
+                // Build type filter buttons
+                buildTypeFilters();
+
+                // Fetch user data for tokens & garage
+                await fetchUserData();
+
+                // Render
+                renderShopGrid();
+            }
+
+            function buildTypeFilters() {
+                const container = document.getElementById('shopTypeFilters');
+                const types = ['all', ...new Set(allShopCars.map(c => c.type).filter(Boolean))];
+                container.innerHTML = types.map(t =>
+                    `<button class="filter-btn ${t === 'all' ? 'active-filter' : ''}" data-filter="${t}">${t === 'all' ? 'All' : t}</button>`
+                ).join('');
+
+                container.querySelectorAll('.filter-btn').forEach(btn => {
+                    btn.addEventListener('click', () => {
+                        container.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active-filter'));
+                        btn.classList.add('active-filter');
+                        renderShopGrid();
+                    });
+                });
+            }
+
+            function renderShopGrid() {
+                const grid = document.getElementById('shopGrid');
+                const empty = document.getElementById('shopEmpty');
+                const searchVal = (document.getElementById('shopSearch')?.value || '').toLowerCase();
+                const activeFilter = document.querySelector('#shopTypeFilters .active-filter')?.dataset.filter || 'all';
+
+                let filtered = allShopCars.filter(car => {
+                    const matchSearch = !searchVal ||
+                        car.name?.toLowerCase().includes(searchVal) ||
+                        car.model?.toLowerCase().includes(searchVal) ||
+                        car.manufacturer?.toLowerCase().includes(searchVal) ||
+                        car.type?.toLowerCase().includes(searchVal);
+                    const matchType = activeFilter === 'all' || car.type === activeFilter;
+                    return matchSearch && matchType;
+                });
+
+                if (filtered.length === 0) {
+                    grid.innerHTML = '';
+                    empty.classList.remove('hidden');
+                    empty.style.display = 'flex';
+                    return;
+                }
+
+                empty.classList.add('hidden');
+                empty.style.display = 'none';
+
+                grid.innerHTML = filtered.map(car => {
+                    const isOwned = userGarageCars.includes(car.id);
+                    const canAfford = userTokens >= car.tokenPrice;
+
+                    return `
+            <div class="shop-card" data-car-id="${car.id}">
+                <div class="shop-card-img-wrap">
+                    <img class="shop-card-img" src="${car.image}" alt="${car.name} ${car.model}" loading="lazy"
+                         onerror="this.src='https://picsum.photos/seed/car${car.id}/600/400.jpg'">
+                    <div class="shop-card-token-badge">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v12"/><path d="M8 8l8 8"/><path d="M16 8l-8 8"/></svg>
+                        ${car.tokenPrice}
+                    </div>
+                </div>
+                <div class="shop-card-body">
+                    <span class="shop-card-type">${car.type || 'N/A'}</span>
+                    <p class="shop-card-name">${car.name}</p>
+                    <p class="shop-card-model">${car.model} — ${car.manufacturer}</p>
+                    <div class="shop-card-specs">
+                        <span class="shop-card-spec">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+                            ${car.horsepower} HP
+                        </span>
+                        <span class="shop-card-spec">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 12v-9"/><path d="m2 2 10 10"/><path d="m22 2-10 10"/><path d="m8 22 4-10 4 10"/></svg>
+                            ${car.topSpeed}
+                        </span>
+                        <span class="shop-card-spec">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                            ${car.acceleration}
+                        </span>
+                        <span class="shop-card-spec">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-1.4-2.2-2.3c-.5-.4-1.1-.7-1.8-.7H5c-.6 0-1.1.4-1.4.9l-1.4 2.9A3.7 3.7 0 0 0 2 12v4c0 .6.4 1 1 1h2"/></svg>
+                            ${car.transmission}
+                        </span>
+                    </div>
+                    <div class="shop-card-footer">
+                        <div class="shop-card-price">
+                            <span class="shop-card-price-amount">${car.tokenPrice}</span>
+                            <span class="shop-card-price-label">tokens</span>
+                        </div>
+                        ${isOwned
+                            ? `<button class="shop-buy-btn owned" disabled>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+                                Owned
+                               </button>`
+                            : `<button class="shop-buy-btn" ${!canAfford ? 'disabled title="Not enough tokens"' : ''} onclick="ShopGarage.openBuyModal(${car.id})">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/></svg>
+                                Buy
+                               </button>`
+                        }
+                    </div>
+                </div>
+            </div>`;
+                }).join('');
+            }
+
+            // ---- Fetch user tokens & garage from Supabase ----
+            async function fetchUserData() {
+                try {
+                    const { data: profile, error } = await supabase
+                        .from('profiles')
+                        .select('tokens, garage_cars')
+                        .eq('id', supabase.auth.currentUser?.id)
+                        .single();
+
+                    if (error) throw error;
+
+                    userTokens = profile?.tokens ?? 1000;
+                    userGarageCars = Array.isArray(profile?.garage_cars) ? profile.garage_cars : [];
+                } catch (err) {
+                    console.warn('Could not fetch user data for shop:', err.message);
+                    userTokens = 1000;
+                    userGarageCars = [];
+                }
+
+                updateTokenDisplay();
+            }
+
+            function updateTokenDisplay() {
+                const el = document.getElementById('shopTokenBalance');
+                if (el) el.textContent = userTokens.toLocaleString();
+            }
+
+            // ---- Buy Modal ----
+            function openBuyModal(carId) {
+                const car = allShopCars.find(c => c.id === carId);
+                if (!car) return;
+
+                if (userGarageCars.includes(car.id)) {
+                    showToast('You already own this car', 'error');
+                    return;
+                }
+
+                if (userTokens < car.tokenPrice) {
+                    showToast('Not enough tokens', 'error');
+                    return;
+                }
+
+                pendingBuyCar = car;
+
+                document.getElementById('buyModalImg').src = car.image;
+                document.getElementById('buyModalName').textContent = car.name;
+                document.getElementById('buyModalModel').textContent = `${car.model} — ${car.manufacturer}`;
+                document.getElementById('buyModalPrice').textContent = `${car.tokenPrice} tokens`;
+                document.getElementById('buyModalBalance').textContent = `${userTokens.toLocaleString()} tokens`;
+
+                const after = userTokens - car.tokenPrice;
+                const afterEl = document.getElementById('buyModalAfter');
+                afterEl.textContent = `${after.toLocaleString()} tokens`;
+                afterEl.className = 'font-semibold ' + (after < 0 ? 'text-red-500' : 'text-green-600');
+
+                document.getElementById('buyModal').classList.add('active');
+            }
+
+            function closeBuyModal() {
+                document.getElementById('buyModal').classList.remove('active');
+                pendingBuyCar = null;
+            }
+
+            async function confirmPurchase() {
+                if (!pendingBuyCar) return;
+
+                const car = pendingBuyCar;
+                const confirmBtn = document.getElementById('buyModalConfirm');
+                confirmBtn.disabled = true;
+                confirmBtn.textContent = 'Processing...';
+
+                try {
+                    const newTokens = userTokens - car.tokenPrice;
+                    const newGarage = [...userGarageCars, car.id];
+
+                    const { error } = await supabase
+                        .from('profiles')
+                        .update({
+                            tokens: newTokens,
+                            garage_cars: newGarage
+                        })
+                        .eq('id', supabase.auth.currentUser?.id);
+
+                    if (error) throw error;
+
+                    // Update local state
+                    userTokens = newTokens;
+                    userGarageCars = newGarage;
+                    updateTokenDisplay();
+
+                    closeBuyModal();
+                    renderShopGrid();
+                    showToast(`${car.name} added to your garage!`, 'success');
+
+                } catch (err) {
+                    console.error('Purchase failed:', err);
+                    showToast('Purchase failed. Please try again.', 'error');
+                } finally {
+                    confirmBtn.disabled = false;
+                    confirmBtn.textContent = 'Buy Now';
+                }
+            }
+
+            // ---- Garage ----
+            async function loadGarage() {
+                const grid = document.getElementById('garageGrid');
+                const empty = document.getElementById('garageEmpty');
+                const subtitle = document.getElementById('garageSubtitle');
+
+                // Show loading
+                grid.innerHTML = '';
+                for (let i = 0; i < 3; i++) {
+                    grid.innerHTML += `
+                <div class="shop-skeleton">
+                    <div class="shop-skeleton-img"></div>
+                    <div style="padding:1.25rem;">
+                        <div class="shop-skeleton-line" style="width:60%;margin-bottom:0.6rem;"></div>
+                        <div class="shop-skeleton-line" style="width:40%;margin-bottom:0.8rem;"></div>
+                        <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.5rem;">
+                            <div class="shop-skeleton-line" style="height:40px;"></div>
+                            <div class="shop-skeleton-line" style="height:40px;"></div>
+                            <div class="shop-skeleton-line" style="height:40px;"></div>
+                            <div class="shop-skeleton-line" style="height:40px;"></div>
+                        </div>
+                    </div>
+                </div>`;
+                }
+                empty.style.display = 'none';
+                empty.classList.add('hidden');
+
+                try {
+                    // Fetch user profile for garage_cars
+                    const { data: profile, error } = await supabase
+                        .from('profiles')
+                        .select('garage_cars, tokens')
+                        .eq('id', supabase.auth.currentUser?.id)
+                        .single();
+
+                    if (error) throw error;
+
+                    userGarageCars = Array.isArray(profile?.garage_cars) ? profile.garage_cars : [];
+                    userTokens = profile?.tokens ?? 1000;
+
+                } catch (err) {
+                    console.warn('Could not fetch garage:', err.message);
+                    userGarageCars = [];
+                }
+
+                // Update subtitle
+                if (subtitle) {
+                    const count = userGarageCars.length;
+                    subtitle.textContent = count === 0
+                        ? 'Your personal car collection'
+                        : `${count} car${count !== 1 ? 's' : ''} in your collection`;
+                }
+
+                if (userGarageCars.length === 0) {
+                    grid.innerHTML = '';
+                    empty.style.display = 'flex';
+                    empty.classList.remove('hidden');
+                    return;
+                }
+
+                // We need the full car data — try to load from shop.json
+                let carDataMap = {};
+                try {
+                    const res = await fetch('shop.json');
+                    if (res.ok) {
+                        const cars = await res.json();
+                        cars.forEach(c => { carDataMap[c.id] = c; });
+                    }
+                } catch (e) {
+                    // If shop.json fails, render with just IDs
+                }
+
+                grid.innerHTML = userGarageCars.map(carId => {
+                    const car = carDataMap[carId];
+                    if (!car) {
+                        return `
+                    <div class="garage-card">
+                        <div class="garage-card-img-wrap" style="background:#f3f4f6;display:flex;align-items:center;justify-content:center;">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="text-gray-300"><path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-1.4-2.2-2.3c-.5-.4-1.1-.7-1.8-.7H5c-.6 0-1.1.4-1.4.9l-1.4 2.9A3.7 3.7 0 0 0 2 12v4c0 .6.4 1 1 1h2"/><circle cx="7" cy="17" r="2"/><path d="M9 17h6"/><circle cx="17" cy="17" r="2"/></svg>
+                        </div>
+                        <div class="garage-card-body">
+                            <p class="garage-card-name">Car #${carId}</p>
+                            <p class="garage-card-model">Data unavailable</p>
+                        </div>
+                    </div>`;
+                    }
+
+                    return `
+                <div class="garage-card">
+                    <div class="garage-card-img-wrap">
+                        <img class="garage-card-img" src="${car.image}" alt="${car.name} ${car.model}" loading="lazy"
+                             onerror="this.src='https://picsum.photos/seed/car${car.id}/600/400.jpg'">
+                        <div class="garage-card-owned-badge">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+                            Owned
+                        </div>
+                    </div>
+                    <div class="garage-card-body">
+                        <p class="garage-card-name">${car.name}</p>
+                        <p class="garage-card-model">${car.model} — ${car.manufacturer}</p>
+                        <div class="garage-card-specs">
+                            <div class="garage-card-spec">
+                                <span class="garage-card-spec-label">Power</span>
+                                <span class="garage-card-spec-value">${car.horsepower} HP</span>
+                            </div>
+                            <div class="garage-card-spec">
+                                <span class="garage-card-spec-label">Top Speed</span>
+                                <span class="garage-card-spec-value">${car.topSpeed}</span>
+                            </div>
+                            <div class="garage-card-spec">
+                                <span class="garage-card-spec-label">0-60</span>
+                                <span class="garage-card-spec-value">${car.acceleration}</span>
+                            </div>
+                            <div class="garage-card-spec">
+                                <span class="garage-card-spec-label">Engine</span>
+                                <span class="garage-card-spec-value">${car.engine}</span>
+                            </div>
+                            <div class="garage-card-spec">
+                                <span class="garage-card-spec-label">Drivetrain</span>
+                                <span class="garage-card-spec-value">${car.drivetrain}</span>
+                            </div>
+                            <div class="garage-card-spec">
+                                <span class="garage-card-spec-label">Fuel</span>
+                                <span class="garage-card-spec-value">${car.fuelType}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>`;
+                }).join('');
+            }
+
+            // ---- Search handler ----
+            function initSearch() {
+                const searchInput = document.getElementById('shopSearch');
+                if (searchInput) {
+                    let debounce;
+                    searchInput.addEventListener('input', () => {
+                        clearTimeout(debounce);
+                        debounce = setTimeout(() => renderShopGrid(), 200);
+                    });
+                }
+            }
+
+            // ---- Close modal on overlay click ----
+            function initModalClose() {
+                const modal = document.getElementById('buyModal');
+                if (modal) {
+                    modal.addEventListener('click', (e) => {
+                        if (e.target === modal) closeBuyModal();
+                    });
+                }
+            }
+
+            // ---- Public API ----
+            return {
+                loadShop,
+                loadGarage,
+                openBuyModal,
+                closeBuyModal,
+                confirmPurchase,
+                initSearch,
+                initModalClose,
+                getUserTokens: () => userTokens,
+                getUserGarage: () => userGarageCars
+            };
+        })();
+
+        // ============================================================
+        // INTEGRATION: Wire into your existing page navigation
+        // ============================================================
+        // If your existing code uses a function like navigateTo(page) or
+        // manually shows/hides .page-section divs, add these two cases.
+        //
+        // Example — if you have a switch/if block handling page switches,
+        // add these cases:
+        //
+        //   case 'shop':
+        //     hideAllPages();
+        //     document.getElementById('shopPage').style.display = 'block';
+        //     ShopGarage.loadShop();
+        //     break;
+        //   case 'garage':
+        //     hideAllPages();
+        //     document.getElementById('garagePage').style.display = 'block';
+        //     ShopGarage.loadGarage();
+        //     break;
+        //
+        // If you use event-delegation on nav buttons, make sure the
+        // data-page="shop" and data-page="garage" buttons fire the
+        // same navigation logic as your other pages.
+        //
+        // Below is a self-contained hook that listens for clicks on
+        // any nav-btn with data-page="shop" or data-page="garage"
+        // and calls the appropriate loader. Remove or adapt this
+        // if your existing nav handler already covers it.
+        // ============================================================
+
+        document.addEventListener('click', (e) => {
+            const btn = e.target.closest('.nav-btn[data-page="shop"], .nav-btn[data-page="garage"]');
+            if (!btn) return;
+
+            const page = btn.dataset.page;
+
+            // Deactivate all nav buttons
+            document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active-nav'));
+            btn.classList.add('active-nav');
+
+            // Hide all page sections
+            document.querySelectorAll('.page-section').forEach(s => {
+                s.style.display = 'none';
+            });
+
+            // Show target page
+            const target = document.getElementById(page + 'Page');
+            if (target) {
+                target.style.display = 'block';
+            }
+
+            // Load data
+            if (page === 'shop') {
+                ShopGarage.loadShop();
+            } else if (page === 'garage') {
+                ShopGarage.loadGarage();
+            }
+        });
+
+        // Init non-page-specific listeners
+        ShopGarage.initSearch();
+        ShopGarage.initModalClose();
+        // Tracks which item the user is about to buy
+        let currentBuyItem = null;
+
+        // Call this when a "Buy" button is clicked on a shop card
+        function openBuyModal(item) {
+            currentBuyItem = item;
+
+            document.getElementById('buyModalImg').src = item.image || item.img_url || '';
+            document.getElementById('buyModalName').textContent = item.name || item.title || '';
+            document.getElementById('buyModalModel').textContent = item.model || item.subtitle || '';
+
+            const cost = item.price || item.token_cost || 0;
+            document.getElementById('buyModalPrice').textContent = `🪙 ${cost.toLocaleString()} tokens`;
+            document.getElementById('buyModalCost').textContent = `-${cost.toLocaleString()} tokens`;
+
+            // Fetch current balance and compute remaining
+            supabase.auth.getSession().then(({ data: { session } }) => {
+                if (!session) {
+                    document.getElementById('buyModalBalance').textContent = '—';
+                    document.getElementById('buyModalRemaining').textContent = '—';
+                    return;
+                }
+                supabase.from('profiles').select('tokens').eq('id', session.user.id).single()
+                    .then(({ data }) => {
+                        const bal = data?.tokens ?? 0;
+                        document.getElementById('buyModalBalance').textContent = `${bal.toLocaleString()} tokens`;
+                        const remaining = bal - cost;
+                        const remEl = document.getElementById('buyModalRemaining');
+                        remEl.textContent = `${remaining.toLocaleString()} tokens`;
+                        remEl.style.color = remaining < 0 ? '#dc2626' : '#1a1a2e';
+                    });
+            });
+
+            document.getElementById('buyModal').classList.add('active');
+            lucide.createIcons();
+        }
     </script>
 </body>
 
