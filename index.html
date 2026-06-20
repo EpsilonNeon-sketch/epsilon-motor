@@ -662,7 +662,6 @@
             background: #1a1a2e;
         }
 
-        /* Dictionary specific styles */
         .dict-card {
             transition: all 0.25s ease;
             border-left: 4px solid transparent;
@@ -778,15 +777,149 @@
             border-radius: 2px;
         }
 
-        .compare-slot{min-height:400px;transition:all 0.3s}
-        .compare-slot.filled{background:linear-gradient(135deg,rgba(26,26,46,0.02),rgba(61,61,94,0.03))}
-        .spec-row{display:grid;grid-template-columns:1fr 140px 1fr;gap:1rem;padding:1rem;border-bottom:1px solid rgba(0,0,0,0.05)}
-        .spec-row:last-child{border:none}
-        .spec-label{text-align:center;font-weight:600;color:#6b7280;font-size:0.8rem}
-        .spec-value{font-weight:600;color:#1a1a2e}
-        .winner{color:#10b981!important}
-        .loser{color:#9ca3af!important}
-        @media(max-width:768px){.spec-row{grid-template-columns:1fr}}
+        .compare-slot {
+            min-height: 400px;
+            transition: all 0.3s
+        }
+
+        .compare-slot.filled {
+            background: linear-gradient(135deg, rgba(26, 26, 46, 0.02), rgba(61, 61, 94, 0.03))
+        }
+
+        .spec-row {
+            display: grid;
+            grid-template-columns: 1fr 140px 1fr;
+            gap: 1rem;
+            padding: 1rem;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05)
+        }
+
+        .spec-row:last-child {
+            border: none
+        }
+
+        .spec-label {
+            text-align: center;
+            font-weight: 600;
+            color: #6b7280;
+            font-size: 0.8rem
+        }
+
+        .spec-value {
+            font-weight: 600;
+            color: #1a1a2e
+        }
+
+        .winner {
+            color: #10b981 !important
+        }
+
+        .loser {
+            color: #9ca3af !important
+        }
+
+        @media (max-width: 768px) {
+            .spec-row {
+                grid-template-columns: 1fr
+            }
+        }
+
+        /* Leaderboard styles */
+        .lb-row {
+            transition: all 0.25s ease;
+            cursor: pointer;
+        }
+
+        .lb-row:hover {
+            background: rgba(26, 26, 46, 0.03);
+            transform: translateX(4px);
+        }
+
+        .lb-rank {
+            width: 2.75rem;
+            height: 2.75rem;
+            border-radius: 0.75rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 0.85rem;
+            flex-shrink: 0;
+        }
+
+        .lb-rank.gold {
+            background: linear-gradient(135deg, #fbbf24, #f59e0b);
+            color: white;
+            box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3);
+        }
+
+        .lb-rank.silver {
+            background: linear-gradient(135deg, #d1d5db, #9ca3af);
+            color: white;
+            box-shadow: 0 4px 12px rgba(156, 163, 175, 0.3);
+        }
+
+        .lb-rank.bronze {
+            background: linear-gradient(135deg, #d97706, #b45309);
+            color: white;
+            box-shadow: 0 4px 12px rgba(180, 83, 9, 0.3);
+        }
+
+        .lb-rank.default {
+            background: #f3f4f6;
+            color: #6b7280;
+        }
+
+        .lb-bar {
+            height: 6px;
+            border-radius: 3px;
+            background: #e5e7eb;
+            overflow: hidden;
+        }
+
+        .lb-bar-fill {
+            height: 100%;
+            border-radius: 3px;
+            background: linear-gradient(90deg, #1a1a2e, #3d3d5e);
+            transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .lb-top-card {
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .lb-top-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 16px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .lb-type-toggle {
+            display: inline-flex;
+            background: #f3f4f6;
+            border-radius: 0.75rem;
+            padding: 4px;
+            gap: 4px;
+        }
+
+        .lb-type-toggle button {
+            padding: 0.5rem 1.25rem;
+            border-radius: 0.6rem;
+            font-size: 0.85rem;
+            font-weight: 600;
+            border: none;
+            background: transparent;
+            color: #6b7280;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .lb-type-toggle button.active-lb-type {
+            background: white;
+            color: #1a1a2e;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+        }
 
         @media (max-width: 768px) {
             .sidebar {
@@ -834,6 +967,10 @@
                     class="nav-btn w-full flex items-center gap-3 p-3 rounded-xl hover:bg-gray-100 transition text-left text-gray-600"
                     data-page="dictionary"><i data-lucide="book-open"
                         style="width:20px;height:20px;"></i><span>Dictionary</span></button>
+                <button
+                    class="nav-btn w-full flex items-center gap-3 p-3 rounded-xl hover:bg-gray-100 transition text-left text-gray-600"
+                    data-page="leaderboard"><i data-lucide="trophy"
+                        style="width:20px;height:20px;"></i><span>Leaderboard</span></button>
                 <button
                     class="nav-btn w-full flex items-center gap-3 p-3 rounded-xl hover:bg-gray-100 transition text-left text-gray-600"
                     data-page="users"><i data-lucide="users"
@@ -1072,13 +1209,9 @@
                     <p class="text-gray-400 mt-1">Learn the language of the automobile industry — <span id="dictCount"
                             class="font-semibold text-gray-600">40</span> terms and counting</p>
                 </header>
-
-                <!-- Search -->
                 <div class="search-box mb-5 max-w-lg"><i data-lucide="search" style="width:18px;height:18px;"></i><input
                         id="dictSearch" type="text" placeholder="Search terms, definitions, examples..."
                         class="input-field" style="padding-left:3rem;"></div>
-
-                <!-- Category filters -->
                 <div class="flex gap-2 flex-wrap mb-5" id="dictFilters">
                     <button class="filter-btn active-filter" data-filter="all">All</button>
                     <button class="filter-btn" data-filter="Engine">Engine</button>
@@ -1089,20 +1222,12 @@
                     <button class="filter-btn" data-filter="Transmission">Transmission</button>
                     <button class="filter-btn" data-filter="General">General</button>
                 </div>
-
-                <!-- Letter nav -->
                 <div class="dict-letter-nav flex flex-wrap gap-1 mb-6" id="dictLetterNav"></div>
-
-                <!-- Terms list -->
                 <div id="dictGrid" class="space-y-3"></div>
-
-                <!-- No results -->
                 <div id="noDictMsg" class="hidden text-center py-16"><i data-lucide="book-x"
                         style="width:48px;height:48px;color:#d1d5db;margin:0 auto 1rem;display:block;"></i>
                     <p class="text-gray-400 font-medium">No terms found matching your search</p>
                 </div>
-
-                <!-- Loading -->
                 <div id="dictLoading" class="space-y-3">
                     <div class="glass rounded-xl p-5">
                         <div class="skeleton h-5 w-1/3 mb-3"></div>
@@ -1121,6 +1246,45 @@
                         <div class="skeleton h-4 w-full mb-2"></div>
                         <div class="skeleton h-4 w-1/2 mb-4"></div>
                         <div class="skeleton h-4 w-4/5"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- LEADERBOARD -->
+            <div id="leaderboardSection" class="section hidden">
+                <header class="mb-6">
+                    <h1 class="text-3xl font-extrabold text-gray-900 tracking-tight">Leaderboard</h1>
+                    <p class="text-gray-400 mt-1">Rankings powered by performance data from our collection</p>
+                </header>
+
+                <!-- Type toggle -->
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
+                    <div class="lb-type-toggle" id="lbTypeToggle">
+                        <button class="active-lb-type" data-lbtype="cars">
+                            <span class="flex items-center gap-2"><i data-lucide="car"
+                                    style="width:16px;height:16px;"></i> Cars</span>
+                        </button>
+                        <button data-lbtype="planes">
+                            <span class="flex items-center gap-2"><i data-lucide="plane"
+                                    style="width:16px;height:16px;"></i> Planes</span>
+                        </button>
+                    </div>
+                    <p class="text-xs text-gray-400">Click any entry to view full details</p>
+                </div>
+
+                <!-- Category tabs -->
+                <div class="flex gap-2 flex-wrap mb-8" id="lbCategoryTabs"></div>
+
+                <!-- Top 3 podium -->
+                <div id="lbPodium" class="grid grid-cols-1 md:grid-cols-3 gap-5 mb-8"></div>
+
+                <!-- Remaining list -->
+                <div class="glass rounded-2xl overflow-hidden">
+                    <div id="lbList" class="divide-y divide-gray-100"></div>
+                    <div id="lbNoData" class="hidden text-center py-16">
+                        <i data-lucide="bar-chart-3"
+                            style="width:48px;height:48px;color:#d1d5db;margin:0 auto 1rem;display:block;"></i>
+                        <p class="text-gray-400 font-medium">No data available for this category</p>
                     </div>
                 </div>
             </div>
@@ -1190,7 +1354,8 @@
                 </header>
                 <div class="glass rounded-2xl p-5 mb-6">
                     <label class="text-gray-700 font-semibold mr-4">Type:</label>
-                    <select id="compareType" class="px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-gray-900 outline-none">
+                    <select id="compareType"
+                        class="px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-gray-900 outline-none">
                         <option value="cars">Cars</option>
                         <option value="planes">Planes</option>
                     </select>
@@ -1198,7 +1363,8 @@
                 <div class="grid md:grid-cols-2 gap-6 mb-6">
                     <div class="glass rounded-2xl p-6 compare-slot" id="compareSlot1">
                         <h2 class="text-xl font-bold text-gray-800 mb-4">Select Item 1</h2>
-                        <select id="compareSelect1" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-gray-900 outline-none mb-4">
+                        <select id="compareSelect1"
+                            class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-gray-900 outline-none mb-4">
                             <option value="">Choose...</option>
                         </select>
                         <div id="comparePreview1" class="hidden">
@@ -1209,7 +1375,8 @@
                     </div>
                     <div class="glass rounded-2xl p-6 compare-slot" id="compareSlot2">
                         <h2 class="text-xl font-bold text-gray-800 mb-4">Select Item 2</h2>
-                        <select id="compareSelect2" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-gray-900 outline-none mb-4">
+                        <select id="compareSelect2"
+                            class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-gray-900 outline-none mb-4">
                             <option value="">Choose...</option>
                         </select>
                         <div id="comparePreview2" class="hidden">
@@ -1218,6 +1385,15 @@
                             <p id="compareSub2" class="text-gray-600 text-sm"></p>
                         </div>
                     </div>
+                </div>
+                <div class="text-center mb-6">
+                    <button id="compareBtn" disabled
+                        class="px-8 py-3 bg-gray-900 text-white font-semibold rounded-xl transition shadow-lg disabled:opacity-40 disabled:cursor-not-allowed hover:bg-gray-800 disabled:hover:bg-gray-900">
+                        <span class="flex items-center gap-2 justify-center">
+                            <i data-lucide="git-compare" style="width:20px;height:20px;"></i>
+                            Compare Specifications
+                        </span>
+                    </button>
                 </div>
                 <div id="comparisonResults" class="hidden glass rounded-2xl p-6">
                     <h2 class="text-2xl font-bold text-gray-800 mb-6 text-center">Specification Comparison</h2>
@@ -1291,36 +1467,131 @@
         let currentUser = null, currentProfile = null, allProfiles = [];
         let carsData = [], planesData = [], glossaryData = [];
         let compareType = 'cars', compareItem1 = null, compareItem2 = null;
+        let lbCurrentType = 'cars', lbCurrentCategory = '';
+
+        // Leaderboard category definitions — keys match possible JSON field names
+        const lbCarCategories = [
+            { key: 'top_speed', label: 'Top Speed', unit: 'mph', icon: 'gauge', sortDesc: true },
+            { key: 'horsepower', label: 'Horsepower', unit: 'hp', icon: 'flame', sortDesc: true },
+            { key: 'torque', label: 'Torque', unit: 'lb-ft', icon: 'rotate-cw', sortDesc: true },
+            { key: '0-60', label: '0–60 mph', unit: 'sec', icon: 'zap', sortDesc: false },
+            { key: 'weight', label: 'Curb Weight', unit: 'lbs', icon: 'weight', sortDesc: false },
+            { key: 'year', label: 'Year (Newest)', unit: '', icon: 'calendar', sortDesc: true },
+        ];
+        const lbPlaneCategories = [
+            { key: 'top_speed', label: 'Top Speed', unit: 'mph', icon: 'gauge', sortDesc: true },
+            { key: 'range', label: 'Range', unit: 'mi', icon: 'map-pin', sortDesc: true },
+            { key: 'wingspan', label: 'Wingspan', unit: 'ft', icon: 'move-horizontal', sortDesc: true },
+            { key: 'capacity', label: 'Passenger Capacity', unit: 'pax', icon: 'users', sortDesc: true },
+            { key: 'length', label: 'Length', unit: 'ft', icon: 'ruler', sortDesc: true },
+            { key: 'year', label: 'Year (Newest)', unit: '', icon: 'calendar', sortDesc: true },
+        ];
+
+        // Try to extract a numeric value from various field formats
+        function extractNum(val) {
+            if (val === null || val === undefined) return null;
+            if (typeof val === 'number') return val;
+            const s = String(val).replace(/[^0-9.\-]/g, '');
+            const n = parseFloat(s);
+            return isNaN(n) ? null : n;
+        }
+
+        // Get a field value trying multiple possible key names
+        function getField(item, key) {
+            // Direct key
+            if (item[key] !== undefined) return extractNum(item[key]);
+            // Common alternative key patterns
+            const alts = {
+                'top_speed': ['top_speed', 'topSpeed', 'top speed', 'max_speed', 'maxSpeed', 'speed'],
+                'horsepower': ['horsepower', 'hp', 'power', 'engine_hp', 'engineHp'],
+                'torque': ['torque', 'torque_lb_ft', 'torqueLbFt'],
+                '0-60': ['0-60', 'zero_to_sixty', '0to60', 'acceleration', '0_60'],
+                'weight': ['weight', 'curb_weight', 'curbWeight', 'weight_lbs'],
+                'year': ['year', 'model_year', 'modelYear'],
+                'range': ['range', 'flight_range', 'flightRange', 'max_range'],
+                'wingspan': ['wingspan', 'wing_span', 'wingSpan'],
+                'capacity': ['capacity', 'passenger_capacity', 'passengerCapacity', 'passengers', 'seats', 'seating'],
+                'length': ['length', 'plane_length', 'planeLength'],
+            };
+            const candidates = alts[key] || [key];
+            for (const c of candidates) {
+                if (item[c] !== undefined) return extractNum(item[c]);
+            }
+            return null;
+        }
+
+        function getName(item) {
+            return item.name || item.model || item.title || 'Unknown';
+        }
+        function getSub(item) {
+            return item.manufacturer || item.brand || item.make || '';
+        }
+        function getImg(item) {
+            return item.image || item.img || item.image_url || item.imageUrl || item.photo || '';
+        }
+        function getType(item) {
+            return item.type || item.body_type || item.bodyType || item.category || '';
+        }
 
         // --- INIT ---
         document.addEventListener('DOMContentLoaded', async () => {
             lucide.createIcons();
-            setupNavigation(); setupSidebar(); setupAuthForms();
-            setupCarFilters(); setupPlaneFilters(); setupDictFilters();
-            setupSearch(); setupModals(); setupCompare();
+            setupNavigation();
+            setupSidebar();
+            setupAuthForms();
+            setupCarFilters();
+            setupPlaneFilters();
+            setupDictFilters();
+            setupSearch();
+            setupModals();
+            setupCompare();
+            setupLeaderboard();
             await Promise.all([loadCarsJSON(), loadPlanesJSON(), loadGlossaryJSON()]);
             checkAuth();
         });
 
         // --- DATA LOADERS ---
         async function loadCarsJSON() {
-            try { const r = await fetch('car.json'); if (!r.ok) throw new Error(); carsData = await r.json(); }
-            catch (e) { console.error('car.json error:', e); carsData = []; }
+            try {
+                const r = await fetch('car.json');
+                if (!r.ok) throw new Error();
+                carsData = await r.json();
+            } catch (e) {
+                console.error('car.json error:', e);
+                carsData = [];
+            }
         }
         async function loadPlanesJSON() {
-            try { const r = await fetch('plane.json'); if (!r.ok) throw new Error(); planesData = await r.json(); }
-            catch (e) { console.error('plane.json error:', e); planesData = []; }
+            try {
+                const r = await fetch('plane.json');
+                if (!r.ok) throw new Error();
+                planesData = await r.json();
+            } catch (e) {
+                console.error('plane.json error:', e);
+                planesData = [];
+            }
         }
         async function loadGlossaryJSON() {
-            try { const r = await fetch('glossary.json'); if (!r.ok) throw new Error(); glossaryData = await r.json(); }
-            catch (e) { console.error('glossary.json error:', e); glossaryData = []; }
+            try {
+                const r = await fetch('glossary.json');
+                if (!r.ok) throw new Error();
+                glossaryData = await r.json();
+            } catch (e) {
+                console.error('glossary.json error:', e);
+                glossaryData = [];
+            }
         }
 
         // --- AUTH ---
         async function checkAuth() {
             const { data: { session } } = await supabaseClient.auth.getSession();
-            if (session) { currentUser = session.user; await fetchCurrentProfile(); showDashboard(); }
-            else showAuth();
+            if (session) {
+                currentUser = session.user;
+                await fetchCurrentProfile();
+                showDashboard();
+            } else {
+                showAuth();
+            }
         }
         async function fetchCurrentProfile() {
             if (!currentUser) return;
@@ -1338,7 +1609,13 @@
             document.getElementById('authPage').classList.remove('active');
             document.getElementById('dashboardPage').classList.add('active');
             document.getElementById('menuToggle').style.display = 'flex';
-            updateUserUI(); loadHomeData(); loadCars(); loadPlanes(); loadUsers(); loadDictionary();
+            updateUserUI();
+            loadHomeData();
+            loadCars();
+            loadPlanes();
+            loadUsers();
+            loadDictionary();
+            renderLeaderboard();
             lucide.createIcons();
         }
         function updateUserUI() {
@@ -1351,300 +1628,751 @@
             if (pic) av.innerHTML = `<img src="${pic}" class="w-12 h-12 rounded-full object-cover shadow-lg shadow-gray-900/20">`;
             else av.textContent = init;
             const sa = document.getElementById('sidebarAvatar');
-            if (pic) { sa.innerHTML = `<img src="${pic}" class="w-9 h-9 rounded-full object-cover">`; sa.className = 'w-9 h-9 rounded-full overflow-hidden flex-shrink-0'; }
-            else { sa.innerHTML = ''; sa.textContent = init; sa.className = 'w-9 h-9 rounded-full bg-gray-900 flex items-center justify-center text-white font-bold text-sm flex-shrink-0'; }
+            if (pic) {
+                sa.innerHTML = `<img src="${pic}" class="w-9 h-9 rounded-full object-cover">`;
+                sa.className = 'w-9 h-9 rounded-full overflow-hidden flex-shrink-0';
+            } else {
+                sa.innerHTML = '';
+                sa.textContent = init;
+                sa.className = 'w-9 h-9 rounded-full bg-gray-900 flex items-center justify-center text-white font-bold text-sm flex-shrink-0';
+            }
             document.getElementById('sidebarUserName').textContent = dn;
             document.getElementById('sidebarUserEmail').textContent = currentProfile?.username ? '@' + currentProfile.username : currentUser.email || '';
         }
-        function setupAuthForms() {
-            document.getElementById('showSignup').addEventListener('click', e => { e.preventDefault(); document.getElementById('loginForm').classList.add('hidden'); document.getElementById('signupForm').classList.remove('hidden'); });
-            document.getElementById('showLogin').addEventListener('click', e => { e.preventDefault(); document.getElementById('signupForm').classList.add('hidden'); document.getElementById('loginForm').classList.remove('hidden'); });
-            document.getElementById('loginForm').addEventListener('submit', async e => {
-                e.preventDefault(); const err = document.getElementById('loginError'); err.classList.add('hidden');
-                const { data, error } = await supabaseClient.auth.signInWithPassword({ email: document.getElementById('loginEmail').value, password: document.getElementById('loginPassword').value });
-                if (error) { err.textContent = error.message; err.classList.remove('hidden'); }
-                else { currentUser = data.user; await fetchCurrentProfile(); showToast('Welcome back!', 'success'); showDashboard(); }
-            });
-            document.getElementById('signupForm').addEventListener('submit', async e => {
-                e.preventDefault(); const err = document.getElementById('signupError'); const suc = document.getElementById('signupSuccess'); err.classList.add('hidden'); suc.classList.add('hidden');
-                const { data, error } = await supabaseClient.auth.signUp({ email: document.getElementById('signupEmail').value, password: document.getElementById('signupPassword').value, options: { data: { display_name: document.getElementById('signupName').value, username: document.getElementById('signupUsername').value } } });
-                if (error) { err.textContent = error.message; err.classList.remove('hidden'); }
-                else if (data.user && !data.session) { suc.textContent = 'Account created! Check your email to verify, then sign in.'; suc.classList.remove('hidden'); }
-                else if (data.session) { currentUser = data.user; await fetchCurrentProfile(); showToast('Account created!', 'success'); showDashboard(); }
-            });
-            document.getElementById('logoutBtn').addEventListener('click', async () => { await supabaseClient.auth.signOut(); currentUser = null; currentProfile = null; showToast('Signed out', 'success'); showAuth(); });
-        }
 
         // --- NAVIGATION ---
-        function setupNavigation() { document.querySelectorAll('.nav-btn[data-page]').forEach(b => b.addEventListener('click', () => navigateTo(b.dataset.page))); }
+        function setupNavigation() {
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const page = btn.dataset.page;
+                    navigateTo(page);
+                });
+            });
+        }
         function navigateTo(page) {
-            document.querySelectorAll('.nav-btn[data-page]').forEach(b => { b.classList.remove('active-nav'); b.classList.add('text-gray-600'); if (b.dataset.page === page) { b.classList.add('active-nav'); b.classList.remove('text-gray-600'); } });
+            // Update nav buttons
+            document.querySelectorAll('.nav-btn').forEach(b => {
+                b.classList.remove('active-nav');
+                b.classList.add('text-gray-600', 'hover:bg-gray-100');
+            });
+            const activeBtn = document.querySelector(`.nav-btn[data-page="${page}"]`);
+            if (activeBtn) {
+                activeBtn.classList.add('active-nav');
+                activeBtn.classList.remove('text-gray-600', 'hover:bg-gray-100');
+            }
+            // Show section
             document.querySelectorAll('.section').forEach(s => s.classList.add('hidden'));
-            const s = document.getElementById(page + 'Section'); if (s) s.classList.remove('hidden');
-            if (window.innerWidth < 768) { document.getElementById('sidebar').classList.remove('open'); document.getElementById('sidebarOverlay').classList.remove('active'); }
-            if (page === 'users') loadUsers();
-            if (page === 'cars') loadCars();
-            if (page === 'planes') loadPlanes();
-            if (page === 'dictionary') loadDictionary();
-            if (page === 'compare') { loadCompareSelects(); resetCompare(); }
-            lucide.createIcons();
+            const sectionMap = {
+                home: 'homeSection', cars: 'carsSection', planes: 'planesSection',
+                dictionary: 'dictionarySection', users: 'usersSection',
+                compare: 'compareSection', leaderboard: 'leaderboardSection'
+            };
+            const sec = document.getElementById(sectionMap[page]);
+            if (sec) sec.classList.remove('hidden');
+            // Close sidebar on mobile
+            if (window.innerWidth < 768) {
+                document.getElementById('sidebar').classList.remove('open');
+                document.getElementById('sidebarOverlay').classList.remove('active');
+            }
+            // Re-render leaderboard when navigating to it
+            if (page === 'leaderboard') {
+                renderLeaderboard();
+                lucide.createIcons();
+            }
         }
 
         // --- SIDEBAR ---
         function setupSidebar() {
-            const sb = document.getElementById('sidebar'), ov = document.getElementById('sidebarOverlay'), mc = document.getElementById('mainContent');
-            document.getElementById('menuToggle').addEventListener('click', () => { if (window.innerWidth < 768) { sb.classList.toggle('open'); ov.classList.toggle('active'); } else { sb.classList.toggle('closed'); mc.classList.toggle('expanded'); } });
-            document.getElementById('closeSidebar').addEventListener('click', () => { sb.classList.remove('open'); ov.classList.remove('active'); });
-            ov.addEventListener('click', () => { sb.classList.remove('open'); ov.classList.remove('active'); });
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('sidebarOverlay');
+            const toggle = document.getElementById('menuToggle');
+            const close = document.getElementById('closeSidebar');
+            toggle.addEventListener('click', () => {
+                sidebar.classList.toggle('open');
+                overlay.classList.toggle('active');
+            });
+            close.addEventListener('click', () => {
+                sidebar.classList.remove('open');
+                overlay.classList.remove('active');
+            });
+            overlay.addEventListener('click', () => {
+                sidebar.classList.remove('open');
+                overlay.classList.remove('active');
+            });
+        }
+
+        // --- AUTH FORMS ---
+        function setupAuthForms() {
+            document.getElementById('showSignup').addEventListener('click', e => {
+                e.preventDefault();
+                document.getElementById('loginForm').classList.add('hidden');
+                document.getElementById('signupForm').classList.remove('hidden');
+            });
+            document.getElementById('showLogin').addEventListener('click', e => {
+                e.preventDefault();
+                document.getElementById('signupForm').classList.add('hidden');
+                document.getElementById('loginForm').classList.remove('hidden');
+            });
+            document.getElementById('loginForm').addEventListener('submit', async e => {
+                e.preventDefault();
+                const err = document.getElementById('loginError');
+                err.classList.add('hidden');
+                const { data, error } = await supabaseClient.auth.signInWithPassword({
+                    email: document.getElementById('loginEmail').value,
+                    password: document.getElementById('loginPassword').value
+                });
+                if (error) {
+                    err.textContent = error.message;
+                    err.classList.remove('hidden');
+                } else {
+                    currentUser = data.user;
+                    await fetchCurrentProfile();
+                    showDashboard();
+                    showToast('Welcome back!');
+                }
+            });
+            document.getElementById('signupForm').addEventListener('submit', async e => {
+                e.preventDefault();
+                const err = document.getElementById('signupError');
+                const suc = document.getElementById('signupSuccess');
+                err.classList.add('hidden');
+                suc.classList.add('hidden');
+                const { data, error } = await supabaseClient.auth.signUp({
+                    email: document.getElementById('signupEmail').value,
+                    password: document.getElementById('signupPassword').value,
+                    options: {
+                        data: {
+                            display_name: document.getElementById('signupName').value,
+                            username: document.getElementById('signupUsername').value
+                        }
+                    }
+                });
+                if (error) {
+                    err.textContent = error.message;
+                    err.classList.remove('hidden');
+                } else {
+                    suc.textContent = 'Account created! Check your email to verify, then sign in.';
+                    suc.classList.remove('hidden');
+                }
+            });
+            document.getElementById('logoutBtn').addEventListener('click', async () => {
+                await supabaseClient.auth.signOut();
+                currentUser = null;
+                currentProfile = null;
+                showAuth();
+                showToast('Signed out');
+            });
+        }
+
+        // --- TOAST ---
+        function showToast(msg, type = 'success') {
+            const t = document.getElementById('toast');
+            t.textContent = msg;
+            t.className = `toast toast-${type} show`;
+            setTimeout(() => t.classList.remove('show'), 3000);
         }
 
         // --- HOME ---
         function loadHomeData() {
             document.getElementById('statCars').textContent = carsData.length || '—';
             document.getElementById('statPlanes').textContent = planesData.length || '—';
-            const mfgs = new Set([...carsData.map(c => c.manufacturer), ...planesData.map(p => p.manufacturer)]);
+            const mfgs = new Set([...carsData.map(c => c.manufacturer || c.brand || c.make).filter(Boolean), ...planesData.map(p => p.manufacturer || p.brand || p.make).filter(Boolean)]);
             document.getElementById('statMfg').textContent = mfgs.size || '—';
             document.getElementById('statUsers').textContent = allProfiles.length || '—';
-            document.getElementById('featuredCarsGrid').innerHTML = carsData.slice(0, 3).map(c => createCarCard(c)).join('');
-            document.getElementById('featuredPlanesGrid').innerHTML = planesData.slice(0, 3).map(p => createPlaneCard(p)).join('');
+            // Featured cars
+            const fcGrid = document.getElementById('featuredCarsGrid');
+            const featured = carsData.slice(0, 3);
+            fcGrid.innerHTML = featured.map(c => buildCarCard(c)).join('');
+            // Featured planes
+            const fpGrid = document.getElementById('featuredPlanesGrid');
+            const fPlanes = planesData.slice(0, 3);
+            fpGrid.innerHTML = fPlanes.map(p => buildPlaneCard(p)).join('');
             lucide.createIcons();
         }
 
         // --- CAR CARDS ---
-        function createCarCard(car) {
-            const tc = { 'Sedan': 'bg-blue-50 text-blue-700', 'SUV': 'bg-amber-50 text-amber-700', 'Sports': 'bg-red-50 text-red-700', 'Truck': 'bg-green-50 text-green-700', 'Electric': 'bg-emerald-50 text-emerald-700', 'Coupe': 'bg-purple-50 text-purple-700' };
-            return `<div class="car-card glass rounded-2xl overflow-hidden" onclick="openCarModal(${car.id})"><div class="relative overflow-hidden aspect-video bg-gray-100"><img src="${car.image}" alt="${car.name}" class="car-img w-full h-full object-cover" loading="lazy"><div class="absolute top-3 left-3"><span class="badge ${tc[car.type] || 'bg-gray-100 text-gray-700'}">${car.type}</span></div><div class="absolute top-3 right-3"><span class="badge badge-dark">$${car.price.toLocaleString()}</span></div></div><div class="p-5"><p class="text-xs text-gray-400 font-medium uppercase tracking-wider mb-1">${car.manufacturer}</p><h3 class="text-lg font-bold text-gray-900">${car.name} <span class="text-gray-400 font-normal">${car.model}</span></h3><div class="flex items-center gap-4 mt-3 text-xs text-gray-400"><span class="flex items-center gap-1"><i data-lucide="gauge" style="width:13px;height:13px;"></i> ${car.horsepower} HP</span><span class="flex items-center gap-1"><i data-lucide="zap" style="width:13px;height:13px;"></i> ${car.acceleration}</span><span class="flex items-center gap-1"><i data-lucide="fuel" style="width:13px;height:13px;"></i> ${car.fuelType}</span></div></div></div>`;
+        function buildCarCard(car) {
+            const name = getName(car);
+            const sub = getSub(car);
+            const img = getImg(car);
+            const type = getType(car);
+            const hp = getField(car, 'horsepower');
+            const spd = getField(car, 'top_speed');
+            return `<div class="car-card glass rounded-2xl overflow-hidden" onclick="openCarModal(${carsData.indexOf(car)})">
+                <div class="h-48 overflow-hidden bg-gray-100"><img src="${img}" alt="${name}" class="car-img w-full h-full object-cover" onerror="this.style.display='none'"></div>
+                <div class="p-5">
+                    <div class="flex items-center gap-2 mb-2">${type ? `<span class="badge badge-outline">${type}</span>` : ''}</div>
+                    <h3 class="font-bold text-gray-900 text-lg leading-tight">${name}</h3>
+                    <p class="text-gray-400 text-sm">${sub}</p>
+                    <div class="flex gap-4 mt-3 text-sm">
+                        ${hp !== null ? `<span class="text-gray-600 font-medium">${hp} hp</span>` : ''}
+                        ${spd !== null ? `<span class="text-gray-600 font-medium">${spd} mph</span>` : ''}
+                    </div>
+                </div>
+            </div>`;
         }
-        function loadCars() {
-            const s = (document.getElementById('carSearch')?.value || '').toLowerCase();
-            const f = document.querySelector('#carFilters .filter-btn.active-filter')?.dataset.filter || 'all';
-            let fl = carsData.filter(c => { const ms = !s || c.name.toLowerCase().includes(s) || c.manufacturer.toLowerCase().includes(s) || c.model.toLowerCase().includes(s) || c.type.toLowerCase().includes(s); const mf = f === 'all' || c.type === f; return ms && mf; });
-            const g = document.getElementById('carsGrid'), n = document.getElementById('noCarsMsg');
-            if (!fl.length) { g.innerHTML = ''; n.classList.remove('hidden'); } else { n.classList.add('hidden'); g.innerHTML = fl.map(c => createCarCard(c)).join(''); }
-            lucide.createIcons();
-        }
-        function setupCarFilters() { document.querySelectorAll('#carFilters .filter-btn').forEach(b => b.addEventListener('click', () => { document.querySelectorAll('#carFilters .filter-btn').forEach(x => x.classList.remove('active-filter')); b.classList.add('active-filter'); loadCars(); })); }
-        function openCarModal(id) {
-            const c = carsData.find(x => x.id === id); if (!c) return;
-            const fp = '$' + c.price.toLocaleString(), df = new Date(c.dateOfManufacturing).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
-            document.getElementById('carModalContent').innerHTML = `<div class="relative"><img src="${c.image}" alt="${c.name}" class="w-full h-64 md:h-80 object-cover"><button onclick="closeCarModal()" class="absolute top-4 right-4 w-10 h-10 bg-white/90 backdrop-blur rounded-full flex items-center justify-center hover:bg-white transition shadow-lg"><i data-lucide="x" style="width:20px;height:20px;"></i></button><div class="absolute bottom-4 left-4 flex gap-2"><span class="badge badge-dark">${c.type}</span><span class="badge bg-white/90 text-gray-900">${fp}</span></div></div><div class="p-6 md:p-8"><p class="text-xs text-gray-400 font-medium uppercase tracking-wider mb-1">${c.manufacturer}</p><h2 class="text-2xl md:text-3xl font-extrabold text-gray-900 mb-2">${c.name} <span class="text-gray-400 font-normal">${c.model}</span></h2><p class="text-sm text-gray-400 mb-6">Manufactured: ${df}</p><p class="text-gray-600 text-sm leading-relaxed mb-8">${c.details}</p><h4 class="text-sm font-bold text-gray-900 uppercase tracking-wider mb-4">Specifications</h4><div class="spec-grid mb-6"><div class="p-3 rounded-xl bg-gray-50 border border-gray-100"><p class="text-xs text-gray-400 mb-0.5">Engine</p><p class="text-sm font-semibold text-gray-800">${c.engine}</p></div><div class="p-3 rounded-xl bg-gray-50 border border-gray-100"><p class="text-xs text-gray-400 mb-0.5">Horsepower</p><p class="text-sm font-semibold text-gray-800">${c.horsepower} HP</p></div><div class="p-3 rounded-xl bg-gray-50 border border-gray-100"><p class="text-xs text-gray-400 mb-0.5">Top Speed</p><p class="text-sm font-semibold text-gray-800">${c.topSpeed}</p></div><div class="p-3 rounded-xl bg-gray-50 border border-gray-100"><p class="text-xs text-gray-400 mb-0.5">0-60 mph</p><p class="text-sm font-semibold text-gray-800">${c.acceleration}</p></div><div class="p-3 rounded-xl bg-gray-50 border border-gray-100"><p class="text-xs text-gray-400 mb-0.5">Transmission</p><p class="text-sm font-semibold text-gray-800">${c.transmission}</p></div><div class="p-3 rounded-xl bg-gray-50 border border-gray-100"><p class="text-xs text-gray-400 mb-0.5">Drivetrain</p><p class="text-sm font-semibold text-gray-800">${c.drivetrain}</p></div><div class="p-3 rounded-xl bg-gray-50 border border-gray-100"><p class="text-xs text-gray-400 mb-0.5">Fuel Type</p><p class="text-sm font-semibold text-gray-800">${c.fuelType}</p></div><div class="p-3 rounded-xl bg-gray-50 border border-gray-100"><p class="text-xs text-gray-400 mb-0.5">Fuel Economy</p><p class="text-sm font-semibold text-gray-800">${c.mpg}</p></div></div><div class="flex items-center justify-between p-4 rounded-xl bg-gray-900 text-white"><div><p class="text-xs text-gray-400">Starting Price</p><p class="text-2xl font-extrabold">${fp}</p></div><div class="text-right"><p class="text-xs text-gray-400">Type</p><p class="text-sm font-semibold">${c.type}</p></div></div></div>`;
-            document.getElementById('carModal').classList.add('active'); document.body.style.overflow = 'hidden'; lucide.createIcons();
-        }
-        function closeCarModal() { document.getElementById('carModal').classList.remove('active'); document.body.style.overflow = ''; }
 
         // --- PLANE CARDS ---
-        function createPlaneCard(p) {
-            const tc = { 'Commercial': 'bg-blue-50 text-blue-700', 'Private': 'bg-purple-50 text-purple-700', 'Military': 'bg-red-50 text-red-700', 'Cargo': 'bg-amber-50 text-amber-700' };
-            return `<div class="plane-card glass rounded-2xl overflow-hidden" onclick="openPlaneModal(${p.id})"><div class="relative overflow-hidden aspect-video bg-gray-100"><img src="${p.image}" alt="${p.name}" class="plane-img w-full h-full object-cover" loading="lazy"><div class="absolute top-3 left-3"><span class="badge ${tc[p.type] || 'bg-gray-100 text-gray-700'}">${p.type}</span></div><div class="absolute top-3 right-3"><span class="badge badge-dark">${p.size}</span></div></div><div class="p-5"><p class="text-xs text-gray-400 font-medium uppercase tracking-wider mb-1">${p.manufacturer}</p><h3 class="text-lg font-bold text-gray-900">${p.name}</h3><div class="flex items-center gap-4 mt-3 text-xs text-gray-400"><span class="flex items-center gap-1"><i data-lucide="ruler" style="width:13px;height:13px;"></i> ${p.length}</span><span class="flex items-center gap-1"><i data-lucide="users" style="width:13px;height:13px;"></i> ${p.capacity}</span><span class="flex items-center gap-1"><i data-lucide="navigation" style="width:13px;height:13px;"></i> ${p.range}</span></div></div></div>`;
+        function buildPlaneCard(plane) {
+            const name = getName(plane);
+            const sub = getSub(plane);
+            const img = getImg(plane);
+            const type = getType(plane);
+            const spd = getField(plane, 'top_speed');
+            const rng = getField(plane, 'range');
+            return `<div class="plane-card glass rounded-2xl overflow-hidden" onclick="openPlaneModal(${planesData.indexOf(plane)})">
+                <div class="h-48 overflow-hidden bg-gray-100"><img src="${img}" alt="${name}" class="plane-img w-full h-full object-cover" onerror="this.style.display='none'"></div>
+                <div class="p-5">
+                    <div class="flex items-center gap-2 mb-2">${type ? `<span class="badge badge-outline">${type}</span>` : ''}</div>
+                    <h3 class="font-bold text-gray-900 text-lg leading-tight">${name}</h3>
+                    <p class="text-gray-400 text-sm">${sub}</p>
+                    <div class="flex gap-4 mt-3 text-sm">
+                        ${spd !== null ? `<span class="text-gray-600 font-medium">${spd} mph</span>` : ''}
+                        ${rng !== null ? `<span class="text-gray-600 font-medium">${rng} mi range</span>` : ''}
+                    </div>
+                </div>
+            </div>`;
         }
-        function loadPlanes() {
-            const s = (document.getElementById('planeSearch')?.value || '').toLowerCase();
-            const f = document.querySelector('#planeFilters .filter-btn.active-filter')?.dataset.filter || 'all';
-            let fl = planesData.filter(p => { const ms = !s || p.name.toLowerCase().includes(s) || p.manufacturer.toLowerCase().includes(s) || p.type.toLowerCase().includes(s); const mf = f === 'all' || p.type === f; return ms && mf; });
-            const g = document.getElementById('planesGrid'), n = document.getElementById('noPlanesMsg');
-            if (!fl.length) { g.innerHTML = ''; n.classList.remove('hidden'); } else { n.classList.add('hidden'); g.innerHTML = fl.map(p => createPlaneCard(p)).join(''); }
+
+        // --- LOAD CARS ---
+        function loadCars(filter = 'all', search = '') {
+            const grid = document.getElementById('carsGrid');
+            const noMsg = document.getElementById('noCarsMsg');
+            let filtered = carsData;
+            if (filter !== 'all') filtered = filtered.filter(c => (getType(c)).toLowerCase() === filter.toLowerCase());
+            if (search) {
+                const q = search.toLowerCase();
+                filtered = filtered.filter(c => (getName(c) + ' ' + getSub(c) + ' ' + (c.model || '')).toLowerCase().includes(q));
+            }
+            if (filtered.length === 0) {
+                grid.innerHTML = '';
+                noMsg.classList.remove('hidden');
+            } else {
+                noMsg.classList.add('hidden');
+                grid.innerHTML = filtered.map(c => buildCarCard(c)).join('');
+            }
             lucide.createIcons();
         }
-        function setupPlaneFilters() { document.querySelectorAll('#planeFilters .filter-btn').forEach(b => b.addEventListener('click', () => { document.querySelectorAll('#planeFilters .filter-btn').forEach(x => x.classList.remove('active-filter')); b.classList.add('active-filter'); loadPlanes(); })); }
-        function openPlaneModal(id) {
-            const p = planesData.find(x => x.id === id); if (!p) return;
-            const df = new Date(p.firstFlight).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
-            document.getElementById('planeModalContent').innerHTML = `<div class="relative"><img src="${p.image}" alt="${p.name}" class="w-full h-64 md:h-80 object-cover"><button onclick="closePlaneModal()" class="absolute top-4 right-4 w-10 h-10 bg-white/90 backdrop-blur rounded-full flex items-center justify-center hover:bg-white transition shadow-lg"><i data-lucide="x" style="width:20px;height:20px;"></i></button><div class="absolute bottom-4 left-4 flex gap-2"><span class="badge badge-dark">${p.type}</span><span class="badge bg-white/90 text-gray-900">${p.size}</span></div></div><div class="p-6 md:p-8"><p class="text-xs text-gray-400 font-medium uppercase tracking-wider mb-1">${p.manufacturer}</p><h2 class="text-2xl md:text-3xl font-extrabold text-gray-900 mb-2">${p.name}</h2><p class="text-sm text-gray-400 mb-6">First Flight: ${df}</p><p class="text-gray-600 text-sm leading-relaxed mb-8">${p.details}</p><h4 class="text-sm font-bold text-gray-900 uppercase tracking-wider mb-4">Specifications</h4><div class="spec-grid mb-6"><div class="p-3 rounded-xl bg-gray-50 border border-gray-100"><p class="text-xs text-gray-400 mb-0.5">Wingspan</p><p class="text-sm font-semibold text-gray-800">${p.wingspan}</p></div><div class="p-3 rounded-xl bg-gray-50 border border-gray-100"><p class="text-xs text-gray-400 mb-0.5">Length</p><p class="text-sm font-semibold text-gray-800">${p.length}</p></div><div class="p-3 rounded-xl bg-gray-50 border border-gray-100"><p class="text-xs text-gray-400 mb-0.5">Height</p><p class="text-sm font-semibold text-gray-800">${p.height}</p></div><div class="p-3 rounded-xl bg-gray-50 border border-gray-100"><p class="text-xs text-gray-400 mb-0.5">Max Speed</p><p class="text-sm font-semibold text-gray-800">${p.maxSpeed}</p></div><div class="p-3 rounded-xl bg-gray-50 border border-gray-100"><p class="text-xs text-gray-400 mb-0.5">Range</p><p class="text-sm font-semibold text-gray-800">${p.range}</p></div><div class="p-3 rounded-xl bg-gray-50 border border-gray-100"><p class="text-xs text-gray-400 mb-0.5">Capacity</p><p class="text-sm font-semibold text-gray-800">${p.capacity}</p></div><div class="p-3 rounded-xl bg-gray-50 border border-gray-100"><p class="text-xs text-gray-400 mb-0.5">Engines</p><p class="text-sm font-semibold text-gray-800">${p.engineCount}x ${p.engineType}</p></div><div class="p-3 rounded-xl bg-gray-50 border border-gray-100"><p class="text-xs text-gray-400 mb-0.5">Max Takeoff Weight</p><p class="text-sm font-semibold text-gray-800">${p.weight}</p></div></div><div class="flex items-center justify-between p-4 rounded-xl bg-gray-900 text-white"><div><p class="text-xs text-gray-400">Classification</p><p class="text-lg font-extrabold">${p.type}</p></div><div class="text-right"><p class="text-xs text-gray-400">Size Category</p><p class="text-sm font-semibold">${p.size}</p></div></div></div>`;
-            document.getElementById('planeModal').classList.add('active'); document.body.style.overflow = 'hidden'; lucide.createIcons();
-        }
-        function closePlaneModal() { document.getElementById('planeModal').classList.remove('active'); document.body.style.overflow = ''; }
 
-        // --- MODALS ---
-        function setupModals() {
-            document.getElementById('carModal').addEventListener('click', e => { if (e.target === document.getElementById('carModal')) closeCarModal(); });
-            document.getElementById('planeModal').addEventListener('click', e => { if (e.target === document.getElementById('planeModal')) closePlaneModal(); });
-            document.addEventListener('keydown', e => { if (e.key === 'Escape') { closeCarModal(); closePlaneModal(); } });
-        }
-
-        // --- SEARCH ---
-        function setupSearch() {
-            document.getElementById('carSearch')?.addEventListener('input', loadCars);
-            document.getElementById('planeSearch')?.addEventListener('input', loadPlanes);
-            document.getElementById('userSearch')?.addEventListener('input', renderUsers);
-            document.getElementById('dictSearch')?.addEventListener('input', renderDictionary);
+        // --- LOAD PLANES ---
+        function loadPlanes(filter = 'all', search = '') {
+            const grid = document.getElementById('planesGrid');
+            const noMsg = document.getElementById('noPlanesMsg');
+            let filtered = planesData;
+            if (filter !== 'all') filtered = filtered.filter(p => (getType(p)).toLowerCase() === filter.toLowerCase());
+            if (search) {
+                const q = search.toLowerCase();
+                filtered = filtered.filter(p => (getName(p) + ' ' + getSub(p)).toLowerCase().includes(q));
+            }
+            if (filtered.length === 0) {
+                grid.innerHTML = '';
+                noMsg.classList.remove('hidden');
+            } else {
+                noMsg.classList.add('hidden');
+                grid.innerHTML = filtered.map(p => buildPlaneCard(p)).join('');
+            }
+            lucide.createIcons();
         }
 
-        // --- DICTIONARY ---
-        function setupDictFilters() {
-            document.querySelectorAll('#dictFilters .filter-btn').forEach(b => {
-                b.addEventListener('click', () => {
-                    document.querySelectorAll('#dictFilters .filter-btn').forEach(x => x.classList.remove('active-filter'));
-                    b.classList.add('active-filter');
-                    // Clear active letter when switching category
-                    document.querySelectorAll('#dictLetterNav button').forEach(x => x.classList.remove('active-letter'));
-                    renderDictionary();
+        // --- FILTERS ---
+        function setupCarFilters() {
+            const container = document.getElementById('carFilters');
+            container.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    container.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active-filter'));
+                    btn.classList.add('active-filter');
+                    loadCars(btn.dataset.filter, document.getElementById('carSearch').value);
+                });
+            });
+        }
+        function setupPlaneFilters() {
+            const container = document.getElementById('planeFilters');
+            container.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    container.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active-filter'));
+                    btn.classList.add('active-filter');
+                    loadPlanes(btn.dataset.filter, document.getElementById('planeSearch').value);
                 });
             });
         }
 
+        // --- SEARCH ---
+        function setupSearch() {
+            document.getElementById('carSearch').addEventListener('input', e => {
+                const activeFilter = document.querySelector('#carFilters .active-filter')?.dataset.filter || 'all';
+                loadCars(activeFilter, e.target.value);
+            });
+            document.getElementById('planeSearch').addEventListener('input', e => {
+                const activeFilter = document.querySelector('#planeFilters .active-filter')?.dataset.filter || 'all';
+                loadPlanes(activeFilter, e.target.value);
+            });
+            document.getElementById('userSearch').addEventListener('input', e => {
+                renderUsers(e.target.value);
+            });
+            document.getElementById('dictSearch').addEventListener('input', e => {
+                renderDictionary(e.target.value);
+            });
+        }
+
+        // --- MODALS ---
+        function setupModals() {
+            document.getElementById('carModal').addEventListener('click', e => {
+                if (e.target === document.getElementById('carModal')) closeCarModal();
+            });
+            document.getElementById('planeModal').addEventListener('click', e => {
+                if (e.target === document.getElementById('planeModal')) closePlaneModal();
+            });
+        }
+        function openCarModal(idx) {
+            const car = carsData[idx];
+            if (!car) return;
+            const name = getName(car);
+            const sub = getSub(car);
+            const img = getImg(car);
+            const type = getType(car);
+            // Build spec rows
+            const fields = [
+                { label: 'Manufacturer', value: sub },
+                { label: 'Type', value: type },
+                { label: 'Year', value: getField(car, 'year') },
+                { label: 'Horsepower', value: getField(car, 'horsepower'), unit: 'hp' },
+                { label: 'Torque', value: getField(car, 'torque'), unit: 'lb-ft' },
+                { label: 'Top Speed', value: getField(car, 'top_speed'), unit: 'mph' },
+                { label: '0–60 mph', value: getField(car, '0-60'), unit: 'sec' },
+                { label: 'Weight', value: getField(car, 'weight'), unit: 'lbs' },
+                { label: 'Engine', value: car.engine || car.engine_type || '' },
+                { label: 'Transmission', value: car.transmission || '' },
+                { label: 'Drivetrain', value: car.drivetrain || '' },
+                { label: 'Description', value: car.description || car.desc || '' },
+            ];
+            const specRows = fields.filter(f => f.value !== null && f.value !== undefined && f.value !== '').map(f =>
+                `<div class="flex justify-between py-2.5 border-b border-gray-100 last:border-0">
+                    <span class="text-gray-400 text-sm">${f.label}</span>
+                    <span class="text-gray-900 font-semibold text-sm text-right">${f.value}${f.unit ? ' ' + f.unit : ''}</span>
+                </div>`
+            ).join('');
+            document.getElementById('carModalContent').innerHTML = `
+                <div class="relative">
+                    <div class="h-64 overflow-hidden rounded-t-2xl bg-gray-100"><img src="${img}" alt="${name}" class="w-full h-full object-cover" onerror="this.style.display='none'"></div>
+                    <button onclick="closeCarModal()" class="absolute top-4 right-4 w-9 h-9 bg-white/90 backdrop-blur rounded-full flex items-center justify-center hover:bg-white transition shadow"><i data-lucide="x" style="width:18px;height:18px;"></i></button>
+                </div>
+                <div class="p-6">
+                    ${type ? `<span class="badge badge-outline mb-3">${type}</span>` : ''}
+                    <h2 class="text-2xl font-extrabold text-gray-900">${name}</h2>
+                    <p class="text-gray-400 text-sm mb-5">${sub}</p>
+                    <div class="spec-grid">${specRows}</div>
+                </div>`;
+            document.getElementById('carModal').classList.add('active');
+            lucide.createIcons();
+        }
+        function closeCarModal() {
+            document.getElementById('carModal').classList.remove('active');
+        }
+        function openPlaneModal(idx) {
+            const plane = planesData[idx];
+            if (!plane) return;
+            const name = getName(plane);
+            const sub = getSub(plane);
+            const img = getImg(plane);
+            const type = getType(plane);
+            const fields = [
+                { label: 'Manufacturer', value: sub },
+                { label: 'Type', value: type },
+                { label: 'Year', value: getField(plane, 'year') },
+                { label: 'Top Speed', value: getField(plane, 'top_speed'), unit: 'mph' },
+                { label: 'Range', value: getField(plane, 'range'), unit: 'mi' },
+                { label: 'Wingspan', value: getField(plane, 'wingspan'), unit: 'ft' },
+                { label: 'Length', value: getField(plane, 'length'), unit: 'ft' },
+                { label: 'Capacity', value: getField(plane, 'capacity'), unit: 'pax' },
+                { label: 'Engine', value: plane.engine || plane.engines || '' },
+                { label: 'Description', value: plane.description || plane.desc || '' },
+            ];
+            const specRows = fields.filter(f => f.value !== null && f.value !== undefined && f.value !== '').map(f =>
+                `<div class="flex justify-between py-2.5 border-b border-gray-100 last:border-0">
+                    <span class="text-gray-400 text-sm">${f.label}</span>
+                    <span class="text-gray-900 font-semibold text-sm text-right">${f.value}${f.unit ? ' ' + f.unit : ''}</span>
+                </div>`
+            ).join('');
+            document.getElementById('planeModalContent').innerHTML = `
+                <div class="relative">
+                    <div class="h-64 overflow-hidden rounded-t-2xl bg-gray-100"><img src="${img}" alt="${name}" class="w-full h-full object-cover" onerror="this.style.display='none'"></div>
+                    <button onclick="closePlaneModal()" class="absolute top-4 right-4 w-9 h-9 bg-white/90 backdrop-blur rounded-full flex items-center justify-center hover:bg-white transition shadow"><i data-lucide="x" style="width:18px;height:18px;"></i></button>
+                </div>
+                <div class="p-6">
+                    ${type ? `<span class="badge badge-outline mb-3">${type}</span>` : ''}
+                    <h2 class="text-2xl font-extrabold text-gray-900">${name}</h2>
+                    <p class="text-gray-400 text-sm mb-5">${sub}</p>
+                    <div class="spec-grid">${specRows}</div>
+                </div>`;
+            document.getElementById('planeModal').classList.add('active');
+            lucide.createIcons();
+        }
+        function closePlaneModal() {
+            document.getElementById('planeModal').classList.remove('active');
+        }
+
+        // --- USERS ---
+        async function loadUsers() {
+            const loading = document.getElementById('usersLoading');
+            const grid = document.getElementById('usersGrid');
+            const errMsg = document.getElementById('usersErrorMsg');
+            loading.classList.remove('hidden');
+            grid.classList.add('hidden');
+            errMsg.classList.add('hidden');
+            try {
+                const { data, error } = await supabaseClient.from('profiles').select('*').order('created_at', { ascending: false });
+                loading.classList.add('hidden');
+                if (error) throw error;
+                allProfiles = data || [];
+                document.getElementById('statUsers').textContent = allProfiles.length;
+                grid.classList.remove('hidden');
+                renderUsers('');
+            } catch (e) {
+                loading.classList.add('hidden');
+                errMsg.classList.remove('hidden');
+            }
+        }
+        function renderUsers(search) {
+            const grid = document.getElementById('usersGrid');
+            const noMsg = document.getElementById('noUsersMsg');
+            let filtered = allProfiles;
+            if (search) {
+                const q = search.toLowerCase();
+                filtered = filtered.filter(u => (u.display_name || '').toLowerCase().includes(q) || (u.username || '').toLowerCase().includes(q));
+            }
+            if (filtered.length === 0) {
+                grid.innerHTML = '';
+                noMsg.classList.remove('hidden');
+            } else {
+                noMsg.classList.add('hidden');
+                grid.innerHTML = filtered.map(u => {
+                    const init = (u.display_name || u.username || 'U').charAt(0).toUpperCase();
+                    const pic = u.profile_pic;
+                    const avatarHtml = pic
+                        ? `<div class="user-avatar-ring"><img src="${pic}" class="w-14 h-14 object-cover"></div>`
+                        : `<div class="user-avatar-ring"><div class="avatar-fallback w-14 h-14 text-xl">${init}</div></div>`;
+                    return `<div class="user-card glass rounded-2xl p-6">
+                        <div class="flex items-center gap-4 mb-3">${avatarHtml}
+                            <div><p class="font-bold text-gray-900">${u.display_name || 'Unknown'}</p><p class="text-gray-400 text-sm">@${u.username || '—'}</p></div>
+                        </div>
+                        ${u.bio ? `<p class="text-gray-500 text-sm leading-relaxed">${u.bio}</p>` : '<p class="text-gray-300 text-sm italic">No bio yet</p>'}
+                    </div>`;
+                }).join('');
+            }
+        }
+
+        // --- DICTIONARY ---
+        let dictActiveCategory = 'all';
         function loadDictionary() {
             document.getElementById('dictLoading').classList.add('hidden');
             document.getElementById('dictCount').textContent = glossaryData.length;
-            buildLetterNav();
-            renderDictionary();
-        }
-
-        function buildLetterNav() {
-            const letters = new Set(glossaryData.map(t => t.term.charAt(0).toUpperCase()));
+            // Build letter nav
+            const letters = [...new Set(glossaryData.map(t => (t.term || t.name || '')[0].toUpperCase()).filter(l => /[A-Z]/.test(l)))].sort();
             const nav = document.getElementById('dictLetterNav');
-            const allLetters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
-            nav.innerHTML = allLetters.map(l => {
-                const hasTerms = letters.has(l);
-                return `<button ${hasTerms ? '' : 'disabled'} data-letter="${l}" onclick="filterByLetter('${l}')">${l}</button>`;
-            }).join('');
+            nav.innerHTML = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('').map(l => `<button ${letters.includes(l) ? '' : 'disabled'} onclick="scrollToLetter('${l}')">${l}</button>`).join('');
+            renderDictionary('');
         }
-
-        function filterByLetter(letter) {
-            document.querySelectorAll('#dictLetterNav button').forEach(b => b.classList.remove('active-letter'));
-            const btn = document.querySelector(`#dictLetterNav button[data-letter="${letter}"]`);
-            if (btn) btn.classList.add('active-letter');
-            // Clear category filter to "all"
-            document.querySelectorAll('#dictFilters .filter-btn').forEach(b => b.classList.remove('active-filter'));
-            document.querySelector('#dictFilters .filter-btn[data-filter="all"]').classList.add('active-filter');
-            // Clear search
-            document.getElementById('dictSearch').value = '';
-            renderDictionary(letter);
-        }
-
-        function renderDictionary(letterFilter) {
-            const search = (document.getElementById('dictSearch')?.value || '').toLowerCase();
-            const activeFilter = document.querySelector('#dictFilters .filter-btn.active-filter')?.dataset.filter || 'all';
-
-            let filtered = glossaryData.filter(t => {
-                const matchSearch = !search || t.term.toLowerCase().includes(search) || t.definition.toLowerCase().includes(search) || t.example.toLowerCase().includes(search);
-                const matchCat = activeFilter === 'all' || t.category === activeFilter;
-                const matchLetter = !letterFilter || t.term.charAt(0).toUpperCase() === letterFilter;
-                return matchSearch && matchCat && matchLetter;
-            });
-
+        function renderDictionary(search) {
             const grid = document.getElementById('dictGrid');
             const noMsg = document.getElementById('noDictMsg');
+            let filtered = glossaryData;
+            if (dictActiveCategory !== 'all') filtered = filtered.filter(t => (t.category || 'General') === dictActiveCategory);
+            if (search) {
+                const q = search.toLowerCase();
+                filtered = filtered.filter(t => (t.term || t.name || '').toLowerCase().includes(q) || (t.definition || t.desc || '').toLowerCase().includes(q) || (t.example || '').toLowerCase().includes(q));
+            }
+            filtered.sort((a, b) => (a.term || a.name || '').localeCompare(b.term || b.name || ''));
+            if (filtered.length === 0) {
+                grid.innerHTML = '';
+                noMsg.classList.remove('hidden');
+            } else {
+                noMsg.classList.add('hidden');
+                grid.innerHTML = filtered.map(t => {
+                    const term = t.term || t.name || '';
+                    const def = t.definition || t.desc || '';
+                    const ex = t.example || '';
+                    const cat = t.category || 'General';
+                    const catClass = 'cat-' + cat.replace(/&/g, '-').replace(/\s+/g, '-');
+                    const badgeClass = 'cat-badge-' + cat.replace(/&/g, '-').replace(/\s+/g, '-');
+                    let defHtml = def;
+                    if (search) {
+                        const re = new RegExp(`(${search.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'gi');
+                        defHtml = defHtml.replace(re, '<span class="highlight">$1</span>');
+                    }
+                    return `<div class="dict-card ${catClass} glass rounded-xl p-5" id="dict-${term[0].toUpperCase()}">
+                        <div class="flex items-center gap-3 mb-2">
+                            <h3 class="font-bold text-gray-900">${term}</h3>
+                            <span class="badge ${badgeClass}">${cat}</span>
+                        </div>
+                        <p class="text-gray-600 text-sm leading-relaxed mb-2">${defHtml}</p>
+                        ${ex ? `<p class="text-gray-400 text-xs italic">Example: ${ex}</p>` : ''}
+                    </div>`;
+                }).join('');
+            }
+        }
+        function setupDictFilters() {
+            const container = document.getElementById('dictFilters');
+            container.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    container.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active-filter'));
+                    btn.classList.add('active-filter');
+                    dictActiveCategory = btn.dataset.filter;
+                    renderDictionary(document.getElementById('dictSearch').value);
+                });
+            });
+        }
+        function scrollToLetter(l) {
+            const el = document.getElementById('dict-' + l);
+            if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
 
-            if (!filtered.length) { grid.innerHTML = ''; noMsg.classList.remove('hidden'); return; }
-            noMsg.classList.add('hidden');
+        // --- COMPARE ---
+        function setupCompare() {
+            const typeSelect = document.getElementById('compareType');
+            const sel1 = document.getElementById('compareSelect1');
+            const sel2 = document.getElementById('compareSelect2');
+            const btn = document.getElementById('compareBtn');
 
-            grid.innerHTML = filtered.map(t => {
-                const catClass = 'cat-' + t.category.replace(/\s+/g, '-');
-                const badgeClass = 'cat-badge-' + t.category.replace(/\s+/g, '-');
-                const def = search ? highlightText(t.definition, search) : t.definition;
-                const ex = search ? highlightText(t.example, search) : t.example;
+            typeSelect.addEventListener('change', () => {
+                compareType = typeSelect.value;
+                compareItem1 = null;
+                compareItem2 = null;
+                document.getElementById('comparePreview1').classList.add('hidden');
+                document.getElementById('comparePreview2').classList.add('hidden');
+                document.getElementById('comparisonResults').classList.add('hidden');
+                btn.disabled = true;
+                populateCompareSelects();
+            });
 
-                return `<div class="dict-card glass rounded-xl p-5 ${catClass}">
-                    <div class="flex items-center gap-3 mb-3">
-                        <h3 class="text-lg font-extrabold text-gray-900">${search ? highlightText(t.term, search) : t.term}</h3>
-                        <span class="badge ${badgeClass}">${t.category}</span>
+            sel1.addEventListener('change', () => {
+                const data = compareType === 'cars' ? carsData : planesData;
+                compareItem1 = data[sel1.value] || null;
+                if (compareItem1) {
+                    document.getElementById('compareImg1').src = getImg(compareItem1);
+                    document.getElementById('compareName1').textContent = getName(compareItem1);
+                    document.getElementById('compareSub1').textContent = getSub(compareItem1);
+                    document.getElementById('comparePreview1').classList.remove('hidden');
+                }
+                btn.disabled = !(compareItem1 && compareItem2);
+            });
+
+            sel2.addEventListener('change', () => {
+                const data = compareType === 'cars' ? carsData : planesData;
+                compareItem2 = data[sel2.value] || null;
+                if (compareItem2) {
+                    document.getElementById('compareImg2').src = getImg(compareItem2);
+                    document.getElementById('compareName2').textContent = getName(compareItem2);
+                    document.getElementById('compareSub2').textContent = getSub(compareItem2);
+                    document.getElementById('comparePreview2').classList.remove('hidden');
+                }
+                btn.disabled = !(compareItem1 && compareItem2);
+            });
+
+            btn.addEventListener('click', () => {
+                if (!compareItem1 || !compareItem2) return;
+                runComparison();
+            });
+        }
+        function populateCompareSelects() {
+            const data = compareType === 'cars' ? carsData : planesData;
+            const options = data.map((item, i) => `<option value="${i}">${getName(item)} — ${getSub(item)}</option>`).join('');
+            const sel1 = document.getElementById('compareSelect1');
+            const sel2 = document.getElementById('compareSelect2');
+            sel1.innerHTML = '<option value="">Choose...</option>' + options;
+            sel2.innerHTML = '<option value="">Choose...</option>' + options;
+        }
+        function runComparison() {
+            const results = document.getElementById('comparisonResults');
+            const specsDiv = document.getElementById('comparisonSpecs');
+            const a = compareItem1, b = compareItem2;
+            // Collect all keys from both objects
+            const skipKeys = ['image', 'img', 'image_url', 'imageUrl', 'photo', 'description', 'desc'];
+            const allKeys = [...new Set([...Object.keys(a), ...Object.keys(b)])].filter(k => !skipKeys.includes(k));
+            const rows = allKeys.map(key => {
+                const va = a[key] !== undefined ? String(a[key]) : '—';
+                const vb = b[key] !== undefined ? String(b[key]) : '—';
+                const na = a[key] !== undefined ? extractNum(a[key]) : null;
+                const nb = b[key] !== undefined ? extractNum(b[key]) : null;
+                let clsA = '', clsB = '';
+                if (na !== null && nb !== null && na !== nb) {
+                    // For 0-60, lower is better
+                    const lowerBetter = key.includes('0-60') || key.includes('weight') || key.toLowerCase().includes('acceleration');
+                    if (lowerBetter) {
+                        clsA = na < nb ? 'winner' : 'loser';
+                        clsB = nb < na ? 'winner' : 'loser';
+                    } else {
+                        clsA = na > nb ? 'winner' : 'loser';
+                        clsB = nb > na ? 'winner' : 'loser';
+                    }
+                }
+                const label = key.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
+                return `<div class="spec-row">
+                    <div class="spec-value text-right ${clsA}">${va}</div>
+                    <div class="spec-label">${label}</div>
+                    <div class="spec-value ${clsB}">${vb}</div>
+                </div>`;
+            }).join('');
+            specsDiv.innerHTML = `<div class="grid grid-cols-3 text-center mb-4 pb-4 border-b-2 border-gray-200">
+                <div class="font-bold text-gray-900">${getName(a)}</div>
+                <div class="text-gray-400 text-xs uppercase tracking-wider">Spec</div>
+                <div class="font-bold text-gray-900">${getName(b)}</div>
+            </div>${rows}`;
+            results.classList.remove('hidden');
+            lucide.createIcons();
+        }
+
+        // ===========================
+        // --- LEADERBOARD ---
+        // ===========================
+        function setupLeaderboard() {
+            // Type toggle
+            document.querySelectorAll('#lbTypeToggle button').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    document.querySelectorAll('#lbTypeToggle button').forEach(b => b.classList.remove('active-lb-type'));
+                    btn.classList.add('active-lb-type');
+                    lbCurrentType = btn.dataset.lbtype;
+                    lbCurrentCategory = '';
+                    renderLeaderboard();
+                    lucide.createIcons();
+                });
+            });
+        }
+
+        function renderLeaderboard() {
+            const cats = lbCurrentType === 'cars' ? lbCarCategories : lbPlaneCategories;
+            const data = lbCurrentType === 'cars' ? carsData : planesData;
+
+            // If no category selected yet, pick the first
+            if (!lbCurrentCategory || !cats.find(c => c.key === lbCurrentCategory)) {
+                lbCurrentCategory = cats[0].key;
+            }
+
+            // Render category tabs
+            const tabsContainer = document.getElementById('lbCategoryTabs');
+            tabsContainer.innerHTML = cats.map(c => `
+                <button class="filter-btn ${c.key === lbCurrentCategory ? 'active-filter' : ''}" data-lbcat="${c.key}">
+                    <span class="flex items-center gap-1.5"><i data-lucide="${c.icon}" style="width:14px;height:14px;"></i> ${c.label}</span>
+                </button>
+            `).join('');
+
+            // Attach tab listeners
+            tabsContainer.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    tabsContainer.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active-filter'));
+                    btn.classList.add('active-filter');
+                    lbCurrentCategory = btn.dataset.lbcat;
+                    renderLeaderboard();
+                    lucide.createIcons();
+                });
+            });
+
+            // Get current category info
+            const catInfo = cats.find(c => c.key === lbCurrentCategory);
+            if (!catInfo) return;
+
+            // Build ranked list
+            const ranked = data.map((item, idx) => ({
+                item,
+                idx,
+                value: getField(item, catInfo.key)
+            })).filter(r => r.value !== null).sort((a, b) => {
+                return catInfo.sortDesc ? b.value - a.value : a.value - b.value;
+            });
+
+            const maxVal = ranked.length > 0 ? ranked[0].value : 1;
+            const podium = document.getElementById('lbPodium');
+            const list = document.getElementById('lbList');
+            const noData = document.getElementById('lbNoData');
+
+            if (ranked.length === 0) {
+                podium.innerHTML = '';
+                list.innerHTML = '';
+                noData.classList.remove('hidden');
+                return;
+            }
+            noData.classList.add('hidden');
+
+            // Top 3 podium cards (order: 2nd, 1st, 3rd for visual effect)
+            const top3 = ranked.slice(0, 3);
+            const podiumOrder = [top3[1], top3[0], top3[2]].filter(Boolean);
+            podium.innerHTML = podiumOrder.map((r, i) => {
+                const rank = r === top3[0] ? 1 : r === top3[1] ? 2 : 3;
+                const name = getName(r.item);
+                const sub = getSub(r.item);
+                const img = getImg(r.item);
+                const pct = Math.max(10, (r.value / maxVal) * 100);
+                const delay = i * 100;
+                const heights = ['md:mt-8', 'md:mt-0', 'md:mt-12'];
+                const sizes = ['', 'md:scale-105', ''];
+                const borderColors = ['border-gray-200', 'border-yellow-400', 'border-amber-600'];
+                return `<div class="lb-top-card glass rounded-2xl overflow-hidden border-2 ${borderColors[i]} ${heights[i]} ${sizes[i]} transition-all" onclick="openLbDetail('${lbCurrentType}', ${r.idx})" style="animation: modalIn 0.4s ${delay}ms both">
+                    <div class="h-40 overflow-hidden bg-gray-100 relative">
+                        <img src="${img}" alt="${name}" class="w-full h-full object-cover" onerror="this.style.display='none'">
+                        <div class="absolute top-3 left-3 lb-rank ${rank === 1 ? 'gold' : rank === 2 ? 'silver' : 'bronze'}">${rank}</div>
                     </div>
-                    <p class="text-sm text-gray-600 leading-relaxed mb-3">${def}</p>
-                    <div class="flex items-start gap-2 pl-0.5">
-                        <i data-lucide="quote" style="width:14px;height:14px;color:#d1d5db;margin-top:3px;flex-shrink:0;"></i>
-                        <p class="text-sm text-gray-400 italic leading-relaxed">${ex}</p>
+                    <div class="p-4">
+                        <h3 class="font-bold text-gray-900 truncate">${name}</h3>
+                        <p class="text-gray-400 text-sm truncate">${sub}</p>
+                        <div class="mt-3 flex items-center gap-3">
+                            <span class="text-lg font-extrabold text-gray-900">${r.value}${catInfo.unit ? ' ' + catInfo.unit : ''}</span>
+                        </div>
+                        <div class="lb-bar mt-2"><div class="lb-bar-fill" style="width:${pct}%"></div></div>
+                    </div>
+                </div>`;
+            }).join('');
+
+            // Remaining list (rank 4+)
+            const rest = ranked.slice(3);
+            list.innerHTML = rest.map((r, i) => {
+                const rank = i + 4;
+                const name = getName(r.item);
+                const sub = getSub(r.item);
+                const img = getImg(r.item);
+                const type = getType(r.item);
+                const pct = Math.max(5, (r.value / maxVal) * 100);
+                return `<div class="lb-row flex items-center gap-4 px-5 py-4" onclick="openLbDetail('${lbCurrentType}', ${r.idx})">
+                    <div class="lb-rank default">${rank}</div>
+                    <div class="w-12 h-12 rounded-lg overflow-hidden bg-gray-100 flex-shrink-0">
+                        <img src="${img}" alt="${name}" class="w-full h-full object-cover" onerror="this.style.display='none'">
+                    </div>
+                    <div class="flex-1 min-w-0">
+                        <div class="flex items-center gap-2">
+                            <h4 class="font-semibold text-gray-900 truncate">${name}</h4>
+                            ${type ? `<span class="badge badge-outline text-[0.6rem] hidden sm:inline-flex">${type}</span>` : ''}
+                        </div>
+                        <p class="text-gray-400 text-xs truncate">${sub}</p>
+                        <div class="lb-bar mt-1.5 w-full max-w-xs"><div class="lb-bar-fill" style="width:${pct}%"></div></div>
+                    </div>
+                    <div class="text-right flex-shrink-0">
+                        <span class="font-extrabold text-gray-900">${r.value}</span>
+                        <span class="text-gray-400 text-xs block">${catInfo.unit}</span>
                     </div>
                 </div>`;
             }).join('');
 
             lucide.createIcons();
-        }
 
-        function highlightText(text, query) {
-            if (!query) return text;
-            const regex = new RegExp(`(${query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'gi');
-            return text.replace(regex, '<span class="highlight">$1</span>');
-        }
-
-        // --- USERS ---
-        async function loadUsers() {
-            const l = document.getElementById('usersLoading'), g = document.getElementById('usersGrid'), n = document.getElementById('noUsersMsg'), e = document.getElementById('usersErrorMsg');
-            l.classList.remove('hidden'); g.classList.add('hidden'); n.classList.add('hidden'); e.classList.add('hidden');
-            try {
-                const { data, error } = await supabaseClient.from('profiles').select('id, username, display_name, profile_pic, bio, created_at').order('created_at', { ascending: false });
-                l.classList.add('hidden'); if (error) throw error;
-                allProfiles = data || []; document.getElementById('statUsers').textContent = allProfiles.length; renderUsers();
-            } catch (err) { console.error(err); l.classList.add('hidden'); e.classList.remove('hidden'); }
-        }
-        function renderUsers() {
-            const s = (document.getElementById('userSearch')?.value || '').toLowerCase();
-            const g = document.getElementById('usersGrid'), n = document.getElementById('noUsersMsg');
-            let fl = allProfiles.filter(p => { if (!s) return true; return (p.username || '').toLowerCase().includes(s) || (p.display_name || '').toLowerCase().includes(s); });
-            if (!fl.length) { g.classList.add('hidden'); n.classList.remove('hidden'); return; }
-            n.classList.add('hidden'); g.classList.remove('hidden');
-            g.innerHTML = fl.map(p => {
-                const dn = p.display_name || 'No display name', un = p.username ? '@' + p.username : '', bio = p.bio || 'No bio yet', isMe = currentUser && p.id === currentUser.id, init = dn.charAt(0).toUpperCase();
-                let av; if (p.profile_pic) av = `<div class="user-avatar-ring flex-shrink-0"><img src="${p.profile_pic}" alt="${dn}" class="w-14 h-14 object-cover"></div>`;
-                else av = `<div class="user-avatar-ring flex-shrink-0"><div class="avatar-fallback w-14 h-14 text-lg">${init}</div></div>`;
-                return `<div class="user-card glass rounded-2xl p-6"><div class="flex items-start gap-4 mb-4">${av}<div class="flex-1 min-w-0"><div class="flex items-center gap-2"><h3 class="text-base font-bold text-gray-900 truncate">${dn}</h3>${isMe ? '<span class="badge badge-dark flex-shrink-0">You</span>' : ''}</div><p class="text-sm text-gray-400 truncate">${un}</p></div></div><p class="text-sm text-gray-500 leading-relaxed" style="display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;">${bio}</p></div>`;
-            }).join('');
-            lucide.createIcons();
-        }
-
-        // --- TOAST ---
-        function showToast(msg, type = 'success') { const t = document.getElementById('toast'); t.textContent = msg; t.className = `toast toast-${type} show`; setTimeout(() => t.classList.remove('show'), 3000); }
-
-        // --- COMPARE ---
-        function setupCompare() {
-            document.getElementById('compareType').onchange = () => { compareType = document.getElementById('compareType').value; loadCompareSelects(); resetCompare(); };
-            document.getElementById('compareSelect1').onchange = () => { const d = compareType === 'cars' ? carsData : planesData; compareItem1 = d.find(i => i.id == document.getElementById('compareSelect1').value); renderCompare(); };
-            document.getElementById('compareSelect2').onchange = () => { const d = compareType === 'cars' ? carsData : planesData; compareItem2 = d.find(i => i.id == document.getElementById('compareSelect2').value); renderCompare(); };
-        }
-        function loadCompareSelects() {
-            const d = compareType === 'cars' ? carsData : planesData;
-            [document.getElementById('compareSelect1'), document.getElementById('compareSelect2')].forEach(s => {
-                s.innerHTML = '<option value="">Choose...</option>' + d.map(i => `<option value="${i.id}">${i.name}${i.model ? ' ' + i.model : ''}</option>`).join('');
+            // Animate bars after a small delay
+            requestAnimationFrame(() => {
+                document.querySelectorAll('.lb-bar-fill').forEach(bar => {
+                    const w = bar.style.width;
+                    bar.style.width = '0%';
+                    requestAnimationFrame(() => { bar.style.width = w; });
+                });
             });
         }
-        function resetCompare() { compareItem1 = compareItem2 = null; document.getElementById('compareSelect1').value = document.getElementById('compareSelect2').value = ''; renderCompare(); }
-        function renderCompare() {
-            renderCompareSlot(compareItem1, 1); renderCompareSlot(compareItem2, 2);
-            if (compareItem1 && compareItem2) renderComparison(); else document.getElementById('comparisonResults').classList.add('hidden');
+
+        function openLbDetail(type, idx) {
+            if (type === 'cars') openCarModal(idx);
+            else openPlaneModal(idx);
         }
-        function renderCompareSlot(item, n) {
-            const slot = document.getElementById(`compareSlot${n}`), preview = document.getElementById(`comparePreview${n}`);
-            if (!item) { slot.classList.remove('filled'); preview.classList.add('hidden'); return; }
-            slot.classList.add('filled'); preview.classList.remove('hidden');
-            document.getElementById(`compareImg${n}`).src = item.image;
-            document.getElementById(`compareName${n}`).textContent = item.name;
-            document.getElementById(`compareSub${n}`).textContent = item.model || item.manufacturer;
-        }
-        function renderComparison() {
-            document.getElementById('comparisonResults').classList.remove('hidden');
-            const fields = compareType === 'cars' ? [
-                {k:'horsepower',l:'Horsepower',n:1},
-                {k:'topSpeed',l:'Top Speed'},
-                {k:'acceleration',l:'0-60 mph',inv:1},
-                {k:'price',l:'Price',n:1,pre:'$'},
-                {k:'engine',l:'Engine'},
-                {k:'transmission',l:'Transmission'},
-                {k:'drivetrain',l:'Drivetrain'},
-                {k:'fuelType',l:'Fuel Type'},
-                {k:'mpg',l:'Efficiency'}
-            ] : [
-                {k:'maxSpeed',l:'Max Speed'},
-                {k:'range',l:'Range'},
-                {k:'capacity',l:'Capacity'},
-                {k:'wingspan',l:'Wingspan'},
-                {k:'length',l:'Length'},
-                {k:'engineCount',l:'Engines',n:1},
-                {k:'engineType',l:'Engine Type'},
-                {k:'weight',l:'Max Weight'},
-                {k:'type',l:'Type'}
-            ];
-            document.getElementById('comparisonSpecs').innerHTML = fields.map(f => {
-                const v1 = compareItem1[f.k], v2 = compareItem2[f.k];
-                let cls1 = 'spec-value', cls2 = 'spec-value';
-                if (f.n && v1 && v2) {
-                    const n1 = parseFloat(String(v1).replace(/[^0-9.]/g, '')), n2 = parseFloat(String(v2).replace(/[^0-9.]/g, ''));
-                    if (f.inv) { if (n1 < n2) cls1 += ' winner'; else if (n2 < n1) cls2 += ' winner'; }
-                    else { if (n1 > n2) cls1 += ' winner'; else if (n2 > n1) cls2 += ' winner'; }
-                    if (!cls1.includes('winner') && !cls2.includes('winner')) cls1 = cls2 = 'spec-value loser';
-                    else { if (!cls1.includes('winner')) cls1 += ' loser'; if (!cls2.includes('winner')) cls2 += ' loser'; }
-                }
-                return `<div class="spec-row"><div class="text-right ${cls1}">${f.pre||''}${v1||'N/A'}</div><div class="spec-label">${f.l}</div><div class="text-left ${cls2}">${f.pre||''}${v2||'N/A'}</div></div>`;
-            }).join('');
-        }
+
+        // Initialize compare selects on dashboard load
+        const origShowDashboard = showDashboard;
+        showDashboard = function () {
+            origShowDashboard();
+            populateCompareSelects();
+        };
         // ===== EPSILON AI SYSTEM (POLLINATIONS PLATFORM) =====
 (function () {
     const fab = document.getElementById('aiFab');
@@ -1662,7 +2390,6 @@
 
     // Hardened engineering framework prompt
     const SYSTEM_PROMPT = `You are Epsilon AI, an engineering expert for Epsilon Motor. You know absolutely everything about sports cars, hypercars, commercial aviation, and jet propulsion systems. Use normal sentence casing (standard capitalization and lowercase letters). Use clean text bullet points (-) instead of markdown formatting. Keep your analyses short, punchy, and professional.`;
-    
     fab.addEventListener('click', () => {
         isOpen = !isOpen;
         chat.classList.toggle('open', isOpen);
