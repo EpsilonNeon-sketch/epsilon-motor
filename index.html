@@ -15,7 +15,254 @@
         * {
             box-sizing: border-box;
         }
+/* ===== EPSILON AI WIDGET SYSTEM ===== */
+.ai-fab {
+    position: fixed;
+    bottom: 1.75rem;
+    right: 1.75rem;
+    z-index: 600;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: #1a1a2e;
+    border: 2px solid rgba(255, 255, 255, 0.05);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    box-shadow: 0 12px 40px rgba(26, 26, 46, 0.35);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
 
+.ai-fab:hover {
+    transform: scale(1.06) translateY(-2px);
+    background: #2563eb; /* Shifts to high-perf blue on hover */
+    box-shadow: 0 16px 48px rgba(37, 99, 235, 0.4);
+}
+
+.ai-fab.active {
+    transform: rotate(90deg) scale(1.02);
+    background: #dc2626;
+}
+
+.ai-fab .fab-pulse {
+    position: absolute;
+    inset: -4px;
+    border-radius: 50%;
+    border: 2px solid rgba(37, 99, 235, 0.3);
+    animation: fabPulse 2.5s ease-out infinite;
+}
+
+@keyframes fabPulse {
+    0% { transform: scale(1); opacity: 0.7; }
+    100% { transform: scale(1.4); opacity: 0; }
+}
+
+.ai-chat {
+    position: fixed;
+    bottom: 6.5rem;
+    right: 1.75rem;
+    z-index: 599;
+    width: 410px;
+    max-width: calc(100vw - 2rem);
+    height: 580px;
+    max-height: calc(100vh - 8rem);
+    border-radius: 1.25rem;
+    background: rgba(255, 255, 255, 0.98);
+    backdrop-filter: blur(24px);
+    border: 1px solid rgba(26, 26, 46, 0.1);
+    box-shadow: 0 24px 64px rgba(0, 0, 0, 0.15);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    transform: scale(0.92) translateY(24px);
+    opacity: 0;
+    pointer-events: none;
+    transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    transform-origin: bottom right;
+}
+
+.ai-chat.open {
+    transform: scale(1) translateY(0);
+    opacity: 1;
+    pointer-events: all;
+}
+
+.ai-chat-header {
+    padding: 1.2rem 1.25rem;
+    background: #1a1a2e;
+    color: white;
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
+}
+
+.ai-chat-header .ai-avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 0.75rem;
+    background: rgba(255, 255, 255, 0.08);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.ai-chat-header .ai-meta h3 {
+    font-size: 0.95rem;
+    font-weight: 700;
+    margin: 0;
+    letter-spacing: -0.01em;
+}
+
+.ai-chat-header .ai-meta p {
+    font-size: 0.72rem;
+    color: rgba(255, 255, 255, 0.45);
+    margin-top: 2px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.ai-chat-header .status-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #10b981;
+}
+
+.ai-chat-messages {
+    flex: 1;
+    overflow-y: auto;
+    padding: 1.25rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+}
+
+.ai-msg {
+    display: flex;
+    gap: 0.75rem;
+    max-width: 85%;
+    animation: msgIn 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes msgIn {
+    from { opacity: 0; transform: translateY(6px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.ai-msg.user {
+    align-self: flex-end;
+    flex-direction: row-reverse;
+}
+
+.ai-msg .msg-bubble {
+    padding: 0.75rem 1rem;
+    border-radius: 1rem;
+    font-size: 0.875rem;
+    line-height: 1.55;
+    color: #1a1a2e;
+}
+
+.ai-msg.assistant .msg-bubble {
+    background: #f3f4f6;
+    border-top-left-radius: 0.25rem;
+}
+
+.ai-msg.user .msg-bubble {
+    background: #1a1a2e;
+    color: white;
+    border-top-right-radius: 0.25rem;
+}
+
+.ai-typing {
+    display: flex;
+    gap: 5px;
+    padding: 0.5rem 0.25rem;
+}
+
+.ai-typing span {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #9ca3af;
+    animation: typeDot 1.2s ease-in-out infinite;
+}
+
+.ai-typing span:nth-child(2) { animation-delay: 0.15s; }
+.ai-typing span:nth-child(3) { animation-delay: 0.3s; }
+
+@keyframes typeDot {
+    0%, 60%, 100% { transform: translateY(0); opacity: 0.4; }
+    30% { transform: translateY(-4px); opacity: 1; }
+}
+
+.ai-chat-input {
+    padding: 1rem;
+    border-top: 1px solid #e5e7eb;
+    display: flex;
+    gap: 0.6rem;
+    background: white;
+}
+
+.ai-chat-input input {
+    flex: 1;
+    border: 1.5px solid #e2e4e8;
+    border-radius: 0.75rem;
+    padding: 0.65rem 1rem;
+    font-size: 0.875rem;
+    outline: none;
+    background: #f8fafc;
+    transition: all 0.2s;
+}
+
+.ai-chat-input input:focus {
+    border-color: #1a1a2e;
+    background: #fff;
+}
+
+.ai-chat-input button {
+    width: 40px;
+    height: 40px;
+    border-radius: 0.75rem;
+    background: #1a1a2e;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+}
+
+.ai-chat-input button:hover { background: #2563eb; }
+.ai-chat-input button:disabled { opacity: 0.4; }
+
+.ai-suggestions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    padding: 0 1rem 0.75rem;
+}
+
+.ai-suggestions button {
+    padding: 0.35rem 0.75rem;
+    border-radius: 9999px;
+    font-size: 0.72rem;
+    font-weight: 600;
+    border: 1.5px solid #e2e4e8;
+    background: white;
+    color: #4b5563;
+    transition: all 0.2s;
+}
+
+.ai-suggestions button:hover {
+    border-color: #1a1a2e;
+    color: #1a1a2e;
+}
+
+@media (max-width: 480px) {
+    .ai-chat { bottom: 0; right: 0; width: 100%; height: 100%; border-radius: 0; }
+}
         body {
             font-family: 'Inter', sans-serif;
             background-color: #f7f8fa;
@@ -972,14 +1219,6 @@
                         </div>
                     </div>
                 </div>
-                <div class="text-center mb-6">
-                    <button id="compareBtn" disabled class="px-8 py-3 bg-gray-900 text-white font-semibold rounded-xl transition shadow-lg disabled:opacity-40 disabled:cursor-not-allowed hover:bg-gray-800 disabled:hover:bg-gray-900">
-                        <span class="flex items-center gap-2 justify-center">
-                            <i data-lucide="git-compare" style="width:20px;height:20px;"></i>
-                            Compare Specifications
-                        </span>
-                    </button>
-                </div>
                 <div id="comparisonResults" class="hidden glass rounded-2xl p-6">
                     <h2 class="text-2xl font-bold text-gray-800 mb-6 text-center">Specification Comparison</h2>
                     <div id="comparisonSpecs"></div>
@@ -990,6 +1229,45 @@
     </div>
 
     <!-- Modals -->
+    <!-- ======================================================== -->
+<!-- EPSILON AI MOTOR ASSISTANT ENGINE -->
+<!-- ======================================================== -->
+<button class="ai-fab" id="aiFab" title="Launch Epsilon AI Engine">
+    <span class="fab-pulse"></span>
+    <i data-lucide="bot" id="fabIconChat" style="width:26px;height:26px;"></i>
+    <i data-lucide="x" id="fabIconClose" style="width:26px;height:26px;display:none;"></i>
+</button>
+
+<div class="ai-chat" id="aiChat">
+    <!-- Header -->
+    <div class="ai-chat-header">
+        <div class="ai-avatar">
+            <i data-lucide="cpu" style="width:18px;height:18px;color:#ffffff;"></i>
+        </div>
+        <div class="ai-meta">
+            <h3>Epsilon AI Engine</h3>
+            <p><span class="status-dot"></span> Diagnostics & Performance Online</p>
+        </div>
+    </div>
+
+    <!-- Message Display Board -->
+    <div class="ai-chat-messages" id="aiMessages"></div>
+
+    <!-- Context Quick Link Suggestions -->
+    <div class="ai-suggestions" id="aiSuggestions">
+        <button data-msg="What's the absolute fastest production hypercar right now?">Fastest Hypercar</button>
+        <button data-msg="Explain how a twin-scroll turbocharger layout optimizes performance.">Twin-Scroll Turbo</button>
+        <button data-msg="What makes a modern commercial jet engine so efficient at high altitudes?">Jet Propulsion</button>
+    </div>
+
+    <!-- Interaction Deck -->
+    <div class="ai-chat-input">
+        <input type="text" id="aiInput" placeholder="Query vehicular specs, powertrains, or aviation stats..." autocomplete="off">
+        <button id="aiSendBtn" title="Transmit Prompt">
+            <i data-lucide="send" style="width:18px;height:18px;"></i>
+        </button>
+    </div>
+</div>
     <div id="carModal" class="modal-overlay">
         <div class="modal-content">
             <div id="carModalContent"></div>
@@ -1309,15 +1587,8 @@
         // --- COMPARE ---
         function setupCompare() {
             document.getElementById('compareType').onchange = () => { compareType = document.getElementById('compareType').value; loadCompareSelects(); resetCompare(); };
-            document.getElementById('compareSelect1').onchange = () => { const d = compareType === 'cars' ? carsData : planesData; compareItem1 = d.find(i => i.id == document.getElementById('compareSelect1').value); updateCompareButton(); renderCompareSlot(compareItem1, 1); };
-            document.getElementById('compareSelect2').onchange = () => { const d = compareType === 'cars' ? carsData : planesData; compareItem2 = d.find(i => i.id == document.getElementById('compareSelect2').value); updateCompareButton(); renderCompareSlot(compareItem2, 2); };
-            document.getElementById('compareBtn').onclick = () => { if (compareItem1 && compareItem2) renderComparison(); };
-        }
-        function updateCompareButton() {
-            const btn = document.getElementById('compareBtn');
-            if (compareItem1 && compareItem2) { btn.disabled = false; document.getElementById('comparisonResults').classList.add('hidden'); }
-            else btn.disabled = true;
-            lucide.createIcons();
+            document.getElementById('compareSelect1').onchange = () => { const d = compareType === 'cars' ? carsData : planesData; compareItem1 = d.find(i => i.id == document.getElementById('compareSelect1').value); renderCompare(); };
+            document.getElementById('compareSelect2').onchange = () => { const d = compareType === 'cars' ? carsData : planesData; compareItem2 = d.find(i => i.id == document.getElementById('compareSelect2').value); renderCompare(); };
         }
         function loadCompareSelects() {
             const d = compareType === 'cars' ? carsData : planesData;
@@ -1325,10 +1596,9 @@
                 s.innerHTML = '<option value="">Choose...</option>' + d.map(i => `<option value="${i.id}">${i.name}${i.model ? ' ' + i.model : ''}</option>`).join('');
             });
         }
-        function resetCompare() { compareItem1 = compareItem2 = null; document.getElementById('compareSelect1').value = document.getElementById('compareSelect2').value = ''; document.getElementById('comparisonResults').classList.add('hidden'); updateCompareButton(); renderCompareSlot(null, 1); renderCompareSlot(null, 2); }
+        function resetCompare() { compareItem1 = compareItem2 = null; document.getElementById('compareSelect1').value = document.getElementById('compareSelect2').value = ''; renderCompare(); }
         function renderCompare() {
             renderCompareSlot(compareItem1, 1); renderCompareSlot(compareItem2, 2);
-            updateCompareButton();
             if (compareItem1 && compareItem2) renderComparison(); else document.getElementById('comparisonResults').classList.add('hidden');
         }
         function renderCompareSlot(item, n) {
@@ -1375,6 +1645,134 @@
                 return `<div class="spec-row"><div class="text-right ${cls1}">${f.pre||''}${v1||'N/A'}</div><div class="spec-label">${f.l}</div><div class="text-left ${cls2}">${f.pre||''}${v2||'N/A'}</div></div>`;
             }).join('');
         }
+        // ===== EPSILON AI SYSTEM (POLLINATIONS PLATFORM) =====
+(function () {
+    const fab = document.getElementById('aiFab');
+    const chat = document.getElementById('aiChat');
+    const messagesEl = document.getElementById('aiMessages');
+    const input = document.getElementById('aiInput');
+    const sendBtn = document.getElementById('aiSendBtn');
+    const suggestions = document.getElementById('aiSuggestions');
+    const iconChat = document.getElementById('fabIconChat');
+    const iconClose = document.getElementById('fabIconClose');
+
+    let chatHistory = [];
+    let isGenerating = false;
+    let isOpen = false;
+
+    // Hardened engineering framework prompt
+    const SYSTEM_PROMPT = `You are Epsilon AI, an engineering expert for Epsilon Motor. You know absolutely everything about sports cars, hypercars, commercial aviation, and jet propulsion systems. Use normal sentence casing (standard capitalization and lowercase letters). Use clean text bullet points (-) instead of markdown formatting. Keep your analyses short, punchy, and professional.`;
+    
+    fab.addEventListener('click', () => {
+        isOpen = !isOpen;
+        chat.classList.toggle('open', isOpen);
+        fab.classList.toggle('active', isOpen);
+        
+        iconChat.style.display = isOpen ? 'none' : 'block';
+        iconClose.style.display = isOpen ? 'block' : 'none';
+
+        if (isOpen && chatHistory.length === 0) {
+            addMessage('assistant', "System ready. I am the Epsilon Motor Diagnostics AI. Requesting initialization parameters—ask me about hypercar aerodynamics, internal combustion layouts, or turbine performance data.");
+            suggestions.style.display = 'flex';
+        }
+        if (isOpen) input.focus();
+    });
+
+    suggestions.addEventListener('click', e => {
+        const btn = e.target.closest('button[data-msg]');
+        if (btn) triggerTransmission(btn.dataset.msg);
+    });
+
+    sendBtn.addEventListener('click', () => {
+        const text = input.value.trim();
+        if (text && !isGenerating) triggerTransmission(text);
+    });
+
+    input.addEventListener('keydown', e => {
+        if (e.key === 'Enter' && !e.shiftKey) {
+            e.preventDefault();
+            const text = input.value.trim();
+            if (text && !isGenerating) triggerTransmission(text);
+        }
+    });
+
+    function triggerTransmission(text) {
+        input.value = '';
+        suggestions.style.display = 'none';
+        addMessage('user', text);
+        chatHistory.push({ role: 'user', content: text });
+        processAIResponse();
+    }
+
+    function addMessage(role, content) {
+        const wrapper = document.createElement('div');
+        wrapper.className = `ai-msg ${role}`;
+
+        const bubble = document.createElement('div');
+        bubble.className = 'msg-bubble';
+        bubble.innerHTML = formatOutputText(content);
+
+        wrapper.appendChild(bubble);
+        messagesEl.appendChild(wrapper);
+        messagesEl.scrollTop = messagesEl.scrollHeight;
+    }
+
+    function showTypingIndicator() {
+        const wrapper = document.createElement('div');
+        wrapper.className = 'ai-msg assistant';
+        wrapper.id = 'aiTypingLoader';
+        wrapper.innerHTML = '<div class="msg-bubble"><div class="ai-typing"><span></span><span></span><span></span></div></div>';
+        messagesEl.appendChild(wrapper);
+        messagesEl.scrollTop = messagesEl.scrollHeight;
+    }
+
+    function killTypingIndicator() {
+        const target = document.getElementById('aiTypingLoader');
+        if (target) target.remove();
+    }
+
+    async function processAIResponse() {
+        isGenerating = true;
+        sendBtn.disabled = true;
+        input.disabled = true;
+        showTypingIndicator();
+
+        try {
+            // Compress dialogue stream for efficient payload matching
+            const operationalContext = chatHistory.slice(-4).map(m => `${m.role}: ${m.content}`).join('\n');
+            const optimizedPrompt = `${SYSTEM_PROMPT}\n\n[LOG]\n${operationalContext}\n\nassistant:`;
+
+            const rawResponse = await fetch(`https://text.pollinations.ai/${encodeURIComponent(optimizedPrompt)}?model=openai&cache=false`);
+            if (!rawResponse.ok) throw new Error('System Downlink Failed');
+
+            const payloadText = await rawResponse.text();
+            killTypingIndicator();
+            
+            const processedString = payloadText.trim();
+            addMessage('assistant', processedString);
+            chatHistory.push({ role: 'assistant', content: processedString });
+
+        } catch (err) {
+            console.error('Core Downlink Defect:', err);
+            killTypingIndicator();
+            addMessage('assistant', 'CRITICAL ERROR: Failed to pipeline data back from the diagnostic cluster. Refresh telemetry.');
+        }
+
+        isGenerating = false;
+        sendBtn.disabled = false;
+        input.disabled = false;
+        input.focus();
+    }
+
+    function formatOutputText(text) {
+        let clean = text.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+        clean = clean.replace(/^([-*])\s+/gm, '<li>');
+        clean = clean.replace(/((?:<li>.*<\/li>\n?)+)/g, '<ul>$1</ul>');
+        clean = clean.replace(/<li>(.*?)(?=\n|$)/g, '<li>$1</li>');
+        clean = clean.replace(/\n\n+/g, '</p><p>').replace(/\n/g, '<br>');
+        return `<p>${clean}</p>`.replace(/<p>\s*<\/p>/g, '');
+    }
+})();
     </script>
 </body>
 
