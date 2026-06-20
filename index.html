@@ -4025,9 +4025,12 @@
         // ============================================================
         const Trading = (() => {
             let selectedCarsForTrade = new Set();
+            let selectedCarsForProposal = new Set();
             let myTrades = [];
             let allTrades = [];
             let carDataMap = {};
+            let currentTradeForProposal = null;
+            let currentTradeForViewProposals = null;
 
             async function loadTrading() {
                 await loadCarData();
@@ -4150,12 +4153,18 @@
                         return;
                     }
 
-                    const { data: trades } = await supabaseClient
+                    const { data: trades, error: tradesError } = await supabaseClient
                         .from('trade_offers')
                         .select('*')
                         .eq('owner_id', session.user.id)
                         .eq('status', 'active')
                         .order('created_at', { ascending: false });
+
+                    if (tradesError) {
+                        console.error('Error fetching my trades:', tradesError);
+                        container.innerHTML = '<p class="text-sm text-red-500">Error loading trades</p>';
+                        return;
+                    }
 
                     myTrades = trades || [];
 
@@ -4164,12 +4173,27 @@
                         return;
                     }
 
-                    container.innerHTML = myTrades.map(trade => {
+                    // For each trade, get proposal count
+                    const tradesWithProposals = await Promise.all(myTrades.map(async (trade) => {
+                        const { data: proposals } = await supabaseClient
+                            .from('trade_proposals')
+                            .select('id', { count: 'exact' })
+                            .eq('trade_offer_id', trade.id)
+                            .eq('status', 'pending');
+                        return { ...trade, proposalCount: proposals?.length || 0 };
+                    }));
+
+                    container.innerHTML = tradesWithProposals.map(trade => {
                         const carNames = trade.offering_cars.map(cid => carDataMap[cid]?.name || `Car #${cid}`).join(', ');
                         return `
                             <div class="border border-gray-200 rounded-lg p-3">
                                 <p class="text-sm font-semibold text-gray-900 mb-1">Offering: ${carNames}</p>
                                 <p class="text-xs text-gray-500 mb-2">Created ${new Date(trade.created_at).toLocaleDateString()}</p>
+                                ${trade.proposalCount > 0 ? `
+                                    <button onclick="Trading.viewProposals(${trade.id})" class="text-xs text-blue-600 hover:text-blue-800 font-semibold mr-3">
+                                        View ${trade.proposalCount} Offer${trade.proposalCount > 1 ? 's' : ''}
+                                    </button>
+                                ` : '<span class="text-xs text-gray-400 mr-3">No offers yet</span>'}
                                 <button onclick="Trading.cancelTrade(${trade.id})" class="text-xs text-red-600 hover:text-red-800 font-semibold">Cancel Trade</button>
                             </div>
                         `;
@@ -4193,12 +4217,19 @@
                         return;
                     }
 
-                    const { data: trades } = await supabaseClient
+                    // Get all active trades except user's own
+                    const { data: trades, error: tradesError } = await supabaseClient
                         .from('trade_offers')
                         .select('*, profiles!trade_offers_owner_id_fkey(username, display_name)')
                         .eq('status', 'active')
                         .neq('owner_id', session.user.id)
                         .order('created_at', { ascending: false });
+
+                    if (tradesError) {
+                        console.error('Error loading trades:', tradesError);
+                        noMsg.classList.remove('hidden');
+                        return;
+                    }
 
                     allTrades = trades || [];
 
@@ -4266,23 +4297,94 @@
                 }
             }
 
-            function openOfferModal(tradeId) {
-                // Store trade ID and open a simple prompt for now
+            async function openOfferModal(tradeId) {
                 const trade = allTrades.find(t => t.id === tradeId);
                 if (!trade) return;
 
-                const carNames = trade.offering_cars.map(cid => carDataMap[cid]?.name || `Car #${cid}`).join(', ');
-                const userInput = prompt(`You want: ${carNames}\n\nEnter the car IDs you want to offer (comma-separated):`);
+                currentTradeForProposal = trade;
+                selectedCarsForProposal.clear();
 
-                if (!userInput) return;
+                // Show what they're offering
+                const offerCarsHtml = trade.offering_cars.map(cid => {
+                    const car = carDataMap[cid];
+                    if (!car) return `<div class="text-xs text-gray-400">Car #${cid}</div>`;
+                    return `
+                        <div class="flex items-center gap-2">
+                            <img src="${car.image}" class="w-10 h-10 rounded object-cover" onerror="this.style.display='none'">
+                            <div class="flex-1 min-w-0">
+                                <p class="text-xs font-semibold text-gray-900 truncate">${car.name}</p>
+                                <p class="text-xs text-gray-500 truncate">${car.model}</p>
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+                document.getElementById('tradeOfferCars').innerHTML = offerCarsHtml;
 
-                const offerCarIds = userInput.split(',').map(id => parseInt(id.trim())).filter(id => !isNaN(id));
-                if (offerCarIds.length === 0) {
-                    showToast('Invalid car IDs', 'error');
-                    return;
+                // Load user's garage for selection
+                try {
+                    const { data: { session } } = await supabaseClient.auth.getSession();
+                    if (!session) return;
+
+                    const { data: profile } = await supabaseClient
+                        .from('profiles')
+                        .select('garage_cars')
+                        .eq('id', session.user.id)
+                        .single();
+
+                    const garageCars = Array.isArray(profile?.garage_cars) ? profile.garage_cars : [];
+
+                    if (garageCars.length === 0) {
+                        document.getElementById('proposalCarsList').innerHTML = '<p class="text-sm text-gray-400">Your garage is empty</p>';
+                    } else {
+                        document.getElementById('proposalCarsList').innerHTML = garageCars.map(carId => {
+                            const car = carDataMap[carId];
+                            if (!car) return '';
+                            return `
+                                <label class="flex items-center gap-3 p-2 rounded border-2 border-gray-200 hover:border-gray-900 transition cursor-pointer">
+                                    <input type="checkbox" class="w-4 h-4" value="${carId}" onchange="Trading.toggleProposalCarSelection(${carId})">
+                                    <img src="${car.image}" class="w-10 h-10 rounded object-cover" onerror="this.style.display='none'">
+                                    <div class="flex-1 min-w-0">
+                                        <p class="text-xs font-semibold text-gray-900 truncate">${car.name}</p>
+                                        <p class="text-xs text-gray-500 truncate">${car.model}</p>
+                                    </div>
+                                </label>
+                            `;
+                        }).join('');
+                    }
+                } catch (e) {
+                    console.error('Error loading garage for proposal:', e);
+                    document.getElementById('proposalCarsList').innerHTML = '<p class="text-sm text-red-500">Error loading your garage</p>';
                 }
 
-                submitOffer(tradeId, offerCarIds);
+                document.getElementById('tradeProposalModal').classList.add('active');
+                lucide.createIcons();
+            }
+
+            function toggleProposalCarSelection(carId) {
+                if (selectedCarsForProposal.has(carId)) {
+                    selectedCarsForProposal.delete(carId);
+                } else {
+                    selectedCarsForProposal.add(carId);
+                }
+                document.getElementById('submitProposalBtn').disabled = selectedCarsForProposal.size === 0;
+            }
+
+            async function submitProposalFromModal() {
+                if (!currentTradeForProposal || selectedCarsForProposal.size === 0) return;
+
+                const btn = document.getElementById('submitProposalBtn');
+                btn.disabled = true;
+                btn.textContent = 'Submitting...';
+
+                try {
+                    await submitOffer(currentTradeForProposal.id, Array.from(selectedCarsForProposal));
+                    closeProposalModal();
+                } catch (e) {
+                    console.error('Error submitting proposal:', e);
+                } finally {
+                    btn.disabled = false;
+                    btn.textContent = 'Submit Offer';
+                }
             }
 
             async function submitOffer(tradeId, offerCarIds) {
@@ -4309,17 +4411,118 @@
                 }
             }
 
+            async function viewProposals(tradeId) {
+                currentTradeForViewProposals = tradeId;
+                const container = document.getElementById('proposalsListContent');
+                container.innerHTML = '<p class="text-sm text-gray-400">Loading proposals...</p>';
+
+                try {
+                    const { data: proposals, error } = await supabaseClient
+                        .from('trade_proposals')
+                        .select('*, profiles!trade_proposals_proposer_id_fkey(username, display_name)')
+                        .eq('trade_offer_id', tradeId)
+                        .eq('status', 'pending')
+                        .order('created_at', { ascending: false });
+
+                    if (error) throw error;
+
+                    if (!proposals || proposals.length === 0) {
+                        container.innerHTML = '<p class="text-sm text-gray-400">No proposals yet</p>';
+                        document.getElementById('viewProposalsModal').classList.add('active');
+                        return;
+                    }
+
+                    container.innerHTML = proposals.map(proposal => {
+                        const proposerName = proposal.profiles?.display_name || proposal.profiles?.username || 'Unknown';
+                        const carCards = proposal.offering_cars.map(cid => {
+                            const car = carDataMap[cid];
+                            if (!car) return `<div class="text-xs text-gray-400">Car #${cid}</div>`;
+                            return `
+                                <div class="flex items-center gap-2 p-2 bg-gray-50 rounded">
+                                    <img src="${car.image}" class="w-10 h-10 rounded object-cover" onerror="this.style.display='none'">
+                                    <div class="flex-1 min-w-0">
+                                        <p class="text-xs font-semibold text-gray-900 truncate">${car.name}</p>
+                                        <p class="text-xs text-gray-500 truncate">${car.model}</p>
+                                    </div>
+                                </div>
+                            `;
+                        }).join('');
+
+                        return `
+                            <div class="border border-gray-200 rounded-lg p-4">
+                                <div class="flex items-center justify-between mb-3">
+                                    <p class="font-semibold text-gray-900">From @${proposerName}</p>
+                                    <span class="text-xs text-gray-400">${new Date(proposal.created_at).toLocaleDateString()}</span>
+                                </div>
+                                <p class="text-xs text-gray-500 mb-2">Offering:</p>
+                                <div class="space-y-2 mb-4">${carCards}</div>
+                                <button onclick="Trading.acceptProposal(${proposal.id})" class="w-full py-2 rounded-lg bg-green-600 text-white text-sm font-semibold hover:bg-green-700 transition">
+                                    Accept Trade
+                                </button>
+                            </div>
+                        `;
+                    }).join('');
+
+                    document.getElementById('viewProposalsModal').classList.add('active');
+                    lucide.createIcons();
+
+                } catch (e) {
+                    console.error('Error loading proposals:', e);
+                    container.innerHTML = '<p class="text-sm text-red-500">Error loading proposals</p>';
+                    document.getElementById('viewProposalsModal').classList.add('active');
+                }
+            }
+
+            async function acceptProposal(proposalId) {
+                if (!confirm('Accept this trade? Cars will be swapped immediately.')) return;
+
+                try {
+                    const { data, error } = await supabaseClient.rpc('complete_trade', {
+                        p_proposal_id: proposalId
+                    });
+
+                    if (error) throw error;
+
+                    if (data && data.success === false) {
+                        showToast(data.error || 'Trade failed', 'error');
+                        return;
+                    }
+
+                    showToast('Trade completed successfully!', 'success');
+                    closeViewProposalsModal();
+                    await loadMyActiveTrades();
+                    await loadAvailableTrades();
+
+                } catch (e) {
+                    console.error('Accept proposal error:', e);
+                    showToast('Failed to complete trade: ' + e.message, 'error');
+                }
+            }
+
             document.getElementById('createTradeBtn')?.addEventListener('click', createTrade);
 
             return {
                 loadTrading,
                 toggleCarSelection,
+                toggleProposalCarSelection,
                 cancelTrade,
-                openOfferModal
+                openOfferModal,
+                submitProposalFromModal,
+                viewProposals,
+                acceptProposal
             };
         })();
 
         window.Trading = Trading;
+        window.closeProposalModal = () => {
+            document.getElementById('tradeProposalModal').classList.remove('active');
+            Trading.loadTrading();
+        };
+        window.closeViewProposalsModal = () => {
+            document.getElementById('viewProposalsModal').classList.remove('active');
+            Trading.loadTrading();
+        };
+        console.log("21")
     </script>
 </body>
 
