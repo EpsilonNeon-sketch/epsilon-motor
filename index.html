@@ -15,254 +15,297 @@
         * {
             box-sizing: border-box;
         }
-/* ===== EPSILON AI WIDGET SYSTEM ===== */
-.ai-fab {
-    position: fixed;
-    bottom: 1.75rem;
-    right: 1.75rem;
-    z-index: 600;
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
-    background: #1a1a2e;
-    border: 2px solid rgba(255, 255, 255, 0.05);
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: white;
-    box-shadow: 0 12px 40px rgba(26, 26, 46, 0.35);
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-}
 
-.ai-fab:hover {
-    transform: scale(1.06) translateY(-2px);
-    background: #2563eb; /* Shifts to high-perf blue on hover */
-    box-shadow: 0 16px 48px rgba(37, 99, 235, 0.4);
-}
+        /* ===== EPSILON AI WIDGET SYSTEM ===== */
+        .ai-fab {
+            position: fixed;
+            bottom: 1.75rem;
+            right: 1.75rem;
+            z-index: 600;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: #1a1a2e;
+            border: 2px solid rgba(255, 255, 255, 0.05);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            box-shadow: 0 12px 40px rgba(26, 26, 46, 0.35);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
 
-.ai-fab.active {
-    transform: rotate(90deg) scale(1.02);
-    background: #dc2626;
-}
+        .ai-fab:hover {
+            transform: scale(1.06) translateY(-2px);
+            background: #2563eb;
+            /* Shifts to high-perf blue on hover */
+            box-shadow: 0 16px 48px rgba(37, 99, 235, 0.4);
+        }
 
-.ai-fab .fab-pulse {
-    position: absolute;
-    inset: -4px;
-    border-radius: 50%;
-    border: 2px solid rgba(37, 99, 235, 0.3);
-    animation: fabPulse 2.5s ease-out infinite;
-}
+        .ai-fab.active {
+            transform: rotate(90deg) scale(1.02);
+            background: #dc2626;
+        }
 
-@keyframes fabPulse {
-    0% { transform: scale(1); opacity: 0.7; }
-    100% { transform: scale(1.4); opacity: 0; }
-}
+        .ai-fab .fab-pulse {
+            position: absolute;
+            inset: -4px;
+            border-radius: 50%;
+            border: 2px solid rgba(37, 99, 235, 0.3);
+            animation: fabPulse 2.5s ease-out infinite;
+        }
 
-.ai-chat {
-    position: fixed;
-    bottom: 6.5rem;
-    right: 1.75rem;
-    z-index: 599;
-    width: 410px;
-    max-width: calc(100vw - 2rem);
-    height: 580px;
-    max-height: calc(100vh - 8rem);
-    border-radius: 1.25rem;
-    background: rgba(255, 255, 255, 0.98);
-    backdrop-filter: blur(24px);
-    border: 1px solid rgba(26, 26, 46, 0.1);
-    box-shadow: 0 24px 64px rgba(0, 0, 0, 0.15);
-    display: flex;
-    flex-direction: column;
-    overflow: hidden;
-    transform: scale(0.92) translateY(24px);
-    opacity: 0;
-    pointer-events: none;
-    transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
-    transform-origin: bottom right;
-}
+        @keyframes fabPulse {
+            0% {
+                transform: scale(1);
+                opacity: 0.7;
+            }
 
-.ai-chat.open {
-    transform: scale(1) translateY(0);
-    opacity: 1;
-    pointer-events: all;
-}
+            100% {
+                transform: scale(1.4);
+                opacity: 0;
+            }
+        }
 
-.ai-chat-header {
-    padding: 1.2rem 1.25rem;
-    background: #1a1a2e;
-    color: white;
-    display: flex;
-    align-items: center;
-    gap: 0.85rem;
-}
+        .ai-chat {
+            position: fixed;
+            bottom: 6.5rem;
+            right: 1.75rem;
+            z-index: 599;
+            width: 410px;
+            max-width: calc(100vw - 2rem);
+            height: 580px;
+            max-height: calc(100vh - 8rem);
+            border-radius: 1.25rem;
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(24px);
+            border: 1px solid rgba(26, 26, 46, 0.1);
+            box-shadow: 0 24px 64px rgba(0, 0, 0, 0.15);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            transform: scale(0.92) translateY(24px);
+            opacity: 0;
+            pointer-events: none;
+            transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+            transform-origin: bottom right;
+        }
 
-.ai-chat-header .ai-avatar {
-    width: 36px;
-    height: 36px;
-    border-radius: 0.75rem;
-    background: rgba(255, 255, 255, 0.08);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
+        .ai-chat.open {
+            transform: scale(1) translateY(0);
+            opacity: 1;
+            pointer-events: all;
+        }
 
-.ai-chat-header .ai-meta h3 {
-    font-size: 0.95rem;
-    font-weight: 700;
-    margin: 0;
-    letter-spacing: -0.01em;
-}
+        .ai-chat-header {
+            padding: 1.2rem 1.25rem;
+            background: #1a1a2e;
+            color: white;
+            display: flex;
+            align-items: center;
+            gap: 0.85rem;
+        }
 
-.ai-chat-header .ai-meta p {
-    font-size: 0.72rem;
-    color: rgba(255, 255, 255, 0.45);
-    margin-top: 2px;
-    display: flex;
-    align-items: center;
-    gap: 5px;
-}
+        .ai-chat-header .ai-avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 0.75rem;
+            background: rgba(255, 255, 255, 0.08);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
 
-.ai-chat-header .status-dot {
-    width: 6px;
-    height: 6px;
-    border-radius: 50%;
-    background: #10b981;
-}
+        .ai-chat-header .ai-meta h3 {
+            font-size: 0.95rem;
+            font-weight: 700;
+            margin: 0;
+            letter-spacing: -0.01em;
+        }
 
-.ai-chat-messages {
-    flex: 1;
-    overflow-y: auto;
-    padding: 1.25rem;
-    display: flex;
-    flex-direction: column;
-    gap: 0.85rem;
-}
+        .ai-chat-header .ai-meta p {
+            font-size: 0.72rem;
+            color: rgba(255, 255, 255, 0.45);
+            margin-top: 2px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
 
-.ai-msg {
-    display: flex;
-    gap: 0.75rem;
-    max-width: 85%;
-    animation: msgIn 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-}
+        .ai-chat-header .status-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: #10b981;
+        }
 
-@keyframes msgIn {
-    from { opacity: 0; transform: translateY(6px); }
-    to { opacity: 1; transform: translateY(0); }
-}
+        .ai-chat-messages {
+            flex: 1;
+            overflow-y: auto;
+            padding: 1.25rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.85rem;
+        }
 
-.ai-msg.user {
-    align-self: flex-end;
-    flex-direction: row-reverse;
-}
+        .ai-msg {
+            display: flex;
+            gap: 0.75rem;
+            max-width: 85%;
+            animation: msgIn 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+        }
 
-.ai-msg .msg-bubble {
-    padding: 0.75rem 1rem;
-    border-radius: 1rem;
-    font-size: 0.875rem;
-    line-height: 1.55;
-    color: #1a1a2e;
-}
+        @keyframes msgIn {
+            from {
+                opacity: 0;
+                transform: translateY(6px);
+            }
 
-.ai-msg.assistant .msg-bubble {
-    background: #f3f4f6;
-    border-top-left-radius: 0.25rem;
-}
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
 
-.ai-msg.user .msg-bubble {
-    background: #1a1a2e;
-    color: white;
-    border-top-right-radius: 0.25rem;
-}
+        .ai-msg.user {
+            align-self: flex-end;
+            flex-direction: row-reverse;
+        }
 
-.ai-typing {
-    display: flex;
-    gap: 5px;
-    padding: 0.5rem 0.25rem;
-}
+        .ai-msg .msg-bubble {
+            padding: 0.75rem 1rem;
+            border-radius: 1rem;
+            font-size: 0.875rem;
+            line-height: 1.55;
+            color: #1a1a2e;
+        }
 
-.ai-typing span {
-    width: 6px;
-    height: 6px;
-    border-radius: 50%;
-    background: #9ca3af;
-    animation: typeDot 1.2s ease-in-out infinite;
-}
+        .ai-msg.assistant .msg-bubble {
+            background: #f3f4f6;
+            border-top-left-radius: 0.25rem;
+        }
 
-.ai-typing span:nth-child(2) { animation-delay: 0.15s; }
-.ai-typing span:nth-child(3) { animation-delay: 0.3s; }
+        .ai-msg.user .msg-bubble {
+            background: #1a1a2e;
+            color: white;
+            border-top-right-radius: 0.25rem;
+        }
 
-@keyframes typeDot {
-    0%, 60%, 100% { transform: translateY(0); opacity: 0.4; }
-    30% { transform: translateY(-4px); opacity: 1; }
-}
+        .ai-typing {
+            display: flex;
+            gap: 5px;
+            padding: 0.5rem 0.25rem;
+        }
 
-.ai-chat-input {
-    padding: 1rem;
-    border-top: 1px solid #e5e7eb;
-    display: flex;
-    gap: 0.6rem;
-    background: white;
-}
+        .ai-typing span {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: #9ca3af;
+            animation: typeDot 1.2s ease-in-out infinite;
+        }
 
-.ai-chat-input input {
-    flex: 1;
-    border: 1.5px solid #e2e4e8;
-    border-radius: 0.75rem;
-    padding: 0.65rem 1rem;
-    font-size: 0.875rem;
-    outline: none;
-    background: #f8fafc;
-    transition: all 0.2s;
-}
+        .ai-typing span:nth-child(2) {
+            animation-delay: 0.15s;
+        }
 
-.ai-chat-input input:focus {
-    border-color: #1a1a2e;
-    background: #fff;
-}
+        .ai-typing span:nth-child(3) {
+            animation-delay: 0.3s;
+        }
 
-.ai-chat-input button {
-    width: 40px;
-    height: 40px;
-    border-radius: 0.75rem;
-    background: #1a1a2e;
-    color: white;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: all 0.2s;
-}
+        @keyframes typeDot {
 
-.ai-chat-input button:hover { background: #2563eb; }
-.ai-chat-input button:disabled { opacity: 0.4; }
+            0%,
+            60%,
+            100% {
+                transform: translateY(0);
+                opacity: 0.4;
+            }
 
-.ai-suggestions {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.4rem;
-    padding: 0 1rem 0.75rem;
-}
+            30% {
+                transform: translateY(-4px);
+                opacity: 1;
+            }
+        }
 
-.ai-suggestions button {
-    padding: 0.35rem 0.75rem;
-    border-radius: 9999px;
-    font-size: 0.72rem;
-    font-weight: 600;
-    border: 1.5px solid #e2e4e8;
-    background: white;
-    color: #4b5563;
-    transition: all 0.2s;
-}
+        .ai-chat-input {
+            padding: 1rem;
+            border-top: 1px solid #e5e7eb;
+            display: flex;
+            gap: 0.6rem;
+            background: white;
+        }
 
-.ai-suggestions button:hover {
-    border-color: #1a1a2e;
-    color: #1a1a2e;
-}
+        .ai-chat-input input {
+            flex: 1;
+            border: 1.5px solid #e2e4e8;
+            border-radius: 0.75rem;
+            padding: 0.65rem 1rem;
+            font-size: 0.875rem;
+            outline: none;
+            background: #f8fafc;
+            transition: all 0.2s;
+        }
 
-@media (max-width: 480px) {
-    .ai-chat { bottom: 0; right: 0; width: 100%; height: 100%; border-radius: 0; }
-}
+        .ai-chat-input input:focus {
+            border-color: #1a1a2e;
+            background: #fff;
+        }
+
+        .ai-chat-input button {
+            width: 40px;
+            height: 40px;
+            border-radius: 0.75rem;
+            background: #1a1a2e;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+        }
+
+        .ai-chat-input button:hover {
+            background: #2563eb;
+        }
+
+        .ai-chat-input button:disabled {
+            opacity: 0.4;
+        }
+
+        .ai-suggestions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.4rem;
+            padding: 0 1rem 0.75rem;
+        }
+
+        .ai-suggestions button {
+            padding: 0.35rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.72rem;
+            font-weight: 600;
+            border: 1.5px solid #e2e4e8;
+            background: white;
+            color: #4b5563;
+            transition: all 0.2s;
+        }
+
+        .ai-suggestions button:hover {
+            border-color: #1a1a2e;
+            color: #1a1a2e;
+        }
+
+        @media (max-width: 480px) {
+            .ai-chat {
+                bottom: 0;
+                right: 0;
+                width: 100%;
+                height: 100%;
+                border-radius: 0;
+            }
+        }
+
         body {
             font-family: 'Inter', sans-serif;
             background-color: #f7f8fa;
@@ -979,6 +1022,10 @@
                     class="nav-btn w-full flex items-center gap-3 p-3 rounded-xl hover:bg-gray-100 transition text-left text-gray-600"
                     data-page="compare"><i data-lucide="git-compare"
                         style="width:20px;height:20px;"></i><span>Compare</span></button>
+                <button
+                    class="nav-btn w-full flex items-center gap-3 p-3 rounded-xl hover:bg-gray-100 transition text-left text-gray-600"
+                    data-page="learn"><i data-lucide="graduation-cap"
+                        style="width:20px;height:20px;"></i><span>Learn</span></button>
             </nav>
             <div class="divider my-6"></div>
             <div class="px-3 py-4 rounded-xl bg-gray-50 border border-gray-100">
@@ -1346,6 +1393,354 @@
                 </div>
             </div>
 
+            <!-- LEARN -->
+            <div id="learnSection" class="section hidden">
+                <header class="mb-6">
+                    <h1 class="text-3xl font-extrabold text-gray-900 tracking-tight">Car Parts Guide</h1>
+                    <p class="text-gray-400 mt-1">Complete guide to car parts, their uses, and models — Perfect for beginners</p>
+                </header>
+                <div class="glass rounded-2xl p-6 mb-6">
+                    <div class="flex items-center gap-3 mb-3">
+                        <i data-lucide="info" style="width:20px;height:20px;color:#2563eb;"></i>
+                        <h2 class="text-lg font-bold text-gray-900">Welcome to Car Parts 101</h2>
+                    </div>
+                    <p class="text-gray-600 text-sm leading-relaxed">This guide covers essential car components, explaining what they do and showing real-world examples. Whether you're new to cars or looking to expand your knowledge, you'll find clear explanations for each major system and part.</p>
+                </div>
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-5">
+                    <div class="glass rounded-2xl p-6">
+                        <div class="flex items-center gap-3 mb-4">
+                            <div class="w-10 h-10 bg-red-100 rounded-lg flex items-center justify-center"><i
+                                    data-lucide="cpu" style="width:20px;height:20px;color:#dc2626;"></i></div>
+                            <h2 class="text-xl font-bold text-gray-900">Engine</h2>
+                        </div>
+                        <p class="text-gray-600 text-sm mb-3">The heart of the car that converts fuel into motion
+                            through combustion.</p>
+                        <p class="text-gray-500 text-xs font-semibold mb-2">Common Models:</p>
+                        <div class="space-y-1 text-xs text-gray-600">
+                            <p>• Inline-4 (Honda Civic, Toyota Camry)</p>
+                            <p>• V6 (Nissan Maxima, Ford Mustang)</p>
+                            <p>• V8 (Chevrolet Corvette, Dodge Charger)</p>
+                        </div>
+                    </div>
+                    <div class="glass rounded-2xl p-6">
+                        <div class="flex items-center gap-3 mb-4">
+                            <div class="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center"><i
+                                    data-lucide="settings" style="width:20px;height:20px;color:#2563eb;"></i></div>
+                            <h2 class="text-xl font-bold text-gray-900">Transmission</h2>
+                        </div>
+                        <p class="text-gray-600 text-sm mb-3">Transfers power from the engine to the wheels, controlling
+                            speed and torque.</p>
+                        <p class="text-gray-500 text-xs font-semibold mb-2">Common Models:</p>
+                        <div class="space-y-1 text-xs text-gray-600">
+                            <p>• Manual (5-speed, 6-speed)</p>
+                            <p>• Automatic (CVT, 8-speed, 10-speed)</p>
+                            <p>• Dual-Clutch (PDK, DSG)</p>
+                        </div>
+                    </div>
+                    <div class="glass rounded-2xl p-6">
+                        <div class="flex items-center gap-3 mb-4">
+                            <div class="w-10 h-10 bg-orange-100 rounded-lg flex items-center justify-center"><i
+                                    data-lucide="disc" style="width:20px;height:20px;color:#ea580c;"></i></div>
+                            <h2 class="text-xl font-bold text-gray-900">Brakes</h2>
+                        </div>
+                        <p class="text-gray-600 text-sm mb-3">Critical safety system that slows or stops the vehicle
+                            using friction.</p>
+                        <p class="text-gray-500 text-xs font-semibold mb-2">Common Models:</p>
+                        <div class="space-y-1 text-xs text-gray-600">
+                            <p>• Disc Brakes (ventilated, solid)</p>
+                            <p>• Drum Brakes (rear wheels)</p>
+                            <p>• ABS (Anti-lock Braking System)</p>
+                        </div>
+                    </div>
+                    <div class="glass rounded-2xl p-6">
+                        <div class="flex items-center gap-3 mb-4">
+                            <div class="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center"><i
+                                    data-lucide="disc-3" style="width:20px;height:20px;color:#16a34a;"></i></div>
+                            <h2 class="text-xl font-bold text-gray-900">Suspension</h2>
+                        </div>
+                        <p class="text-gray-600 text-sm mb-3">Absorbs road shocks and maintains tire contact for smooth
+                            handling.</p>
+                        <p class="text-gray-500 text-xs font-semibold mb-2">Common Models:</p>
+                        <div class="space-y-1 text-xs text-gray-600">
+                            <p>• MacPherson Strut (most sedans)</p>
+                            <p>• Double Wishbone (sports cars)</p>
+                            <p>• Air Suspension (luxury vehicles)</p>
+                        </div>
+                    </div>
+                    <div class="glass rounded-2xl p-6">
+                        <div class="flex items-center gap-3 mb-4">
+                            <div class="w-10 h-10 bg-purple-100 rounded-lg flex items-center justify-center"><i
+                                    data-lucide="wind" style="width:20px;height:20px;color:#9333ea;"></i></div>
+                            <h2 class="text-xl font-bold text-gray-900">Turbocharger</h2>
+                        </div>
+                        <p class="text-gray-600 text-sm mb-3">Forces more air into the engine for increased power
+                            output.</p>
+                        <p class="text-gray-500 text-xs font-semibold mb-2">Common Models:</p>
+                        <div class="space-y-1 text-xs text-gray-600">
+                            <p>• Single Turbo (most turbocharged cars)</p>
+                            <p>• Twin-Turbo (high-performance engines)</p>
+                            <p>• Twin-Scroll (efficient performance)</p>
+                        </div>
+                    </div>
+                    <div class="glass rounded-2xl p-6">
+                        <div class="flex items-center gap-3 mb-4">
+                            <div class="w-10 h-10 bg-yellow-100 rounded-lg flex items-center justify-center"><i
+                                    data-lucide="gauge" style="width:20px;height:20px;color:#ca8a04;"></i></div>
+                            <h2 class="text-xl font-bold text-gray-900">Fuel System</h2>
+                        </div>
+                        <p class="text-gray-600 text-sm mb-3">Stores and delivers fuel to the engine for combustion.</p>
+                        <p class="text-gray-500 text-xs font-semibold mb-2">Common Models:</p>
+                        <div class="space-y-1 text-xs text-gray-600">
+                            <p>• Port Fuel Injection (older vehicles)</p>
+                            <p>• Direct Injection (modern engines)</p>
+                            <p>• High-Pressure Pump (diesels)</p>
+                        </div>
+                    </div>
+                    <div class="glass rounded-2xl p-6">
+                        <div class="flex items-center gap-3 mb-4">
+                            <div class="w-10 h-10 bg-indigo-100 rounded-lg flex items-center justify-center"><i
+                                    data-lucide="zap" style="width:20px;height:20px;color:#4f46e5;"></i></div>
+                            <h2 class="text-xl font-bold text-gray-900">Battery</h2>
+                        </div>
+                        <p class="text-gray-600 text-sm mb-3">Provides electrical power to start the engine and run
+                            electronics.</p>
+                        <p class="text-gray-500 text-xs font-semibold mb-2">Common Models:</p>
+                        <div class="space-y-1 text-xs text-gray-600">
+                            <p>• Lead-Acid (standard 12V)</p>
+                            <p>• AGM (Absorbent Glass Mat)</p>
+                            <p>• Lithium-Ion (electric vehicles)</p>
+                        </div>
+                    </div>
+                    <div class="glass rounded-2xl p-6">
+                        <div class="flex items-center gap-3 mb-4">
+                            <div class="w-10 h-10 bg-pink-100 rounded-lg flex items-center justify-center"><i
+                                    data-lucide="rotate-cw" style="width:20px;height:20px;color:#db2777;"></i></div>
+                            <h2 class="text-xl font-bold text-gray-900">Alternator</h2>
+                        </div>
+                        <p class="text-gray-600 text-sm mb-3">Generates electricity to charge the battery and power
+                            accessories.</p>
+                        <p class="text-gray-500 text-xs font-semibold mb-2">Common Models:</p>
+                        <div class="space-y-1 text-xs text-gray-600">
+                            <p>• 60-90 Amp (compact cars)</p>
+                            <p>• 100-150 Amp (full-size vehicles)</p>
+                            <p>• High-Output (performance vehicles)</p>
+                        </div>
+                    </div>
+                    <div class="glass rounded-2xl p-6">
+                        <div class="flex items-center gap-3 mb-4">
+                            <div class="w-10 h-10 bg-teal-100 rounded-lg flex items-center justify-center"><i
+                                    data-lucide="thermometer" style="width:20px;height:20px;color:#0d9488;"></i></div>
+                            <h2 class="text-xl font-bold text-gray-900">Radiator</h2>
+                        </div>
+                        <p class="text-gray-600 text-sm mb-3">Cools the engine by dissipating heat from the coolant
+                            fluid.</p>
+                        <p class="text-gray-500 text-xs font-semibold mb-2">Common Models:</p>
+                        <div class="space-y-1 text-xs text-gray-600">
+                            <p>• Aluminum (modern standard)</p>
+                            <p>• Copper/Brass (older vehicles)</p>
+                            <p>• Performance (larger core)</p>
+                        </div>
+                    </div>
+                    <div class="glass rounded-2xl p-6">
+                        <div class="flex items-center gap-3 mb-4">
+                            <div class="w-10 h-10 bg-gray-100 rounded-lg flex items-center justify-center"><i
+                                    data-lucide="circle" style="width:20px;height:20px;color:#6b7280;"></i></div>
+                            <h2 class="text-xl font-bold text-gray-900">Tires & Wheels</h2>
+                        </div>
+                        <p class="text-gray-600 text-sm mb-3">Provides traction, grip, and absorbs minor road
+                            imperfections.</p>
+                        <p class="text-gray-500 text-xs font-semibold mb-2">Common Models:</p>
+                        <div class="space-y-1 text-xs text-gray-600">
+                            <p>• All-Season (daily driving)</p>
+                            <p>• Summer Performance (sports cars)</p>
+                            <p>• Winter/Snow (cold climates)</p>
+                        </div>
+                    </div>
+                    <div class="glass rounded-2xl p-6">
+                        <div class="flex items-center gap-3 mb-4">
+                            <div class="w-10 h-10 bg-sky-100 rounded-lg flex items-center justify-center"><i
+                                    data-lucide="droplets" style="width:20px;height:20px;color:#0ea5e9;"></i></div>
+                            <h2 class="text-xl font-bold text-gray-900">Oil Filter</h2>
+                        </div>
+                        <p class="text-gray-600 text-sm mb-3">Removes contaminants from engine oil to protect internal components.</p>
+                        <p class="text-gray-500 text-xs font-semibold mb-2">Common Models:</p>
+                        <div class="space-y-1 text-xs text-gray-600">
+                            <p>• Spin-On (easy replacement)</p>
+                            <p>• Cartridge (eco-friendly)</p>
+                            <p>• Magnetic (enhanced filtering)</p>
+                        </div>
+                    </div>
+                    <div class="glass rounded-2xl p-6">
+                        <div class="flex items-center gap-3 mb-4">
+                            <div class="w-10 h-10 bg-rose-100 rounded-lg flex items-center justify-center"><i
+                                    data-lucide="flame" style="width:20px;height:20px;color:#f43f5e;"></i></div>
+                            <h2 class="text-xl font-bold text-gray-900">Spark Plugs</h2>
+                        </div>
+                        <p class="text-gray-600 text-sm mb-3">Ignites the air-fuel mixture in the combustion chamber to power the engine.</p>
+                        <p class="text-gray-500 text-xs font-semibold mb-2">Common Models:</p>
+                        <div class="space-y-1 text-xs text-gray-600">
+                            <p>• Copper (standard use)</p>
+                            <p>• Platinum (longer lifespan)</p>
+                            <p>• Iridium (high-performance)</p>
+                        </div>
+                    </div>
+                    <div class="glass rounded-2xl p-6">
+                        <div class="flex items-center gap-3 mb-4">
+                            <div class="w-10 h-10 bg-lime-100 rounded-lg flex items-center justify-center"><i
+                                    data-lucide="recycle" style="width:20px;height:20px;color:#84cc16;"></i></div>
+                            <h2 class="text-xl font-bold text-gray-900">Catalytic Converter</h2>
+                        </div>
+                        <p class="text-gray-600 text-sm mb-3">Reduces harmful emissions by converting toxic gases into less harmful substances.</p>
+                        <p class="text-gray-500 text-xs font-semibold mb-2">Common Models:</p>
+                        <div class="space-y-1 text-xs text-gray-600">
+                            <p>• Two-Way (CO and HC reduction)</p>
+                            <p>• Three-Way (modern standard)</p>
+                            <p>• High-Flow (performance cars)</p>
+                        </div>
+                    </div>
+                    <div class="glass rounded-2xl p-6">
+                        <div class="flex items-center gap-3 mb-4">
+                            <div class="w-10 h-10 bg-cyan-100 rounded-lg flex items-center justify-center"><i
+                                    data-lucide="airplay" style="width:20px;height:20px;color:#06b6d4;"></i></div>
+                            <h2 class="text-xl font-bold text-gray-900">Air Filter</h2>
+                        </div>
+                        <p class="text-gray-600 text-sm mb-3">Prevents dirt and debris from entering the engine, ensuring clean air for combustion.</p>
+                        <p class="text-gray-500 text-xs font-semibold mb-2">Common Models:</p>
+                        <div class="space-y-1 text-xs text-gray-600">
+                            <p>• Paper Element (disposable)</p>
+                            <p>• Foam (washable, reusable)</p>
+                            <p>• Cotton Gauze (K&N style)</p>
+                        </div>
+                    </div>
+                    <div class="glass rounded-2xl p-6">
+                        <div class="flex items-center gap-3 mb-4">
+                            <div class="w-10 h-10 bg-violet-100 rounded-lg flex items-center justify-center"><i
+                                    data-lucide="move" style="width:20px;height:20px;color:#8b5cf6;"></i></div>
+                            <h2 class="text-xl font-bold text-gray-900">Axle</h2>
+                        </div>
+                        <p class="text-gray-600 text-sm mb-3">Transfers power from the transmission to the wheels, enabling vehicle movement.</p>
+                        <p class="text-gray-500 text-xs font-semibold mb-2">Common Models:</p>
+                        <div class="space-y-1 text-xs text-gray-600">
+                            <p>• Front Axle (steering control)</p>
+                            <p>• Rear Axle (power delivery)</p>
+                            <p>• CV Axle (FWD vehicles)</p>
+                        </div>
+                    </div>
+                    <div class="glass rounded-2xl p-6">
+                        <div class="flex items-center gap-3 mb-4">
+                            <div class="w-10 h-10 bg-amber-100 rounded-lg flex items-center justify-center"><i
+                                    data-lucide="lightbulb" style="width:20px;height:20px;color:#f59e0b;"></i></div>
+                            <h2 class="text-xl font-bold text-gray-900">Headlights</h2>
+                        </div>
+                        <p class="text-gray-600 text-sm mb-3">Illuminates the road ahead for safe nighttime and low-visibility driving.</p>
+                        <p class="text-gray-500 text-xs font-semibold mb-2">Common Models:</p>
+                        <div class="space-y-1 text-xs text-gray-600">
+                            <p>• Halogen (standard bulbs)</p>
+                            <p>• LED (energy efficient)</p>
+                            <p>• HID/Xenon (bright white light)</p>
+                        </div>
+                    </div>
+                    <div class="glass rounded-2xl p-6">
+                        <div class="flex items-center gap-3 mb-4">
+                            <div class="w-10 h-10 bg-emerald-100 rounded-lg flex items-center justify-center"><i
+                                    data-lucide="waves" style="width:20px;height:20px;color:#10b981;"></i></div>
+                            <h2 class="text-xl font-bold text-gray-900">Shock Absorbers</h2>
+                        </div>
+                        <p class="text-gray-600 text-sm mb-3">Controls spring movement and dampens road bumps for a smooth ride.</p>
+                        <p class="text-gray-500 text-xs font-semibold mb-2">Common Models:</p>
+                        <div class="space-y-1 text-xs text-gray-600">
+                            <p>• Twin-Tube (comfort-oriented)</p>
+                            <p>• Mono-Tube (performance)</p>
+                            <p>• Gas-Charged (better response)</p>
+                        </div>
+                    </div>
+                    <div class="glass rounded-2xl p-6">
+                        <div class="flex items-center gap-3 mb-4">
+                            <div class="w-10 h-10 bg-fuchsia-100 rounded-lg flex items-center justify-center"><i
+                                    data-lucide="minimize-2" style="width:20px;height:20px;color:#d946ef;"></i></div>
+                            <h2 class="text-xl font-bold text-gray-900">Exhaust System</h2>
+                        </div>
+                        <p class="text-gray-600 text-sm mb-3">Channels exhaust gases away from the engine, reduces noise, and controls emissions.</p>
+                        <p class="text-gray-500 text-xs font-semibold mb-2">Common Models:</p>
+                        <div class="space-y-1 text-xs text-gray-600">
+                            <p>• Single Exit (most cars)</p>
+                            <p>• Dual Exit (V6/V8 engines)</p>
+                            <p>• Cat-Back (performance upgrade)</p>
+                        </div>
+                    </div>
+                    <div class="glass rounded-2xl p-6">
+                        <div class="flex items-center gap-3 mb-4">
+                            <div class="w-10 h-10 bg-slate-100 rounded-lg flex items-center justify-center"><i
+                                    data-lucide="car-front" style="width:20px;height:20px;color:#64748b;"></i></div>
+                            <h2 class="text-xl font-bold text-gray-900">Bumpers</h2>
+                        </div>
+                        <p class="text-gray-600 text-sm mb-3">Protects the vehicle body and absorbs impact during low-speed collisions.</p>
+                        <p class="text-gray-500 text-xs font-semibold mb-2">Common Models:</p>
+                        <div class="space-y-1 text-xs text-gray-600">
+                            <p>• Plastic Cover (modern standard)</p>
+                            <p>• Steel Reinforced (trucks/SUVs)</p>
+                            <p>• Energy Absorbing (safety focus)</p>
+                        </div>
+                    </div>
+                    <div class="glass rounded-2xl p-6">
+                        <div class="flex items-center gap-3 mb-4">
+                            <div class="w-10 h-10 bg-red-100 rounded-lg flex items-center justify-center"><i
+                                    data-lucide="shield" style="width:20px;height:20px;color:#ef4444;"></i></div>
+                            <h2 class="text-xl font-bold text-gray-900">Airbags</h2>
+                        </div>
+                        <p class="text-gray-600 text-sm mb-3">Deploys during collisions to cushion and protect occupants from injury.</p>
+                        <p class="text-gray-500 text-xs font-semibold mb-2">Common Models:</p>
+                        <div class="space-y-1 text-xs text-gray-600">
+                            <p>• Front Airbags (driver & passenger)</p>
+                            <p>• Side Curtain (window protection)</p>
+                            <p>• Knee Airbags (leg protection)</p>
+                        </div>
+                    </div>
+                    <div class="glass rounded-2xl p-6">
+                        <div class="flex items-center gap-3 mb-4">
+                            <div class="w-10 h-10 bg-orange-100 rounded-lg flex items-center justify-center"><i
+                                    data-lucide="git-fork" style="width:20px;height:20px;color:#fb923c;"></i></div>
+                            <h2 class="text-xl font-bold text-gray-900">Differential</h2>
+                        </div>
+                        <p class="text-gray-600 text-sm mb-3">Allows wheels to rotate at different speeds during turns for smooth handling.</p>
+                        <p class="text-gray-500 text-xs font-semibold mb-2">Common Models:</p>
+                        <div class="space-y-1 text-xs text-gray-600">
+                            <p>• Open Differential (standard cars)</p>
+                            <p>• Limited-Slip (performance/AWD)</p>
+                            <p>• Locking (off-road vehicles)</p>
+                        </div>
+                    </div>
+                    <div class="glass rounded-2xl p-6">
+                        <div class="flex items-center gap-3 mb-4">
+                            <div class="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center"><i
+                                    data-lucide="navigation" style="width:20px;height:20px;color:#22c55e;"></i></div>
+                            <h2 class="text-xl font-bold text-gray-900">Steering System</h2>
+                        </div>
+                        <p class="text-gray-600 text-sm mb-3">Converts steering wheel input into directional movement of the front wheels.</p>
+                        <p class="text-gray-500 text-xs font-semibold mb-2">Common Models:</p>
+                        <div class="space-y-1 text-xs text-gray-600">
+                            <p>• Rack & Pinion (most modern cars)</p>
+                            <p>• Power Steering (hydraulic assist)</p>
+                            <p>• Electric Power (modern efficiency)</p>
+                        </div>
+                    </div>
+                    <div class="glass rounded-2xl p-6">
+                        <div class="flex items-center gap-3 mb-4">
+                            <div class="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center"><i
+                                    data-lucide="panels-top-left" style="width:20px;height:20px;color:#3b82f6;"></i></div>
+                            <h2 class="text-xl font-bold text-gray-900">Dashboard</h2>
+                        </div>
+                        <p class="text-gray-600 text-sm mb-3">Displays vital vehicle information including speed, fuel level, and warning indicators.</p>
+                        <p class="text-gray-500 text-xs font-semibold mb-2">Common Models:</p>
+                        <div class="space-y-1 text-xs text-gray-600">
+                            <p>• Analog Gauges (traditional)</p>
+                            <p>• Digital Display (modern cars)</p>
+                            <p>• Heads-Up Display (luxury/premium)</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <!-- COMPARE -->
             <div id="compareSection" class="section hidden">
                 <header class="mb-6">
@@ -1406,44 +1801,47 @@
 
     <!-- Modals -->
     <!-- ======================================================== -->
-<!-- EPSILON AI MOTOR ASSISTANT ENGINE -->
-<!-- ======================================================== -->
-<button class="ai-fab" id="aiFab" title="Launch Epsilon AI Engine">
-    <span class="fab-pulse"></span>
-    <i data-lucide="bot" id="fabIconChat" style="width:26px;height:26px;"></i>
-    <i data-lucide="x" id="fabIconClose" style="width:26px;height:26px;display:none;"></i>
-</button>
+    <!-- EPSILON AI MOTOR ASSISTANT ENGINE -->
+    <!-- ======================================================== -->
+    <button class="ai-fab" id="aiFab" title="Launch Epsilon AI Engine">
+        <span class="fab-pulse"></span>
+        <i data-lucide="bot" id="fabIconChat" style="width:26px;height:26px;"></i>
+        <i data-lucide="x" id="fabIconClose" style="width:26px;height:26px;display:none;"></i>
+    </button>
 
-<div class="ai-chat" id="aiChat">
-    <!-- Header -->
-    <div class="ai-chat-header">
-        <div class="ai-avatar">
-            <i data-lucide="cpu" style="width:18px;height:18px;color:#ffffff;"></i>
+    <div class="ai-chat" id="aiChat">
+        <!-- Header -->
+        <div class="ai-chat-header">
+            <div class="ai-avatar">
+                <i data-lucide="cpu" style="width:18px;height:18px;color:#ffffff;"></i>
+            </div>
+            <div class="ai-meta">
+                <h3>Epsilon AI Engine</h3>
+                <p><span class="status-dot"></span> Diagnostics & Performance Online</p>
+            </div>
         </div>
-        <div class="ai-meta">
-            <h3>Epsilon AI Engine</h3>
-            <p><span class="status-dot"></span> Diagnostics & Performance Online</p>
+
+        <!-- Message Display Board -->
+        <div class="ai-chat-messages" id="aiMessages"></div>
+
+        <!-- Context Quick Link Suggestions -->
+        <div class="ai-suggestions" id="aiSuggestions">
+            <button data-msg="What's the absolute fastest production hypercar right now?">Fastest Hypercar</button>
+            <button data-msg="Explain how a twin-scroll turbocharger layout optimizes performance.">Twin-Scroll
+                Turbo</button>
+            <button data-msg="What makes a modern commercial jet engine so efficient at high altitudes?">Jet
+                Propulsion</button>
+        </div>
+
+        <!-- Interaction Deck -->
+        <div class="ai-chat-input">
+            <input type="text" id="aiInput" placeholder="Query vehicular specs, powertrains, or aviation stats..."
+                autocomplete="off">
+            <button id="aiSendBtn" title="Transmit Prompt">
+                <i data-lucide="send" style="width:18px;height:18px;"></i>
+            </button>
         </div>
     </div>
-
-    <!-- Message Display Board -->
-    <div class="ai-chat-messages" id="aiMessages"></div>
-
-    <!-- Context Quick Link Suggestions -->
-    <div class="ai-suggestions" id="aiSuggestions">
-        <button data-msg="What's the absolute fastest production hypercar right now?">Fastest Hypercar</button>
-        <button data-msg="Explain how a twin-scroll turbocharger layout optimizes performance.">Twin-Scroll Turbo</button>
-        <button data-msg="What makes a modern commercial jet engine so efficient at high altitudes?">Jet Propulsion</button>
-    </div>
-
-    <!-- Interaction Deck -->
-    <div class="ai-chat-input">
-        <input type="text" id="aiInput" placeholder="Query vehicular specs, powertrains, or aviation stats..." autocomplete="off">
-        <button id="aiSendBtn" title="Transmit Prompt">
-            <i data-lucide="send" style="width:18px;height:18px;"></i>
-        </button>
-    </div>
-</div>
     <div id="carModal" class="modal-overlay">
         <div class="modal-content">
             <div id="carModalContent"></div>
@@ -1665,7 +2063,7 @@
             const sectionMap = {
                 home: 'homeSection', cars: 'carsSection', planes: 'planesSection',
                 dictionary: 'dictionarySection', users: 'usersSection',
-                compare: 'compareSection', leaderboard: 'leaderboardSection'
+                compare: 'compareSection', leaderboard: 'leaderboardSection', learn: 'learnSection'
             };
             const sec = document.getElementById(sectionMap[page]);
             if (sec) sec.classList.remove('hidden');
@@ -2374,132 +2772,132 @@
             populateCompareSelects();
         };
         // ===== EPSILON AI SYSTEM (POLLINATIONS PLATFORM) =====
-(function () {
-    const fab = document.getElementById('aiFab');
-    const chat = document.getElementById('aiChat');
-    const messagesEl = document.getElementById('aiMessages');
-    const input = document.getElementById('aiInput');
-    const sendBtn = document.getElementById('aiSendBtn');
-    const suggestions = document.getElementById('aiSuggestions');
-    const iconChat = document.getElementById('fabIconChat');
-    const iconClose = document.getElementById('fabIconClose');
+        (function () {
+            const fab = document.getElementById('aiFab');
+            const chat = document.getElementById('aiChat');
+            const messagesEl = document.getElementById('aiMessages');
+            const input = document.getElementById('aiInput');
+            const sendBtn = document.getElementById('aiSendBtn');
+            const suggestions = document.getElementById('aiSuggestions');
+            const iconChat = document.getElementById('fabIconChat');
+            const iconClose = document.getElementById('fabIconClose');
 
-    let chatHistory = [];
-    let isGenerating = false;
-    let isOpen = false;
+            let chatHistory = [];
+            let isGenerating = false;
+            let isOpen = false;
 
-    // Hardened engineering framework prompt
-    const SYSTEM_PROMPT = `You are Epsilon AI, an engineering expert for Epsilon Motor. You know absolutely everything about sports cars, hypercars, commercial aviation, and jet propulsion systems. Use normal sentence casing (standard capitalization and lowercase letters). Use clean text bullet points (-) instead of markdown formatting. Keep your analyses short, punchy, and professional.`;
-    fab.addEventListener('click', () => {
-        isOpen = !isOpen;
-        chat.classList.toggle('open', isOpen);
-        fab.classList.toggle('active', isOpen);
-        
-        iconChat.style.display = isOpen ? 'none' : 'block';
-        iconClose.style.display = isOpen ? 'block' : 'none';
+            // Hardened engineering framework prompt
+            const SYSTEM_PROMPT = `You are Epsilon AI, an engineering expert for Epsilon Motor. You know absolutely everything about sports cars, hypercars, commercial aviation, and jet propulsion systems. Use normal sentence casing (standard capitalization and lowercase letters). Use clean text bullet points (-) instead of markdown formatting. Keep your analyses short, punchy, and professional.`;
+            fab.addEventListener('click', () => {
+                isOpen = !isOpen;
+                chat.classList.toggle('open', isOpen);
+                fab.classList.toggle('active', isOpen);
 
-        if (isOpen && chatHistory.length === 0) {
-            addMessage('assistant', "System ready. I am the Epsilon Motor Diagnostics AI. Requesting initialization parameters—ask me about hypercar aerodynamics, internal combustion layouts, or turbine performance data.");
-            suggestions.style.display = 'flex';
-        }
-        if (isOpen) input.focus();
-    });
+                iconChat.style.display = isOpen ? 'none' : 'block';
+                iconClose.style.display = isOpen ? 'block' : 'none';
 
-    suggestions.addEventListener('click', e => {
-        const btn = e.target.closest('button[data-msg]');
-        if (btn) triggerTransmission(btn.dataset.msg);
-    });
+                if (isOpen && chatHistory.length === 0) {
+                    addMessage('assistant', "System ready. I am the Epsilon Motor Diagnostics AI. Requesting initialization parameters—ask me about hypercar aerodynamics, internal combustion layouts, or turbine performance data.");
+                    suggestions.style.display = 'flex';
+                }
+                if (isOpen) input.focus();
+            });
 
-    sendBtn.addEventListener('click', () => {
-        const text = input.value.trim();
-        if (text && !isGenerating) triggerTransmission(text);
-    });
+            suggestions.addEventListener('click', e => {
+                const btn = e.target.closest('button[data-msg]');
+                if (btn) triggerTransmission(btn.dataset.msg);
+            });
 
-    input.addEventListener('keydown', e => {
-        if (e.key === 'Enter' && !e.shiftKey) {
-            e.preventDefault();
-            const text = input.value.trim();
-            if (text && !isGenerating) triggerTransmission(text);
-        }
-    });
+            sendBtn.addEventListener('click', () => {
+                const text = input.value.trim();
+                if (text && !isGenerating) triggerTransmission(text);
+            });
 
-    function triggerTransmission(text) {
-        input.value = '';
-        suggestions.style.display = 'none';
-        addMessage('user', text);
-        chatHistory.push({ role: 'user', content: text });
-        processAIResponse();
-    }
+            input.addEventListener('keydown', e => {
+                if (e.key === 'Enter' && !e.shiftKey) {
+                    e.preventDefault();
+                    const text = input.value.trim();
+                    if (text && !isGenerating) triggerTransmission(text);
+                }
+            });
 
-    function addMessage(role, content) {
-        const wrapper = document.createElement('div');
-        wrapper.className = `ai-msg ${role}`;
+            function triggerTransmission(text) {
+                input.value = '';
+                suggestions.style.display = 'none';
+                addMessage('user', text);
+                chatHistory.push({ role: 'user', content: text });
+                processAIResponse();
+            }
 
-        const bubble = document.createElement('div');
-        bubble.className = 'msg-bubble';
-        bubble.innerHTML = formatOutputText(content);
+            function addMessage(role, content) {
+                const wrapper = document.createElement('div');
+                wrapper.className = `ai-msg ${role}`;
 
-        wrapper.appendChild(bubble);
-        messagesEl.appendChild(wrapper);
-        messagesEl.scrollTop = messagesEl.scrollHeight;
-    }
+                const bubble = document.createElement('div');
+                bubble.className = 'msg-bubble';
+                bubble.innerHTML = formatOutputText(content);
 
-    function showTypingIndicator() {
-        const wrapper = document.createElement('div');
-        wrapper.className = 'ai-msg assistant';
-        wrapper.id = 'aiTypingLoader';
-        wrapper.innerHTML = '<div class="msg-bubble"><div class="ai-typing"><span></span><span></span><span></span></div></div>';
-        messagesEl.appendChild(wrapper);
-        messagesEl.scrollTop = messagesEl.scrollHeight;
-    }
+                wrapper.appendChild(bubble);
+                messagesEl.appendChild(wrapper);
+                messagesEl.scrollTop = messagesEl.scrollHeight;
+            }
 
-    function killTypingIndicator() {
-        const target = document.getElementById('aiTypingLoader');
-        if (target) target.remove();
-    }
+            function showTypingIndicator() {
+                const wrapper = document.createElement('div');
+                wrapper.className = 'ai-msg assistant';
+                wrapper.id = 'aiTypingLoader';
+                wrapper.innerHTML = '<div class="msg-bubble"><div class="ai-typing"><span></span><span></span><span></span></div></div>';
+                messagesEl.appendChild(wrapper);
+                messagesEl.scrollTop = messagesEl.scrollHeight;
+            }
 
-    async function processAIResponse() {
-        isGenerating = true;
-        sendBtn.disabled = true;
-        input.disabled = true;
-        showTypingIndicator();
+            function killTypingIndicator() {
+                const target = document.getElementById('aiTypingLoader');
+                if (target) target.remove();
+            }
 
-        try {
-            // Compress dialogue stream for efficient payload matching
-            const operationalContext = chatHistory.slice(-4).map(m => `${m.role}: ${m.content}`).join('\n');
-            const optimizedPrompt = `${SYSTEM_PROMPT}\n\n[LOG]\n${operationalContext}\n\nassistant:`;
+            async function processAIResponse() {
+                isGenerating = true;
+                sendBtn.disabled = true;
+                input.disabled = true;
+                showTypingIndicator();
 
-            const rawResponse = await fetch(`https://text.pollinations.ai/${encodeURIComponent(optimizedPrompt)}?model=openai&cache=false`);
-            if (!rawResponse.ok) throw new Error('System Downlink Failed');
+                try {
+                    // Compress dialogue stream for efficient payload matching
+                    const operationalContext = chatHistory.slice(-4).map(m => `${m.role}: ${m.content}`).join('\n');
+                    const optimizedPrompt = `${SYSTEM_PROMPT}\n\n[LOG]\n${operationalContext}\n\nassistant:`;
 
-            const payloadText = await rawResponse.text();
-            killTypingIndicator();
-            
-            const processedString = payloadText.trim();
-            addMessage('assistant', processedString);
-            chatHistory.push({ role: 'assistant', content: processedString });
+                    const rawResponse = await fetch(`https://text.pollinations.ai/${encodeURIComponent(optimizedPrompt)}?model=openai&cache=false`);
+                    if (!rawResponse.ok) throw new Error('System Downlink Failed');
 
-        } catch (err) {
-            console.error('Core Downlink Defect:', err);
-            killTypingIndicator();
-            addMessage('assistant', 'CRITICAL ERROR: Failed to pipeline data back from the diagnostic cluster. Refresh telemetry.');
-        }
+                    const payloadText = await rawResponse.text();
+                    killTypingIndicator();
 
-        isGenerating = false;
-        sendBtn.disabled = false;
-        input.disabled = false;
-        input.focus();
-    }
+                    const processedString = payloadText.trim();
+                    addMessage('assistant', processedString);
+                    chatHistory.push({ role: 'assistant', content: processedString });
 
-    function formatOutputText(text) {
-        let clean = text.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
-        clean = clean.replace(/^([-*])\s+/gm, '<li>');
-        clean = clean.replace(/((?:<li>.*<\/li>\n?)+)/g, '<ul>$1</ul>');
-        clean = clean.replace(/<li>(.*?)(?=\n|$)/g, '<li>$1</li>');
-        clean = clean.replace(/\n\n+/g, '</p><p>').replace(/\n/g, '<br>');
-        return `<p>${clean}</p>`.replace(/<p>\s*<\/p>/g, '');
-    }
-})();
+                } catch (err) {
+                    console.error('Core Downlink Defect:', err);
+                    killTypingIndicator();
+                    addMessage('assistant', 'CRITICAL ERROR: Failed to pipeline data back from the diagnostic cluster. Refresh telemetry.');
+                }
+
+                isGenerating = false;
+                sendBtn.disabled = false;
+                input.disabled = false;
+                input.focus();
+            }
+
+            function formatOutputText(text) {
+                let clean = text.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+                clean = clean.replace(/^([-*])\s+/gm, '<li>');
+                clean = clean.replace(/((?:<li>.*<\/li>\n?)+)/g, '<ul>$1</ul>');
+                clean = clean.replace(/<li>(.*?)(?=\n|$)/g, '<li>$1</li>');
+                clean = clean.replace(/\n\n+/g, '</p><p>').replace(/\n/g, '<br>');
+                return `<p>${clean}</p>`.replace(/<p>\s*<\/p>/g, '');
+            }
+        })();
     </script>
 </body>
 
