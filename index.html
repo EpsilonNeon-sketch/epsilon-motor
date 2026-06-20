@@ -1331,6 +1331,12 @@
                     class="nav-btn w-full flex items-center gap-3 p-3 rounded-xl hover:bg-gray-100 transition text-left text-gray-600"
                     data-page="compare"><i data-lucide="git-compare"
                         style="width:20px;height:20px;"></i><span>Compare</span></button>
+                        <button class="nav-btn w-full flex items-center gap-3 p-3 rounded-xl hover:bg-gray-100 transition text-left text-gray-600"
+    data-page="flex">
+    <i data-lucide="sparkles" style="width:20px;height:20px;"></i>
+    <span>Flex</span>
+</button>
+
                 <button
                     class="nav-btn w-full flex items-center gap-3 p-3 rounded-xl hover:bg-gray-100 transition text-left text-gray-600"
                     data-page="learn"><i data-lucide="graduation-cap"
@@ -1432,6 +1438,25 @@
             </div>
         </div>
     </div>
+
+<!-- FLEX PAGE -->
+<div id="flexPage" class="section hidden">
+    <header class="mb-6">
+        <h1 class="text-3xl font-extrabold text-gray-900 tracking-tight">Flex Your Collection</h1>
+        <p class="text-gray-400 mt-1">Show off your garage to the community</p>
+    </header>
+    
+    <!-- My Showcase Section -->
+    <div class="glass rounded-2xl p-6 mb-8">
+        <h2 class="text-xl font-bold text-gray-900 mb-4">My Showcase</h2>
+        <div id="myShowcase" class="space-y-4"></div>
+        <button id="editShowcaseBtn" class="mt-4 px-6 py-3 bg-gray-900 text-white rounded-xl hover:bg-gray-800 transition">Edit My Showcase</button>
+    </div>
+
+    <!-- Community Feed -->
+    <div id="showcaseFeed" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+</div>
+
 
     <!-- Dashboard -->
     <div id="dashboardPage" class="page active">
