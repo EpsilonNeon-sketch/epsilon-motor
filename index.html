@@ -8,8 +8,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
-    <link rel="icon"
-        href="icon.png" type="image/png">
+    <link rel="icon" href="icon.png" type="image/png">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
 
@@ -532,6 +531,16 @@
             border-radius: 2px;
         }
 
+        .compare-slot{min-height:400px;transition:all 0.3s}
+        .compare-slot.filled{background:linear-gradient(135deg,rgba(26,26,46,0.02),rgba(61,61,94,0.03))}
+        .spec-row{display:grid;grid-template-columns:1fr 140px 1fr;gap:1rem;padding:1rem;border-bottom:1px solid rgba(0,0,0,0.05)}
+        .spec-row:last-child{border:none}
+        .spec-label{text-align:center;font-weight:600;color:#6b7280;font-size:0.8rem}
+        .spec-value{font-weight:600;color:#1a1a2e}
+        .winner{color:#10b981!important}
+        .loser{color:#9ca3af!important}
+        @media(max-width:768px){.spec-row{grid-template-columns:1fr}}
+
         @media (max-width: 768px) {
             .sidebar {
                 transform: translateX(-100%);
@@ -582,6 +591,10 @@
                     class="nav-btn w-full flex items-center gap-3 p-3 rounded-xl hover:bg-gray-100 transition text-left text-gray-600"
                     data-page="users"><i data-lucide="users"
                         style="width:20px;height:20px;"></i><span>Users</span></button>
+                <button
+                    class="nav-btn w-full flex items-center gap-3 p-3 rounded-xl hover:bg-gray-100 transition text-left text-gray-600"
+                    data-page="compare"><i data-lucide="git-compare"
+                        style="width:20px;height:20px;"></i><span>Compare</span></button>
             </nav>
             <div class="divider my-6"></div>
             <div class="px-3 py-4 rounded-xl bg-gray-50 border border-gray-100">
@@ -922,6 +935,49 @@
                 </div>
             </div>
 
+            <!-- COMPARE -->
+            <div id="compareSection" class="section hidden">
+                <header class="mb-6">
+                    <h1 class="text-3xl font-extrabold text-gray-900 tracking-tight">Compare</h1>
+                    <p class="text-gray-400 mt-1">Select two cars or planes to compare side by side</p>
+                </header>
+                <div class="glass rounded-2xl p-5 mb-6">
+                    <label class="text-gray-700 font-semibold mr-4">Type:</label>
+                    <select id="compareType" class="px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-gray-900 outline-none">
+                        <option value="cars">Cars</option>
+                        <option value="planes">Planes</option>
+                    </select>
+                </div>
+                <div class="grid md:grid-cols-2 gap-6 mb-6">
+                    <div class="glass rounded-2xl p-6 compare-slot" id="compareSlot1">
+                        <h2 class="text-xl font-bold text-gray-800 mb-4">Select Item 1</h2>
+                        <select id="compareSelect1" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-gray-900 outline-none mb-4">
+                            <option value="">Choose...</option>
+                        </select>
+                        <div id="comparePreview1" class="hidden">
+                            <img id="compareImg1" class="w-full h-48 object-cover rounded-lg mb-4">
+                            <h3 id="compareName1" class="text-lg font-bold text-gray-800"></h3>
+                            <p id="compareSub1" class="text-gray-600 text-sm"></p>
+                        </div>
+                    </div>
+                    <div class="glass rounded-2xl p-6 compare-slot" id="compareSlot2">
+                        <h2 class="text-xl font-bold text-gray-800 mb-4">Select Item 2</h2>
+                        <select id="compareSelect2" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-gray-900 outline-none mb-4">
+                            <option value="">Choose...</option>
+                        </select>
+                        <div id="comparePreview2" class="hidden">
+                            <img id="compareImg2" class="w-full h-48 object-cover rounded-lg mb-4">
+                            <h3 id="compareName2" class="text-lg font-bold text-gray-800"></h3>
+                            <p id="compareSub2" class="text-gray-600 text-sm"></p>
+                        </div>
+                    </div>
+                </div>
+                <div id="comparisonResults" class="hidden glass rounded-2xl p-6">
+                    <h2 class="text-2xl font-bold text-gray-800 mb-6 text-center">Specification Comparison</h2>
+                    <div id="comparisonSpecs"></div>
+                </div>
+            </div>
+
         </div>
     </div>
 
@@ -948,13 +1004,14 @@
         // --- STATE ---
         let currentUser = null, currentProfile = null, allProfiles = [];
         let carsData = [], planesData = [], glossaryData = [];
+        let compareType = 'cars', compareItem1 = null, compareItem2 = null;
 
         // --- INIT ---
         document.addEventListener('DOMContentLoaded', async () => {
             lucide.createIcons();
             setupNavigation(); setupSidebar(); setupAuthForms();
             setupCarFilters(); setupPlaneFilters(); setupDictFilters();
-            setupSearch(); setupModals();
+            setupSearch(); setupModals(); setupCompare();
             await Promise.all([loadCarsJSON(), loadPlanesJSON(), loadGlossaryJSON()]);
             checkAuth();
         });
@@ -1043,6 +1100,7 @@
             if (page === 'cars') loadCars();
             if (page === 'planes') loadPlanes();
             if (page === 'dictionary') loadDictionary();
+            if (page === 'compare') { loadCompareSelects(); resetCompare(); }
             lucide.createIcons();
         }
 
@@ -1239,6 +1297,68 @@
 
         // --- TOAST ---
         function showToast(msg, type = 'success') { const t = document.getElementById('toast'); t.textContent = msg; t.className = `toast toast-${type} show`; setTimeout(() => t.classList.remove('show'), 3000); }
+
+        // --- COMPARE ---
+        function setupCompare() {
+            document.getElementById('compareType').onchange = () => { compareType = document.getElementById('compareType').value; loadCompareSelects(); resetCompare(); };
+            document.getElementById('compareSelect1').onchange = () => { const d = compareType === 'cars' ? carsData : planesData; compareItem1 = d.find(i => i.id == document.getElementById('compareSelect1').value); renderCompare(); };
+            document.getElementById('compareSelect2').onchange = () => { const d = compareType === 'cars' ? carsData : planesData; compareItem2 = d.find(i => i.id == document.getElementById('compareSelect2').value); renderCompare(); };
+        }
+        function loadCompareSelects() {
+            const d = compareType === 'cars' ? carsData : planesData;
+            [document.getElementById('compareSelect1'), document.getElementById('compareSelect2')].forEach(s => {
+                s.innerHTML = '<option value="">Choose...</option>' + d.map(i => `<option value="${i.id}">${i.name}${i.model ? ' ' + i.model : ''}</option>`).join('');
+            });
+        }
+        function resetCompare() { compareItem1 = compareItem2 = null; document.getElementById('compareSelect1').value = document.getElementById('compareSelect2').value = ''; renderCompare(); }
+        function renderCompare() {
+            renderCompareSlot(compareItem1, 1); renderCompareSlot(compareItem2, 2);
+            if (compareItem1 && compareItem2) renderComparison(); else document.getElementById('comparisonResults').classList.add('hidden');
+        }
+        function renderCompareSlot(item, n) {
+            const slot = document.getElementById(`compareSlot${n}`), preview = document.getElementById(`comparePreview${n}`);
+            if (!item) { slot.classList.remove('filled'); preview.classList.add('hidden'); return; }
+            slot.classList.add('filled'); preview.classList.remove('hidden');
+            document.getElementById(`compareImg${n}`).src = item.image;
+            document.getElementById(`compareName${n}`).textContent = item.name;
+            document.getElementById(`compareSub${n}`).textContent = item.model || item.manufacturer;
+        }
+        function renderComparison() {
+            document.getElementById('comparisonResults').classList.remove('hidden');
+            const fields = compareType === 'cars' ? [
+                {k:'horsepower',l:'Horsepower',n:1},
+                {k:'topSpeed',l:'Top Speed'},
+                {k:'acceleration',l:'0-60 mph',inv:1},
+                {k:'price',l:'Price',n:1,pre:'$'},
+                {k:'engine',l:'Engine'},
+                {k:'transmission',l:'Transmission'},
+                {k:'drivetrain',l:'Drivetrain'},
+                {k:'fuelType',l:'Fuel Type'},
+                {k:'mpg',l:'Efficiency'}
+            ] : [
+                {k:'maxSpeed',l:'Max Speed'},
+                {k:'range',l:'Range'},
+                {k:'capacity',l:'Capacity'},
+                {k:'wingspan',l:'Wingspan'},
+                {k:'length',l:'Length'},
+                {k:'engineCount',l:'Engines',n:1},
+                {k:'engineType',l:'Engine Type'},
+                {k:'weight',l:'Max Weight'},
+                {k:'type',l:'Type'}
+            ];
+            document.getElementById('comparisonSpecs').innerHTML = fields.map(f => {
+                const v1 = compareItem1[f.k], v2 = compareItem2[f.k];
+                let cls1 = 'spec-value', cls2 = 'spec-value';
+                if (f.n && v1 && v2) {
+                    const n1 = parseFloat(String(v1).replace(/[^0-9.]/g, '')), n2 = parseFloat(String(v2).replace(/[^0-9.]/g, ''));
+                    if (f.inv) { if (n1 < n2) cls1 += ' winner'; else if (n2 < n1) cls2 += ' winner'; }
+                    else { if (n1 > n2) cls1 += ' winner'; else if (n2 > n1) cls2 += ' winner'; }
+                    if (!cls1.includes('winner') && !cls2.includes('winner')) cls1 = cls2 = 'spec-value loser';
+                    else { if (!cls1.includes('winner')) cls1 += ' loser'; if (!cls2.includes('winner')) cls2 += ' loser'; }
+                }
+                return `<div class="spec-row"><div class="text-right ${cls1}">${f.pre||''}${v1||'N/A'}</div><div class="spec-label">${f.l}</div><div class="text-left ${cls2}">${f.pre||''}${v2||'N/A'}</div></div>`;
+            }).join('');
+        }
     </script>
 </body>
 
