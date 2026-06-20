@@ -3561,10 +3561,18 @@
             // ---- Fetch user tokens & garage from Supabase ----
             async function fetchUserData() {
                 try {
-                    const { data: profile, error } = await supabase
+                    const { data: { session } } = await supabaseClient.auth.getSession();
+                    if (!session || !session.user) {
+                        userTokens = 1000;
+                        userGarageCars = [];
+                        updateTokenDisplay();
+                        return;
+                    }
+
+                    const { data: profile, error } = await supabaseClient
                         .from('profiles')
                         .select('tokens, garage_cars')
-                        .eq('id', supabase.auth.currentUser?.id)
+                        .eq('id', session.user.id)
                         .single();
 
                     if (error) throw error;
@@ -3630,16 +3638,21 @@
                 confirmBtn.textContent = 'Processing...';
 
                 try {
+                    const { data: { session } } = await supabaseClient.auth.getSession();
+                    if (!session || !session.user) {
+                        throw new Error('Not authenticated');
+                    }
+
                     const newTokens = userTokens - car.tokenPrice;
                     const newGarage = [...userGarageCars, car.id];
 
-                    const { error } = await supabase
+                    const { error } = await supabaseClient
                         .from('profiles')
                         .update({
                             tokens: newTokens,
                             garage_cars: newGarage
                         })
-                        .eq('id', supabase.auth.currentUser?.id);
+                        .eq('id', session.user.id);
 
                     if (error) throw error;
 
@@ -3689,17 +3702,23 @@
                 empty.classList.add('hidden');
 
                 try {
-                    // Fetch user profile for garage_cars
-                    const { data: profile, error } = await supabase
-                        .from('profiles')
-                        .select('garage_cars, tokens')
-                        .eq('id', supabase.auth.currentUser?.id)
-                        .single();
+                    const { data: { session } } = await supabaseClient.auth.getSession();
+                    if (!session || !session.user) {
+                        userGarageCars = [];
+                        userTokens = 1000;
+                    } else {
+                        // Fetch user profile for garage_cars
+                        const { data: profile, error } = await supabaseClient
+                            .from('profiles')
+                            .select('garage_cars, tokens')
+                            .eq('id', session.user.id)
+                            .single();
 
-                    if (error) throw error;
+                        if (error) throw error;
 
-                    userGarageCars = Array.isArray(profile?.garage_cars) ? profile.garage_cars : [];
-                    userTokens = profile?.tokens ?? 1000;
+                        userGarageCars = Array.isArray(profile?.garage_cars) ? profile.garage_cars : [];
+                        userTokens = profile?.tokens ?? 1000;
+                    }
 
                 } catch (err) {
                     console.warn('Could not fetch garage:', err.message);
@@ -3890,42 +3909,10 @@
         // Init non-page-specific listeners
         ShopGarage.initSearch();
         ShopGarage.initModalClose();
-        // Tracks which item the user is about to buy
-        let currentBuyItem = null;
 
-        // Call this when a "Buy" button is clicked on a shop card
-        function openBuyModal(item) {
-            currentBuyItem = item;
-
-            document.getElementById('buyModalImg').src = item.image || item.img_url || '';
-            document.getElementById('buyModalName').textContent = item.name || item.title || '';
-            document.getElementById('buyModalModel').textContent = item.model || item.subtitle || '';
-
-            const cost = item.price || item.token_cost || 0;
-            document.getElementById('buyModalPrice').textContent = `🪙 ${cost.toLocaleString()} tokens`;
-            document.getElementById('buyModalCost').textContent = `-${cost.toLocaleString()} tokens`;
-
-            // Fetch current balance and compute remaining
-            supabase.auth.getSession().then(({ data: { session } }) => {
-                if (!session) {
-                    document.getElementById('buyModalBalance').textContent = '—';
-                    document.getElementById('buyModalRemaining').textContent = '—';
-                    return;
-                }
-                supabase.from('profiles').select('tokens').eq('id', session.user.id).single()
-                    .then(({ data }) => {
-                        const bal = data?.tokens ?? 0;
-                        document.getElementById('buyModalBalance').textContent = `${bal.toLocaleString()} tokens`;
-                        const remaining = bal - cost;
-                        const remEl = document.getElementById('buyModalRemaining');
-                        remEl.textContent = `${remaining.toLocaleString()} tokens`;
-                        remEl.style.color = remaining < 0 ? '#dc2626' : '#1a1a2e';
-                    });
-            });
-
-            document.getElementById('buyModal').classList.add('active');
-            lucide.createIcons();
-        }
+        // Make functions globally accessible
+        window.closeBuyModal = ShopGarage.closeBuyModal;
+        window.confirmPurchase = ShopGarage.confirmPurchase;
     </script>
 </body>
 
