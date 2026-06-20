@@ -1,0 +1,1208 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Epsilon Motor</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+    <link rel="icon" href="icon.png">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f7f8fa;
+            color: #1a1a2e;
+            margin: 0;
+            overflow-x: hidden;
+        }
+
+        .bg-pattern {
+            position: fixed;
+            inset: 0;
+            z-index: -1;
+            background-image:
+                radial-gradient(at 0% 0%, rgba(120, 120, 140, 0.08) 0, transparent 50%),
+                radial-gradient(at 100% 100%, rgba(100, 100, 120, 0.06) 0, transparent 50%),
+                radial-gradient(at 50% 50%, rgba(80, 80, 100, 0.04) 0, transparent 70%);
+        }
+
+        .glass {
+            background: rgba(255, 255, 255, 0.92);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(200, 200, 210, 0.3);
+            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.04), 0 1px 2px rgba(0, 0, 0, 0.03);
+        }
+
+        .page {
+            display: none;
+        }
+
+        .page.active {
+            display: flex;
+        }
+
+        #authPage {
+            position: fixed;
+            inset: 0;
+            z-index: 200;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #f7f8fa 0%, #ebedf2 100%);
+        }
+
+        #dashboardPage {
+            display: none;
+        }
+
+        #dashboardPage.active {
+            display: block;
+        }
+
+        .sidebar {
+            position: fixed;
+            left: 0;
+            top: 0;
+            height: 100vh;
+            width: 270px;
+            background: rgba(255, 255, 255, 0.97);
+            backdrop-filter: blur(20px);
+            border-right: 1px solid rgba(200, 200, 210, 0.25);
+            transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 100;
+            overflow-y: auto;
+        }
+
+        .sidebar::-webkit-scrollbar {
+            width: 4px;
+        }
+
+        .sidebar::-webkit-scrollbar-thumb {
+            background: #d1d5db;
+            border-radius: 4px;
+        }
+
+        .sidebar.closed {
+            transform: translateX(-100%);
+        }
+
+        .main-content {
+            margin-left: 270px;
+            transition: margin-left 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+            padding: 2rem 2.5rem;
+            min-height: 100vh;
+        }
+
+        .main-content.expanded {
+            margin-left: 0;
+        }
+
+        .menu-toggle {
+            position: fixed;
+            top: 1.25rem;
+            left: 1.25rem;
+            z-index: 101;
+            background: #1a1a2e;
+            border: none;
+            padding: 0.7rem;
+            border-radius: 0.6rem;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            color: white;
+            box-shadow: 0 4px 12px rgba(26, 26, 46, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .menu-toggle:hover {
+            background: #2d2d4e;
+            transform: scale(1.05);
+        }
+
+        .sidebar-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.15);
+            z-index: 99;
+            display: none;
+            backdrop-filter: blur(2px);
+        }
+
+        .sidebar-overlay.active {
+            display: block;
+        }
+
+        .input-field {
+            width: 100%;
+            border-radius: 0.6rem;
+            padding: 0.8rem 1rem;
+            background-color: #f7f8fa;
+            border: 1.5px solid #e2e4e8;
+            transition: all 0.25s;
+            font-size: 0.95rem;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .input-field:focus {
+            outline: none;
+            border-color: #1a1a2e;
+            box-shadow: 0 0 0 3px rgba(26, 26, 46, 0.08);
+            background: #fff;
+        }
+
+        .nav-btn {
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        .nav-btn.active-nav {
+            background: #1a1a2e !important;
+            color: white !important;
+        }
+
+        .nav-btn.active-nav svg {
+            color: white !important;
+        }
+
+        .car-card {
+            transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+        }
+
+        .car-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08), 0 8px 16px rgba(0, 0, 0, 0.04);
+        }
+
+        .car-card:hover .car-img {
+            transform: scale(1.05);
+        }
+
+        .car-img {
+            transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .plane-card {
+            transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+        }
+
+        .plane-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
+        }
+
+        .plane-card:hover .plane-img {
+            transform: scale(1.05);
+        }
+
+        .plane-img {
+            transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .badge-dark {
+            background: #1a1a2e;
+            color: white;
+        }
+
+        .badge-outline {
+            background: transparent;
+            border: 1.5px solid #d1d5db;
+            color: #555;
+        }
+
+        .stat-card {
+            transition: all 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+        }
+
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(6px);
+            z-index: 300;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 1.25rem;
+            max-width: 720px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.15);
+            animation: modalIn 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .modal-content::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .modal-content::-webkit-scrollbar-thumb {
+            background: #d1d5db;
+            border-radius: 4px;
+        }
+
+        @keyframes modalIn {
+            from {
+                opacity: 0;
+                transform: scale(0.95) translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
+        }
+
+        .spec-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 0.75rem;
+        }
+
+        @media (max-width: 640px) {
+            .spec-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .user-card {
+            transition: all 0.25s ease;
+        }
+
+        .user-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+        }
+
+        .toast {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            z-index: 500;
+            padding: 1rem 1.5rem;
+            border-radius: 0.75rem;
+            color: white;
+            font-weight: 500;
+            font-size: 0.9rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            transform: translateY(120%);
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .toast.show {
+            transform: translateY(0);
+        }
+
+        .toast-success {
+            background: #1a1a2e;
+        }
+
+        .toast-error {
+            background: #dc2626;
+        }
+
+        .filter-btn {
+            padding: 0.5rem 1.25rem;
+            border-radius: 9999px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            border: 1.5px solid #e2e4e8;
+            background: white;
+            color: #555;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .filter-btn:hover {
+            border-color: #1a1a2e;
+            color: #1a1a2e;
+        }
+
+        .filter-btn.active-filter {
+            background: #1a1a2e;
+            color: white;
+            border-color: #1a1a2e;
+        }
+
+        .search-box {
+            position: relative;
+        }
+
+        .search-box svg {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #9ca3af;
+        }
+
+        .search-box input {
+            padding-left: 3rem;
+        }
+
+        .divider {
+            height: 1px;
+            background: linear-gradient(90deg, transparent, #e2e4e8, transparent);
+        }
+
+        .skeleton {
+            background: linear-gradient(90deg, #f0f0f0 25%, #e8e8e8 50%, #f0f0f0 75%);
+            background-size: 200% 100%;
+            animation: shimmer 1.5s infinite;
+            border-radius: 0.5rem;
+        }
+
+        @keyframes shimmer {
+            0% {
+                background-position: 200% 0;
+            }
+
+            100% {
+                background-position: -200% 0;
+            }
+        }
+
+        .user-avatar-ring {
+            padding: 2px;
+            border-radius: 9999px;
+            background: linear-gradient(135deg, #1a1a2e, #3d3d5e);
+        }
+
+        .user-avatar-ring img,
+        .user-avatar-ring .avatar-fallback {
+            border-radius: 9999px;
+            border: 2px solid white;
+        }
+
+        .avatar-fallback {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            color: white;
+            background: #1a1a2e;
+        }
+
+        @media (max-width: 768px) {
+            .sidebar {
+                transform: translateX(-100%);
+            }
+
+            .sidebar.open {
+                transform: translateX(0);
+            }
+
+            .main-content {
+                margin-left: 0;
+                padding: 1.25rem;
+            }
+        }
+    </style>
+</head>
+
+<body class="min-h-screen">
+    <div class="bg-pattern"></div>
+
+    <button id="menuToggle" class="menu-toggle">
+        <i data-lucide="menu" style="width:22px;height:22px;"></i>
+    </button>
+
+    <div id="sidebarOverlay" class="sidebar-overlay"></div>
+
+    <aside id="sidebar" class="sidebar">
+        <div class="p-6">
+            <div class="flex items-center justify-between mb-8">
+                <h2 class="text-xl font-extrabold text-gray-900 tracking-tight">EPSILON<span
+                        class="text-gray-400">MOTOR</span></h2>
+                <button id="closeSidebar" class="md:hidden text-gray-400 hover:text-gray-700">
+                    <i data-lucide="x" style="width:22px;height:22px;"></i>
+                </button>
+            </div>
+            <nav class="space-y-1">
+                <button class="nav-btn w-full flex items-center gap-3 p-3 rounded-xl transition text-left active-nav"
+                    data-page="home">
+                    <i data-lucide="layout-dashboard" style="width:20px;height:20px;"></i><span>Home</span>
+                </button>
+                <button
+                    class="nav-btn w-full flex items-center gap-3 p-3 rounded-xl hover:bg-gray-100 transition text-left text-gray-600"
+                    data-page="cars">
+                    <i data-lucide="car" style="width:20px;height:20px;"></i><span>Cars</span>
+                </button>
+                <button
+                    class="nav-btn w-full flex items-center gap-3 p-3 rounded-xl hover:bg-gray-100 transition text-left text-gray-600"
+                    data-page="planes">
+                    <i data-lucide="plane" style="width:20px;height:20px;"></i><span>Planes</span>
+                </button>
+                <button
+                    class="nav-btn w-full flex items-center gap-3 p-3 rounded-xl hover:bg-gray-100 transition text-left text-gray-600"
+                    data-page="users">
+                    <i data-lucide="users" style="width:20px;height:20px;"></i><span>Users</span>
+                </button>
+            </nav>
+            <div class="divider my-6"></div>
+            <div class="px-3 py-4 rounded-xl bg-gray-50 border border-gray-100">
+                <div class="flex items-center gap-3">
+                    <div id="sidebarAvatar"
+                        class="w-9 h-9 rounded-full bg-gray-900 flex items-center justify-center text-white font-bold text-sm flex-shrink-0">
+                        E</div>
+                    <div>
+                        <p id="sidebarUserName" class="text-sm font-semibold text-gray-800">Guest</p>
+                        <p id="sidebarUserEmail" class="text-xs text-gray-400">Not signed in</p>
+                    </div>
+                </div>
+            </div>
+            <div class="mt-4 pt-4 border-t border-gray-100">
+                <button id="logoutBtn"
+                    class="w-full flex items-center gap-3 p-3 rounded-xl hover:bg-red-50 hover:text-red-600 transition text-left text-gray-500 text-sm">
+                    <i data-lucide="log-out" style="width:18px;height:18px;"></i><span>Sign Out</span>
+                </button>
+            </div>
+        </div>
+    </aside>
+
+    <!-- Auth Page -->
+    <div id="authPage" class="page px-6">
+        <div class="max-w-md w-full">
+            <div class="glass p-8 rounded-2xl">
+                <div class="text-center mb-8">
+                    <div class="w-16 h-16 mx-auto mb-4 rounded-2xl bg-gray-900 flex items-center justify-center">
+                        <i data-lucide="car" style="width:32px;height:32px;color:white;"></i>
+                    </div>
+                    <h1 class="text-2xl font-extrabold text-gray-900 tracking-tight">EPSILON<span
+                            class="text-gray-400">MOTOR</span></h1>
+                    <p class="text-gray-400 text-sm mt-1">Discover the world of automobiles & aviation</p>
+                </div>
+                <form id="loginForm" class="space-y-4">
+                    <h2 class="text-lg font-bold text-gray-800">Welcome Back</h2>
+                    <p class="text-gray-400 text-sm -mt-2">Sign in to continue exploring</p>
+                    <input id="loginEmail" type="email" placeholder="Email Address" class="input-field" required>
+                    <input id="loginPassword" type="password" placeholder="Password" class="input-field" required>
+                    <button type="submit"
+                        class="w-full bg-gray-900 hover:bg-gray-800 text-white font-semibold py-3 rounded-xl transition shadow-lg shadow-gray-900/20">Sign
+                        In</button>
+                    <p class="text-center text-sm text-gray-400 mt-4">Don't have an account? <a href="#" id="showSignup"
+                            class="text-gray-900 font-semibold hover:underline">Sign Up</a></p>
+                    <p id="loginError" class="text-red-500 text-sm text-center hidden"></p>
+                </form>
+                <form id="signupForm" class="space-y-4 hidden">
+                    <h2 class="text-lg font-bold text-gray-800">Create Account</h2>
+                    <p class="text-gray-400 text-sm -mt-2">Join Epsilon Motor today</p>
+                    <input id="signupName" type="text" placeholder="Display Name" class="input-field" required>
+                    <input id="signupUsername" type="text" placeholder="Username (unique)" class="input-field" required>
+                    <input id="signupEmail" type="email" placeholder="Email Address" class="input-field" required>
+                    <input id="signupPassword" type="password" placeholder="Create Password (min 6 chars)"
+                        class="input-field" required minlength="6">
+                    <button type="submit"
+                        class="w-full bg-gray-900 hover:bg-gray-800 text-white font-semibold py-3 rounded-xl transition shadow-lg shadow-gray-900/20">Create
+                        Account</button>
+                    <p class="text-center text-sm text-gray-400 mt-4">Already have an account? <a href="#"
+                            id="showLogin" class="text-gray-900 font-semibold hover:underline">Sign In</a></p>
+                    <p id="signupError" class="text-red-500 text-sm text-center hidden"></p>
+                    <p id="signupSuccess" class="text-green-600 text-sm text-center hidden"></p>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Dashboard -->
+    <div id="dashboardPage" class="page active">
+        <div id="mainContent" class="main-content">
+
+            <!-- HOME -->
+            <div id="homeSection" class="section">
+                <header class="flex justify-between items-start mb-8">
+                    <div>
+                        <h1 class="text-3xl font-extrabold text-gray-900 tracking-tight">Hello, <span
+                                id="userNameDisplay" class="text-gray-400">Guest</span></h1>
+                        <p class="text-gray-400 mt-1">Explore the world of motors and aviation</p>
+                    </div>
+                    <div id="userAvatar"
+                        class="w-12 h-12 rounded-full bg-gray-900 flex items-center justify-center text-white font-bold text-lg shadow-lg shadow-gray-900/20">
+                        G</div>
+                </header>
+                <div class="relative rounded-2xl overflow-hidden mb-8"
+                    style="background:linear-gradient(135deg,#1a1a2e 0%,#2d2d4e 50%,#3d3d5e 100%);min-height:280px;">
+                    <div class="absolute inset-0 opacity-10">
+                        <div
+                            style="position:absolute;top:20%;left:10%;width:300px;height:300px;border-radius:50%;background:radial-gradient(circle,rgba(255,255,255,0.3),transparent);">
+                        </div>
+                        <div
+                            style="position:absolute;bottom:10%;right:15%;width:200px;height:200px;border-radius:50%;background:radial-gradient(circle,rgba(255,255,255,0.2),transparent);">
+                        </div>
+                    </div>
+                    <div class="relative z-10 p-8 md:p-12 flex flex-col justify-center h-full"
+                        style="min-height:280px;">
+                        <span class="badge badge-dark mb-4 w-fit">New Collection 2025</span>
+                        <h2 class="text-white text-3xl md:text-4xl font-extrabold tracking-tight mb-3 max-w-lg">Discover
+                            Legendary<br>Automobiles & Aircraft</h2>
+                        <p class="text-gray-300 text-sm max-w-md mb-6">Browse our curated collection of cars and planes.
+                            Learn about specifications, history, and performance.</p>
+                        <div class="flex gap-3">
+                            <button onclick="navigateTo('cars')"
+                                class="px-6 py-2.5 bg-white text-gray-900 font-semibold rounded-xl text-sm hover:bg-gray-100 transition">Explore
+                                Cars</button>
+                            <button onclick="navigateTo('planes')"
+                                class="px-6 py-2.5 bg-white/10 text-white font-semibold rounded-xl text-sm hover:bg-white/20 transition border border-white/20">View
+                                Planes</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
+                    <div class="stat-card glass p-5 rounded-2xl">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-gray-400 text-xs font-medium uppercase tracking-wider">Total Cars</p>
+                                <h3 id="statCars" class="text-2xl font-extrabold text-gray-900 mt-1">—</h3>
+                            </div>
+                            <div class="w-10 h-10 bg-gray-100 rounded-xl flex items-center justify-center"><i
+                                    data-lucide="car" style="width:20px;height:20px;color:#555;"></i></div>
+                        </div>
+                    </div>
+                    <div class="stat-card glass p-5 rounded-2xl">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-gray-400 text-xs font-medium uppercase tracking-wider">Total Planes</p>
+                                <h3 id="statPlanes" class="text-2xl font-extrabold text-gray-900 mt-1">—</h3>
+                            </div>
+                            <div class="w-10 h-10 bg-gray-100 rounded-xl flex items-center justify-center"><i
+                                    data-lucide="plane" style="width:20px;height:20px;color:#555;"></i></div>
+                        </div>
+                    </div>
+                    <div class="stat-card glass p-5 rounded-2xl">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-gray-400 text-xs font-medium uppercase tracking-wider">Manufacturers</p>
+                                <h3 id="statMfg" class="text-2xl font-extrabold text-gray-900 mt-1">—</h3>
+                            </div>
+                            <div class="w-10 h-10 bg-gray-100 rounded-xl flex items-center justify-center"><i
+                                    data-lucide="factory" style="width:20px;height:20px;color:#555;"></i></div>
+                        </div>
+                    </div>
+                    <div class="stat-card glass p-5 rounded-2xl">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-gray-400 text-xs font-medium uppercase tracking-wider">Members</p>
+                                <h3 id="statUsers" class="text-2xl font-extrabold text-gray-900 mt-1">—</h3>
+                            </div>
+                            <div class="w-10 h-10 bg-gray-100 rounded-xl flex items-center justify-center"><i
+                                    data-lucide="users" style="width:20px;height:20px;color:#555;"></i></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="mb-8">
+                    <div class="flex items-center justify-between mb-5">
+                        <div>
+                            <h3 class="text-xl font-extrabold text-gray-900">Featured Cars</h3>
+                            <p class="text-gray-400 text-sm">Hand-picked automobiles from our collection</p>
+                        </div>
+                        <button onclick="navigateTo('cars')"
+                            class="text-sm font-semibold text-gray-500 hover:text-gray-900 transition flex items-center gap-1">View
+                            All <i data-lucide="arrow-right" style="width:16px;height:16px;"></i></button>
+                    </div>
+                    <div id="featuredCarsGrid" class="grid grid-cols-1 md:grid-cols-3 gap-5"></div>
+                </div>
+                <div class="mb-8">
+                    <div class="flex items-center justify-between mb-5">
+                        <div>
+                            <h3 class="text-xl font-extrabold text-gray-900">Featured Aircraft</h3>
+                            <p class="text-gray-400 text-sm">Explore aviation marvels</p>
+                        </div>
+                        <button onclick="navigateTo('planes')"
+                            class="text-sm font-semibold text-gray-500 hover:text-gray-900 transition flex items-center gap-1">View
+                            All <i data-lucide="arrow-right" style="width:16px;height:16px;"></i></button>
+                    </div>
+                    <div id="featuredPlanesGrid" class="grid grid-cols-1 md:grid-cols-3 gap-5"></div>
+                </div>
+            </div>
+
+            <!-- CARS -->
+            <div id="carsSection" class="section hidden">
+                <header class="mb-6">
+                    <h1 class="text-3xl font-extrabold text-gray-900 tracking-tight">Cars</h1>
+                    <p class="text-gray-400 mt-1">Browse and discover detailed information about automobiles</p>
+                </header>
+                <div class="flex flex-col md:flex-row gap-4 mb-6">
+                    <div class="search-box flex-1"><i data-lucide="search" style="width:18px;height:18px;"></i><input
+                            id="carSearch" type="text" placeholder="Search by name, manufacturer, model..."
+                            class="input-field" style="padding-left:3rem;"></div>
+                    <div class="flex gap-2 flex-wrap" id="carFilters">
+                        <button class="filter-btn active-filter" data-filter="all">All</button>
+                        <button class="filter-btn" data-filter="Sedan">Sedan</button>
+                        <button class="filter-btn" data-filter="SUV">SUV</button>
+                        <button class="filter-btn" data-filter="Sports">Sports</button>
+                        <button class="filter-btn" data-filter="Truck">Truck</button>
+                        <button class="filter-btn" data-filter="Electric">Electric</button>
+                        <button class="filter-btn" data-filter="Coupe">Coupe</button>
+                    </div>
+                </div>
+                <div id="carsGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5"></div>
+                <div id="noCarsMsg" class="hidden text-center py-16"><i data-lucide="search-x"
+                        style="width:48px;height:48px;color:#d1d5db;margin:0 auto 1rem;display:block;"></i>
+                    <p class="text-gray-400 font-medium">No cars found matching your criteria</p>
+                </div>
+            </div>
+
+            <!-- PLANES -->
+            <div id="planesSection" class="section hidden">
+                <header class="mb-6">
+                    <h1 class="text-3xl font-extrabold text-gray-900 tracking-tight">Planes</h1>
+                    <p class="text-gray-400 mt-1">Explore the world of aviation</p>
+                </header>
+                <div class="flex flex-col md:flex-row gap-4 mb-6">
+                    <div class="search-box flex-1"><i data-lucide="search" style="width:18px;height:18px;"></i><input
+                            id="planeSearch" type="text" placeholder="Search by name, manufacturer..."
+                            class="input-field" style="padding-left:3rem;"></div>
+                    <div class="flex gap-2 flex-wrap" id="planeFilters">
+                        <button class="filter-btn active-filter" data-filter="all">All</button>
+                        <button class="filter-btn" data-filter="Commercial">Commercial</button>
+                        <button class="filter-btn" data-filter="Private">Private</button>
+                        <button class="filter-btn" data-filter="Military">Military</button>
+                        <button class="filter-btn" data-filter="Cargo">Cargo</button>
+                    </div>
+                </div>
+                <div id="planesGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5"></div>
+                <div id="noPlanesMsg" class="hidden text-center py-16"><i data-lucide="search-x"
+                        style="width:48px;height:48px;color:#d1d5db;margin:0 auto 1rem;display:block;"></i>
+                    <p class="text-gray-400 font-medium">No planes found matching your criteria</p>
+                </div>
+            </div>
+
+            <!-- USERS -->
+            <div id="usersSection" class="section hidden">
+                <header class="mb-6">
+                    <h1 class="text-3xl font-extrabold text-gray-900 tracking-tight">Community</h1>
+                    <p class="text-gray-400 mt-1">All registered members of Epsilon Motor</p>
+                </header>
+                <div class="search-box mb-6 max-w-md"><i data-lucide="search" style="width:18px;height:18px;"></i><input
+                        id="userSearch" type="text" placeholder="Search by username or display name..."
+                        class="input-field" style="padding-left:3rem;"></div>
+                <div id="usersLoading" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+                    <div class="glass rounded-2xl p-6">
+                        <div class="flex items-center gap-4 mb-4">
+                            <div class="skeleton w-14 h-14 rounded-full flex-shrink-0"></div>
+                            <div class="flex-1">
+                                <div class="skeleton h-4 w-3/4 mb-2"></div>
+                                <div class="skeleton h-3 w-1/2"></div>
+                            </div>
+                        </div>
+                        <div class="skeleton h-3 w-full mb-2"></div>
+                        <div class="skeleton h-3 w-2/3"></div>
+                    </div>
+                    <div class="glass rounded-2xl p-6">
+                        <div class="flex items-center gap-4 mb-4">
+                            <div class="skeleton w-14 h-14 rounded-full flex-shrink-0"></div>
+                            <div class="flex-1">
+                                <div class="skeleton h-4 w-3/4 mb-2"></div>
+                                <div class="skeleton h-3 w-1/2"></div>
+                            </div>
+                        </div>
+                        <div class="skeleton h-3 w-full mb-2"></div>
+                        <div class="skeleton h-3 w-2/3"></div>
+                    </div>
+                    <div class="glass rounded-2xl p-6">
+                        <div class="flex items-center gap-4 mb-4">
+                            <div class="skeleton w-14 h-14 rounded-full flex-shrink-0"></div>
+                            <div class="flex-1">
+                                <div class="skeleton h-4 w-3/4 mb-2"></div>
+                                <div class="skeleton h-3 w-1/2"></div>
+                            </div>
+                        </div>
+                        <div class="skeleton h-3 w-full mb-2"></div>
+                        <div class="skeleton h-3 w-2/3"></div>
+                    </div>
+                </div>
+                <div id="usersGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 hidden"></div>
+                <div id="noUsersMsg" class="hidden text-center py-16"><i data-lucide="users"
+                        style="width:48px;height:48px;color:#d1d5db;margin:0 auto 1rem;display:block;"></i>
+                    <p class="text-gray-400 font-medium">No members found</p>
+                </div>
+                <div id="usersErrorMsg" class="hidden text-center py-16"><i data-lucide="alert-circle"
+                        style="width:48px;height:48px;color:#d1d5db;margin:0 auto 1rem;display:block;"></i>
+                    <p class="text-gray-400 font-medium">Unable to load members right now</p><button
+                        onclick="loadUsers()" class="mt-3 text-sm font-semibold text-gray-900 hover:underline">Try
+                        again</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Modals -->
+    <div id="carModal" class="modal-overlay">
+        <div class="modal-content">
+            <div id="carModalContent"></div>
+        </div>
+    </div>
+    <div id="planeModal" class="modal-overlay">
+        <div class="modal-content">
+            <div id="planeModalContent"></div>
+        </div>
+    </div>
+    <div id="toast" class="toast toast-success"></div>
+
+    <script>
+        // --- CONFIG ---
+        const { createClient } = supabase;
+        const supabaseClient = createClient('https://gfsqzkyviivhvyqadpeg.supabase.co', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imdmc3F6a3l2aWl2aHZ5cWFkcGVnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzA0NDI0NDQsImV4cCI6MjA4NjAxODQ0NH0.MwC6dMZKFZMyklCJKqr4DPek8dxR-EswBZSd1L_AkMA', {
+            auth: { persistSession: true, storageKey: 'epsilon-motors-auth' }
+        });
+
+        // --- STATE ---
+        let currentUser = null;
+        let currentProfile = null;
+        let allProfiles = [];
+        let carsData = [];
+        let planesData = [];
+
+        // --- INIT ---
+        document.addEventListener('DOMContentLoaded', async () => {
+            lucide.createIcons();
+            setupNavigation();
+            setupSidebar();
+            setupAuthForms();
+            setupCarFilters();
+            setupPlaneFilters();
+            setupSearch();
+            setupModals();
+
+            // Load JSON data files first, then check auth
+            await Promise.all([loadCarsJSON(), loadPlanesJSON()]);
+            checkAuth();
+        });
+
+        // --- LOAD CARS FROM car.json ---
+        async function loadCarsJSON() {
+            try {
+                const res = await fetch('car.json');
+                if (!res.ok) throw new Error('Failed to load car.json');
+                carsData = await res.json();
+            } catch (err) {
+                console.error('Error loading car.json:', err);
+                carsData = [];
+                showToast('Failed to load cars data', 'error');
+            }
+        }
+
+        // --- LOAD PLANES FROM plane.json ---
+        async function loadPlanesJSON() {
+            try {
+                const res = await fetch('plane.json');
+                if (!res.ok) throw new Error('Failed to load plane.json');
+                planesData = await res.json();
+            } catch (err) {
+                console.error('Error loading plane.json:', err);
+                planesData = [];
+                showToast('Failed to load planes data', 'error');
+            }
+        }
+
+        // --- AUTH ---
+        async function checkAuth() {
+            const { data: { session } } = await supabaseClient.auth.getSession();
+            if (session) {
+                currentUser = session.user;
+                await fetchCurrentProfile();
+                showDashboard();
+            } else {
+                showAuth();
+            }
+        }
+
+        async function fetchCurrentProfile() {
+            if (!currentUser) return;
+            const { data } = await supabaseClient
+                .from('profiles')
+                .select('username, display_name, profile_pic, bio')
+                .eq('id', currentUser.id)
+                .single();
+            currentProfile = data || null;
+        }
+
+        function showAuth() {
+            document.getElementById('authPage').classList.add('active');
+            document.getElementById('dashboardPage').classList.remove('active');
+            document.getElementById('menuToggle').style.display = 'none';
+            document.getElementById('sidebar').classList.add('closed');
+            document.getElementById('mainContent').classList.add('expanded');
+        }
+
+        function showDashboard() {
+            document.getElementById('authPage').classList.remove('active');
+            document.getElementById('dashboardPage').classList.add('active');
+            document.getElementById('menuToggle').style.display = 'flex';
+            updateUserUI();
+            loadHomeData();
+            loadCars();
+            loadPlanes();
+            loadUsers();
+            lucide.createIcons();
+        }
+
+        function updateUserUI() {
+            if (!currentUser) return;
+            const displayName = currentProfile?.display_name || currentUser.email?.split('@')[0] || 'User';
+            const initial = displayName.charAt(0).toUpperCase();
+            const profilePic = currentProfile?.profile_pic;
+            document.getElementById('userNameDisplay').textContent = displayName;
+            const avatarEl = document.getElementById('userAvatar');
+            if (profilePic) { avatarEl.innerHTML = `<img src="${profilePic}" class="w-12 h-12 rounded-full object-cover shadow-lg shadow-gray-900/20">`; }
+            else { avatarEl.textContent = initial; }
+            const sidebarAvEl = document.getElementById('sidebarAvatar');
+            if (profilePic) { sidebarAvEl.innerHTML = `<img src="${profilePic}" class="w-9 h-9 rounded-full object-cover">`; sidebarAvEl.className = 'w-9 h-9 rounded-full overflow-hidden flex-shrink-0'; }
+            else { sidebarAvEl.innerHTML = ''; sidebarAvEl.textContent = initial; sidebarAvEl.className = 'w-9 h-9 rounded-full bg-gray-900 flex items-center justify-center text-white font-bold text-sm flex-shrink-0'; }
+            document.getElementById('sidebarUserName').textContent = displayName;
+            document.getElementById('sidebarUserEmail').textContent = currentProfile?.username ? '@' + currentProfile.username : currentUser.email || '';
+        }
+
+        function setupAuthForms() {
+            document.getElementById('showSignup').addEventListener('click', (e) => { e.preventDefault(); document.getElementById('loginForm').classList.add('hidden'); document.getElementById('signupForm').classList.remove('hidden'); });
+            document.getElementById('showLogin').addEventListener('click', (e) => { e.preventDefault(); document.getElementById('signupForm').classList.add('hidden'); document.getElementById('loginForm').classList.remove('hidden'); });
+
+            document.getElementById('loginForm').addEventListener('submit', async (e) => {
+                e.preventDefault();
+                const email = document.getElementById('loginEmail').value;
+                const password = document.getElementById('loginPassword').value;
+                const errorEl = document.getElementById('loginError');
+                errorEl.classList.add('hidden');
+                const { data, error } = await supabaseClient.auth.signInWithPassword({ email, password });
+                if (error) { errorEl.textContent = error.message; errorEl.classList.remove('hidden'); }
+                else { currentUser = data.user; await fetchCurrentProfile(); showToast('Welcome back!', 'success'); showDashboard(); }
+            });
+
+            document.getElementById('signupForm').addEventListener('submit', async (e) => {
+                e.preventDefault();
+                const email = document.getElementById('signupEmail').value;
+                const password = document.getElementById('signupPassword').value;
+                const displayName = document.getElementById('signupName').value;
+                const username = document.getElementById('signupUsername').value;
+                const errorEl = document.getElementById('signupError');
+                const successEl = document.getElementById('signupSuccess');
+                errorEl.classList.add('hidden'); successEl.classList.add('hidden');
+                const { data, error } = await supabaseClient.auth.signUp({ email, password, options: { data: { display_name: displayName, username: username } } });
+                if (error) { errorEl.textContent = error.message; errorEl.classList.remove('hidden'); }
+                else if (data.user && !data.session) { successEl.textContent = 'Account created! Please check your email to verify, then sign in.'; successEl.classList.remove('hidden'); }
+                else if (data.session) { currentUser = data.user; await fetchCurrentProfile(); showToast('Account created successfully!', 'success'); showDashboard(); }
+            });
+
+            document.getElementById('logoutBtn').addEventListener('click', async () => {
+                await supabaseClient.auth.signOut();
+                currentUser = null; currentProfile = null;
+                showToast('Signed out', 'success'); showAuth();
+            });
+        }
+
+        // --- NAVIGATION ---
+        function setupNavigation() {
+            document.querySelectorAll('.nav-btn[data-page]').forEach(btn => { btn.addEventListener('click', () => navigateTo(btn.dataset.page)); });
+        }
+
+        function navigateTo(page) {
+            document.querySelectorAll('.nav-btn[data-page]').forEach(btn => {
+                btn.classList.remove('active-nav'); btn.classList.add('text-gray-600');
+                if (btn.dataset.page === page) { btn.classList.add('active-nav'); btn.classList.remove('text-gray-600'); }
+            });
+            document.querySelectorAll('.section').forEach(s => s.classList.add('hidden'));
+            const section = document.getElementById(page + 'Section');
+            if (section) section.classList.remove('hidden');
+            if (window.innerWidth < 768) { document.getElementById('sidebar').classList.remove('open'); document.getElementById('sidebarOverlay').classList.remove('active'); }
+            if (page === 'users') loadUsers();
+            if (page === 'cars') loadCars();
+            if (page === 'planes') loadPlanes();
+            lucide.createIcons();
+        }
+
+        // --- SIDEBAR ---
+        function setupSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('sidebarOverlay');
+            const mainContent = document.getElementById('mainContent');
+            document.getElementById('menuToggle').addEventListener('click', () => {
+                if (window.innerWidth < 768) { sidebar.classList.toggle('open'); overlay.classList.toggle('active'); }
+                else { sidebar.classList.toggle('closed'); mainContent.classList.toggle('expanded'); }
+            });
+            document.getElementById('closeSidebar').addEventListener('click', () => { sidebar.classList.remove('open'); overlay.classList.remove('active'); });
+            overlay.addEventListener('click', () => { sidebar.classList.remove('open'); overlay.classList.remove('active'); });
+        }
+
+        // --- HOME ---
+        function loadHomeData() {
+            document.getElementById('statCars').textContent = carsData.length || '—';
+            document.getElementById('statPlanes').textContent = planesData.length || '—';
+            const manufacturers = new Set([...carsData.map(c => c.manufacturer), ...planesData.map(p => p.manufacturer)]);
+            document.getElementById('statMfg').textContent = manufacturers.size || '—';
+            document.getElementById('statUsers').textContent = allProfiles.length || '—';
+            document.getElementById('featuredCarsGrid').innerHTML = carsData.slice(0, 3).map(car => createCarCard(car)).join('');
+            document.getElementById('featuredPlanesGrid').innerHTML = planesData.slice(0, 3).map(plane => createPlaneCard(plane)).join('');
+            lucide.createIcons();
+        }
+
+        // --- CAR CARDS ---
+        function createCarCard(car) {
+            const tc = { 'Sedan': 'bg-blue-50 text-blue-700', 'SUV': 'bg-amber-50 text-amber-700', 'Sports': 'bg-red-50 text-red-700', 'Truck': 'bg-green-50 text-green-700', 'Electric': 'bg-emerald-50 text-emerald-700', 'Coupe': 'bg-purple-50 text-purple-700' };
+            return `<div class="car-card glass rounded-2xl overflow-hidden" onclick="openCarModal(${car.id})">
+                <div class="relative overflow-hidden aspect-video bg-gray-100">
+                    <img src="${car.image}" alt="${car.name}" class="car-img w-full h-full object-cover" loading="lazy">
+                    <div class="absolute top-3 left-3"><span class="badge ${tc[car.type] || 'bg-gray-100 text-gray-700'}">${car.type}</span></div>
+                    <div class="absolute top-3 right-3"><span class="badge badge-dark">$${car.price.toLocaleString()}</span></div>
+                </div>
+                <div class="p-5">
+                    <p class="text-xs text-gray-400 font-medium uppercase tracking-wider mb-1">${car.manufacturer}</p>
+                    <h3 class="text-lg font-bold text-gray-900">${car.name} <span class="text-gray-400 font-normal">${car.model}</span></h3>
+                    <div class="flex items-center gap-4 mt-3 text-xs text-gray-400">
+                        <span class="flex items-center gap-1"><i data-lucide="gauge" style="width:13px;height:13px;"></i> ${car.horsepower} HP</span>
+                        <span class="flex items-center gap-1"><i data-lucide="zap" style="width:13px;height:13px;"></i> ${car.acceleration}</span>
+                        <span class="flex items-center gap-1"><i data-lucide="fuel" style="width:13px;height:13px;"></i> ${car.fuelType}</span>
+                    </div>
+                </div></div>`;
+        }
+
+        function loadCars() {
+            const search = (document.getElementById('carSearch')?.value || '').toLowerCase();
+            const activeFilter = document.querySelector('#carFilters .filter-btn.active-filter')?.dataset.filter || 'all';
+            let filtered = carsData.filter(car => {
+                const ms = !search || car.name.toLowerCase().includes(search) || car.manufacturer.toLowerCase().includes(search) || car.model.toLowerCase().includes(search) || car.type.toLowerCase().includes(search);
+                const mf = activeFilter === 'all' || car.type === activeFilter;
+                return ms && mf;
+            });
+            const grid = document.getElementById('carsGrid');
+            const noMsg = document.getElementById('noCarsMsg');
+            if (filtered.length === 0) { grid.innerHTML = ''; noMsg.classList.remove('hidden'); }
+            else { noMsg.classList.add('hidden'); grid.innerHTML = filtered.map(car => createCarCard(car)).join(''); }
+            lucide.createIcons();
+        }
+
+        function setupCarFilters() {
+            document.querySelectorAll('#carFilters .filter-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    document.querySelectorAll('#carFilters .filter-btn').forEach(b => b.classList.remove('active-filter'));
+                    btn.classList.add('active-filter'); loadCars();
+                });
+            });
+        }
+
+        function openCarModal(id) {
+            const car = carsData.find(c => c.id === id);
+            if (!car) return;
+            const fp = '$' + car.price.toLocaleString();
+            const df = new Date(car.dateOfManufacturing).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+            document.getElementById('carModalContent').innerHTML = `
+                <div class="relative"><img src="${car.image}" alt="${car.name}" class="w-full h-64 md:h-80 object-cover">
+                <button onclick="closeCarModal()" class="absolute top-4 right-4 w-10 h-10 bg-white/90 backdrop-blur rounded-full flex items-center justify-center hover:bg-white transition shadow-lg"><i data-lucide="x" style="width:20px;height:20px;"></i></button>
+                <div class="absolute bottom-4 left-4 flex gap-2"><span class="badge badge-dark">${car.type}</span><span class="badge bg-white/90 text-gray-900">${fp}</span></div></div>
+                <div class="p-6 md:p-8">
+                    <p class="text-xs text-gray-400 font-medium uppercase tracking-wider mb-1">${car.manufacturer}</p>
+                    <h2 class="text-2xl md:text-3xl font-extrabold text-gray-900 mb-2">${car.name} <span class="text-gray-400 font-normal">${car.model}</span></h2>
+                    <p class="text-sm text-gray-400 mb-6">Manufactured: ${df}</p>
+                    <p class="text-gray-600 text-sm leading-relaxed mb-8">${car.details}</p>
+                    <h4 class="text-sm font-bold text-gray-900 uppercase tracking-wider mb-4">Specifications</h4>
+                    <div class="spec-grid mb-6">
+                        <div class="p-3 rounded-xl bg-gray-50 border border-gray-100"><p class="text-xs text-gray-400 mb-0.5">Engine</p><p class="text-sm font-semibold text-gray-800">${car.engine}</p></div>
+                        <div class="p-3 rounded-xl bg-gray-50 border border-gray-100"><p class="text-xs text-gray-400 mb-0.5">Horsepower</p><p class="text-sm font-semibold text-gray-800">${car.horsepower} HP</p></div>
+                        <div class="p-3 rounded-xl bg-gray-50 border border-gray-100"><p class="text-xs text-gray-400 mb-0.5">Top Speed</p><p class="text-sm font-semibold text-gray-800">${car.topSpeed}</p></div>
+                        <div class="p-3 rounded-xl bg-gray-50 border border-gray-100"><p class="text-xs text-gray-400 mb-0.5">0-60 mph</p><p class="text-sm font-semibold text-gray-800">${car.acceleration}</p></div>
+                        <div class="p-3 rounded-xl bg-gray-50 border border-gray-100"><p class="text-xs text-gray-400 mb-0.5">Transmission</p><p class="text-sm font-semibold text-gray-800">${car.transmission}</p></div>
+                        <div class="p-3 rounded-xl bg-gray-50 border border-gray-100"><p class="text-xs text-gray-400 mb-0.5">Drivetrain</p><p class="text-sm font-semibold text-gray-800">${car.drivetrain}</p></div>
+                        <div class="p-3 rounded-xl bg-gray-50 border border-gray-100"><p class="text-xs text-gray-400 mb-0.5">Fuel Type</p><p class="text-sm font-semibold text-gray-800">${car.fuelType}</p></div>
+                        <div class="p-3 rounded-xl bg-gray-50 border border-gray-100"><p class="text-xs text-gray-400 mb-0.5">Fuel Economy</p><p class="text-sm font-semibold text-gray-800">${car.mpg}</p></div>
+                    </div>
+                    <div class="flex items-center justify-between p-4 rounded-xl bg-gray-900 text-white">
+                        <div><p class="text-xs text-gray-400">Starting Price</p><p class="text-2xl font-extrabold">${fp}</p></div>
+                        <div class="text-right"><p class="text-xs text-gray-400">Type</p><p class="text-sm font-semibold">${car.type}</p></div>
+                    </div>
+                </div>`;
+            document.getElementById('carModal').classList.add('active');
+            document.body.style.overflow = 'hidden';
+            lucide.createIcons();
+        }
+
+        function closeCarModal() { document.getElementById('carModal').classList.remove('active'); document.body.style.overflow = ''; }
+
+        // --- PLANE CARDS ---
+        function createPlaneCard(plane) {
+            const tc = { 'Commercial': 'bg-blue-50 text-blue-700', 'Private': 'bg-purple-50 text-purple-700', 'Military': 'bg-red-50 text-red-700', 'Cargo': 'bg-amber-50 text-amber-700' };
+            return `<div class="plane-card glass rounded-2xl overflow-hidden" onclick="openPlaneModal(${plane.id})">
+                <div class="relative overflow-hidden aspect-video bg-gray-100">
+                    <img src="${plane.image}" alt="${plane.name}" class="plane-img w-full h-full object-cover" loading="lazy">
+                    <div class="absolute top-3 left-3"><span class="badge ${tc[plane.type] || 'bg-gray-100 text-gray-700'}">${plane.type}</span></div>
+                    <div class="absolute top-3 right-3"><span class="badge badge-dark">${plane.size}</span></div>
+                </div>
+                <div class="p-5">
+                    <p class="text-xs text-gray-400 font-medium uppercase tracking-wider mb-1">${plane.manufacturer}</p>
+                    <h3 class="text-lg font-bold text-gray-900">${plane.name}</h3>
+                    <div class="flex items-center gap-4 mt-3 text-xs text-gray-400">
+                        <span class="flex items-center gap-1"><i data-lucide="ruler" style="width:13px;height:13px;"></i> ${plane.length}</span>
+                        <span class="flex items-center gap-1"><i data-lucide="users" style="width:13px;height:13px;"></i> ${plane.capacity}</span>
+                        <span class="flex items-center gap-1"><i data-lucide="navigation" style="width:13px;height:13px;"></i> ${plane.range}</span>
+                    </div>
+                </div></div>`;
+        }
+
+        function loadPlanes() {
+            const search = (document.getElementById('planeSearch')?.value || '').toLowerCase();
+            const activeFilter = document.querySelector('#planeFilters .filter-btn.active-filter')?.dataset.filter || 'all';
+            let filtered = planesData.filter(plane => {
+                const ms = !search || plane.name.toLowerCase().includes(search) || plane.manufacturer.toLowerCase().includes(search) || plane.type.toLowerCase().includes(search);
+                const mf = activeFilter === 'all' || plane.type === activeFilter;
+                return ms && mf;
+            });
+            const grid = document.getElementById('planesGrid');
+            const noMsg = document.getElementById('noPlanesMsg');
+            if (filtered.length === 0) { grid.innerHTML = ''; noMsg.classList.remove('hidden'); }
+            else { noMsg.classList.add('hidden'); grid.innerHTML = filtered.map(plane => createPlaneCard(plane)).join(''); }
+            lucide.createIcons();
+        }
+
+        function setupPlaneFilters() {
+            document.querySelectorAll('#planeFilters .filter-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    document.querySelectorAll('#planeFilters .filter-btn').forEach(b => b.classList.remove('active-filter'));
+                    btn.classList.add('active-filter'); loadPlanes();
+                });
+            });
+        }
+
+        function openPlaneModal(id) {
+            const plane = planesData.find(p => p.id === id);
+            if (!plane) return;
+            const df = new Date(plane.firstFlight).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+            document.getElementById('planeModalContent').innerHTML = `
+                <div class="relative"><img src="${plane.image}" alt="${plane.name}" class="w-full h-64 md:h-80 object-cover">
+                <button onclick="closePlaneModal()" class="absolute top-4 right-4 w-10 h-10 bg-white/90 backdrop-blur rounded-full flex items-center justify-center hover:bg-white transition shadow-lg"><i data-lucide="x" style="width:20px;height:20px;"></i></button>
+                <div class="absolute bottom-4 left-4 flex gap-2"><span class="badge badge-dark">${plane.type}</span><span class="badge bg-white/90 text-gray-900">${plane.size}</span></div></div>
+                <div class="p-6 md:p-8">
+                    <p class="text-xs text-gray-400 font-medium uppercase tracking-wider mb-1">${plane.manufacturer}</p>
+                    <h2 class="text-2xl md:text-3xl font-extrabold text-gray-900 mb-2">${plane.name}</h2>
+                    <p class="text-sm text-gray-400 mb-6">First Flight: ${df}</p>
+                    <p class="text-gray-600 text-sm leading-relaxed mb-8">${plane.details}</p>
+                    <h4 class="text-sm font-bold text-gray-900 uppercase tracking-wider mb-4">Specifications</h4>
+                    <div class="spec-grid mb-6">
+                        <div class="p-3 rounded-xl bg-gray-50 border border-gray-100"><p class="text-xs text-gray-400 mb-0.5">Wingspan</p><p class="text-sm font-semibold text-gray-800">${plane.wingspan}</p></div>
+                        <div class="p-3 rounded-xl bg-gray-50 border border-gray-100"><p class="text-xs text-gray-400 mb-0.5">Length</p><p class="text-sm font-semibold text-gray-800">${plane.length}</p></div>
+                        <div class="p-3 rounded-xl bg-gray-50 border border-gray-100"><p class="text-xs text-gray-400 mb-0.5">Height</p><p class="text-sm font-semibold text-gray-800">${plane.height}</p></div>
+                        <div class="p-3 rounded-xl bg-gray-50 border border-gray-100"><p class="text-xs text-gray-400 mb-0.5">Max Speed</p><p class="text-sm font-semibold text-gray-800">${plane.maxSpeed}</p></div>
+                        <div class="p-3 rounded-xl bg-gray-50 border border-gray-100"><p class="text-xs text-gray-400 mb-0.5">Range</p><p class="text-sm font-semibold text-gray-800">${plane.range}</p></div>
+                        <div class="p-3 rounded-xl bg-gray-50 border border-gray-100"><p class="text-xs text-gray-400 mb-0.5">Capacity</p><p class="text-sm font-semibold text-gray-800">${plane.capacity}</p></div>
+                        <div class="p-3 rounded-xl bg-gray-50 border border-gray-100"><p class="text-xs text-gray-400 mb-0.5">Engines</p><p class="text-sm font-semibold text-gray-800">${plane.engineCount}x ${plane.engineType}</p></div>
+                        <div class="p-3 rounded-xl bg-gray-50 border border-gray-100"><p class="text-xs text-gray-400 mb-0.5">Max Takeoff Weight</p><p class="text-sm font-semibold text-gray-800">${plane.weight}</p></div>
+                    </div>
+                    <div class="flex items-center justify-between p-4 rounded-xl bg-gray-900 text-white">
+                        <div><p class="text-xs text-gray-400">Classification</p><p class="text-lg font-extrabold">${plane.type}</p></div>
+                        <div class="text-right"><p class="text-xs text-gray-400">Size Category</p><p class="text-sm font-semibold">${plane.size}</p></div>
+                    </div>
+                </div>`;
+            document.getElementById('planeModal').classList.add('active');
+            document.body.style.overflow = 'hidden';
+            lucide.createIcons();
+        }
+
+        function closePlaneModal() { document.getElementById('planeModal').classList.remove('active'); document.body.style.overflow = ''; }
+
+        // --- MODALS ---
+        function setupModals() {
+            document.getElementById('carModal').addEventListener('click', (e) => { if (e.target === document.getElementById('carModal')) closeCarModal(); });
+            document.getElementById('planeModal').addEventListener('click', (e) => { if (e.target === document.getElementById('planeModal')) closePlaneModal(); });
+            document.addEventListener('keydown', (e) => { if (e.key === 'Escape') { closeCarModal(); closePlaneModal(); } });
+        }
+
+        // --- SEARCH ---
+        function setupSearch() {
+            document.getElementById('carSearch')?.addEventListener('input', loadCars);
+            document.getElementById('planeSearch')?.addEventListener('input', loadPlanes);
+            document.getElementById('userSearch')?.addEventListener('input', renderUsers);
+        }
+
+        // --- USERS (from profiles table — only safe fields) ---
+        async function loadUsers() {
+            const loadingEl = document.getElementById('usersLoading');
+            const gridEl = document.getElementById('usersGrid');
+            const noMsgEl = document.getElementById('noUsersMsg');
+            const errorMsgEl = document.getElementById('usersErrorMsg');
+            loadingEl.classList.remove('hidden'); gridEl.classList.add('hidden'); noMsgEl.classList.add('hidden'); errorMsgEl.classList.add('hidden');
+            try {
+                const { data, error } = await supabaseClient.from('profiles').select('id, username, display_name, profile_pic, bio, created_at').order('created_at', { ascending: false });
+                loadingEl.classList.add('hidden');
+                if (error) throw error;
+                allProfiles = data || [];
+                document.getElementById('statUsers').textContent = allProfiles.length;
+                renderUsers();
+            } catch (err) {
+                console.error('Failed to load profiles:', err);
+                loadingEl.classList.add('hidden'); errorMsgEl.classList.remove('hidden');
+            }
+        }
+
+        function renderUsers() {
+            const search = (document.getElementById('userSearch')?.value || '').toLowerCase();
+            const gridEl = document.getElementById('usersGrid');
+            const noMsgEl = document.getElementById('noUsersMsg');
+            let filtered = allProfiles.filter(p => {
+                if (!search) return true;
+                return (p.username || '').toLowerCase().includes(search) || (p.display_name || '').toLowerCase().includes(search);
+            });
+            if (filtered.length === 0) { gridEl.classList.add('hidden'); noMsgEl.classList.remove('hidden'); return; }
+            noMsgEl.classList.add('hidden'); gridEl.classList.remove('hidden');
+            gridEl.innerHTML = filtered.map(profile => {
+                const dn = profile.display_name || 'No display name';
+                const un = profile.username ? '@' + profile.username : '';
+                const bio = profile.bio || 'No bio yet';
+                const isMe = currentUser && profile.id === currentUser.id;
+                const init = dn.charAt(0).toUpperCase();
+                let avHtml;
+                if (profile.profile_pic) { avHtml = `<div class="user-avatar-ring flex-shrink-0"><img src="${profile.profile_pic}" alt="${dn}" class="w-14 h-14 object-cover"></div>`; }
+                else { avHtml = `<div class="user-avatar-ring flex-shrink-0"><div class="avatar-fallback w-14 h-14 text-lg">${init}</div></div>`; }
+                return `<div class="user-card glass rounded-2xl p-6">
+                    <div class="flex items-start gap-4 mb-4">${avHtml}
+                        <div class="flex-1 min-w-0"><div class="flex items-center gap-2"><h3 class="text-base font-bold text-gray-900 truncate">${dn}</h3>${isMe ? '<span class="badge badge-dark flex-shrink-0">You</span>' : ''}</div><p class="text-sm text-gray-400 truncate">${un}</p></div>
+                    </div>
+                    <p class="text-sm text-gray-500 leading-relaxed" style="display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;">${bio}</p>
+                </div>`;
+            }).join('');
+            lucide.createIcons();
+        }
+
+        // --- TOAST ---
+        function showToast(message, type = 'success') {
+            const toast = document.getElementById('toast');
+            toast.textContent = message;
+            toast.className = `toast toast-${type} show`;
+            setTimeout(() => { toast.classList.remove('show'); }, 3000);
+        }
+    </script>
+</body>
+
+</html>
